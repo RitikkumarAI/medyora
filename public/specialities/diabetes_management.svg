@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="60%" stop-color="#E0F2FE"/>
+      <stop offset="100%" stop-color="#BAE6FD"/>
+    </radialGradient>
+
+    <!-- Glucometer Body Gradient -->
+    <linearGradient id="deviceBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+
+    <!-- Screen Glass Gradient -->
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+
+    <!-- Test Strip Gradient -->
+    <linearGradient id="stripGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="50%" stop-color="#E2E8F0"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filters -->
+    <filter id="deviceShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#0F172A" flood-opacity="0.3"/>
+    </filter>
+    <filter id="bloodGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#EF4444" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="500" rx="40" fill="url(#bgGrad)"/>
+
+  <!-- Subtle Blue Glow Ring -->
+  <circle cx="250" cy="270" r="160" fill="#38BDF8" opacity="0.15" filter="blur(24px)"/>
+
+  <!-- Glucometer Device Group -->
+  <g filter="url(#deviceShadow)">
+    
+    <!-- Test Strip Inserted at Top -->
+    <rect x="225" y="60" width="50" height="75" rx="6" fill="url(#stripGrad)" stroke="#64748B" stroke-width="2"/>
+    <!-- Strip Gold Contacts -->
+    <rect x="235" y="60" width="10" height="20" rx="2" fill="#EAB308"/>
+    <rect x="255" y="60" width="10" height="20" rx="2" fill="#EAB308"/>
+    <!-- Strip Blood Target Zone with Red Blood Drop -->
+    <circle cx="250" cy="95" r="7" fill="#EF4444" filter="url(#bloodGlow)"/>
+
+    <!-- Main Device Body (Sleek Modern Oval-Rect) -->
+    <rect x="135" y="115" width="230" height="320" rx="60" fill="url(#deviceBody)" stroke="#475569" stroke-width="3"/>
+
+    <!-- Outer Rim Highlight -->
+    <rect x="140" y="120" width="220" height="310" rx="55" fill="none" stroke="#64748B" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Screen Bezel -->
+    <rect x="160" y="150" width="180" height="150" rx="20" fill="#020617" stroke="#334155" stroke-width="2"/>
+
+    <!-- LCD Display Screen -->
+    <rect x="168" y="158" width="164" height="134" rx="14" fill="url(#screenGrad)"/>
+
+    <!-- Screen Content -->
+    <!-- Time & Date -->
+    <text x="180" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#64748B">10:30 AM</text>
+    <text x="295" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="800" fill="#0284C7">FASTING</text>
+
+    <!-- Large Blood Sugar Number: "120" -->
+    <text x="180" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="900" fill="#0F172A" letter-spacing="-2">120</text>
+    
+    <!-- Unit: "mg/dL" -->
+    <text x="282" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="900" fill="#475569">mg</text>
+    <line x1="282" y1="240" x2="310" y2="240" stroke="#475569" stroke-width="1.5"/>
+    <text x="282" y="254" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="900" fill="#475569">dL</text>
+
+    <!-- Status Bar at bottom of screen: Normal Green indicator -->
+    <rect x="180" y="268" width="140" height="10" rx="5" fill="#E2E8F0"/>
+    <rect x="220" y="268" width="50" height="10" rx="5" fill="#10B981"/>
+    <circle cx="245" cy="273" r="3" fill="#FFFFFF"/>
+
+    <!-- Device Control Buttons -->
+    <!-- Power / Central Button -->
+    <circle cx="250" cy="355" r="28" fill="#1E293B" stroke="#475569" stroke-width="2"/>
+    <circle cx="250" cy="355" r="22" fill="#0F172A"/>
+    <!-- Power Icon -->
+    <path d="M250 343 L 250 353 M242 347 A 10 10 0 1 0 258 347" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Left & Right Arrow Buttons -->
+    <circle cx="185" cy="355" r="16" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+    <path d="M188 349 L 182 355 L 188 361" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <circle cx="315" cy="355" r="16" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+    <path d="M312 349 L 318 355 L 312 361" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Brand Label: MEDYORA CARE -->
+    <text x="250" y="412" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="900" fill="#64748B" text-anchor="middle" letter-spacing="1.5">GLUCO SMART</text>
+  </g>
+</svg>

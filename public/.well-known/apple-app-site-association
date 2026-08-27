@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAMID.com.medyora.health",
+        "paths": [
+          "/doctors/*",
+          "/booking/*",
+          "/patient/*",
+          "/doctor/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAMID.com.medyora.health"
+    ]
+  }
+}

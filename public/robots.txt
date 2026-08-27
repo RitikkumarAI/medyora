@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /auth/verify
+Disallow: /api/
+
+Sitemap: https://medyora.com/sitemap.xml
