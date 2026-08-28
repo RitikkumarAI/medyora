@@ -7,6 +7,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Environment and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# Dependencies and build
 node_modules
 dist
 dist-ssr
@@ -18,7 +25,6 @@ dist-ssr
 
 # Wrangler / Cloudflare
 .wrangler/
-.dev.vars
 
 # Editor directories and files
 .vscode/*
@@ -30,3 +36,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+

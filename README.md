@@ -1,29 +1,45 @@
-# Welcome to your Lovable project
+# Medyora — India's Smartest AI Healthcare Platform
 
-This project was built with [Lovable](https://lovable.dev).
+Medyora is a modern healthcare web platform and doctor consultation ecosystem built with TanStack Start, React, TypeScript, and Tailwind CSS.
 
-## Build with Lovable
+## Key Features
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+- **24/7 Smart Care AI Copilot**: Intelligent symptom assessment, disease risk triaging, and specialist doctor matching.
+- **Doctor Consultation & Booking Flow**: Book in-clinic appointments, encrypted video consultations, and doctor home visits.
+- **Live Digital Token & Queue Tracker**: Real-time waiting queue, estimated arrival timings, and automated notification triggers.
+- **Clinical Health Articles & Knowledge Hub**: Evidence-backed wellness articles with nutritional breakdown, dosage timings, and lifestyle guidance.
+- **Family Health Manager**: Manage profiles, appointments, and prescriptions for multiple family members under a single dashboard.
+- **Full Responsive Design & Universal Dark Mode**: Polished desktop portals and mobile web app views with seamless dark/light mode toggling.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Tech Stack
 
-## Development
+- **Framework**: TanStack Start (SSR + Vite + Nitro)
+- **Frontend**: React 18, TypeScript, Tailwind CSS v4
+- **State & Data**: TanStack Query, Lucide Icons, Radix UI
+- **Internationalization**: i18next (English, Hindi, Marathi)
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Getting Started
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Environment Configuration
+Copy `.env.example` to `.env` and fill in your Supabase project credentials when ready:
+```bash
+cp .env.example .env
+```
+
+### 3. Start Development Server
+```bash
 npm run dev
 ```
 
-## Built with
+### 4. Production Build
+```bash
+npm run build
+```
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## License
+Private / Proprietary.
