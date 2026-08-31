@@ -40,7 +40,7 @@ export function SiteHeader() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="sticky top-0 z-50 border-b border-slate-100/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors"
+      className="sticky top-0 z-50 border-b border-slate-100/80 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/50 backdrop-blur-lg transition-colors"
       role="banner"
     >
       <div className="mx-auto flex h-20 w-full max-w-[1536px] items-center justify-between gap-6 px-6 sm:px-10 lg:px-16">
