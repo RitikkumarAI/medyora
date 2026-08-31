@@ -191,6 +191,15 @@ function RootComponent() {
         navigator.serviceWorker.register("/sw.js").catch((err) => {
           console.warn("[SW] Registration error:", err);
         });
+
+        // Automatically reload the page when a new service worker takes over
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
       });
     }
   }, []);
