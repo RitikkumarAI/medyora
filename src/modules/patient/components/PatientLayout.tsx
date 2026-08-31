@@ -39,8 +39,8 @@ export function PatientLayout() {
   // If this is the main landing/discovery page, let DesktopLandingPage manage its full custom layout
   if (isLandingPath) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors font-sans pb-24 lg:pb-0">
-        <main id="main-content" tabIndex={-1} className="w-full focus:outline-none">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors font-sans pb-24 lg:pb-0 overflow-x-hidden max-w-[100vw] w-full">
+        <main id="main-content" tabIndex={-1} className="w-full focus:outline-none overflow-x-hidden">
           <Outlet />
         </main>
 
@@ -51,7 +51,7 @@ export function PatientLayout() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors font-sans">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors font-sans overflow-x-hidden max-w-[100vw] w-full">
       
       {/* Universal Top Site Header */}
       <SiteHeader />

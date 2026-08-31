@@ -123,7 +123,7 @@ export function PatientHome() {
       </div>
 
       {/* Mobile Practo Super App Experience (< lg) */}
-      <div className="block lg:hidden min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors">
+      <div className="block lg:hidden min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors overflow-x-hidden max-w-[100vw] w-full select-none">
         
         {/* ================= 1. PRACTO-STYLE HEADER ================= */}
         <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-3 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs">
@@ -163,7 +163,7 @@ export function PatientHome() {
           </div>
         </header>
 
-        <main className="p-4 space-y-6">
+        <main className="p-4 space-y-6 overflow-x-hidden max-w-full">
           
           {/* ================= 2. TOP 6 SERVICES (SCREEN 1) ================= */}
           <section>
@@ -183,7 +183,7 @@ export function PatientHome() {
                   <img
                     src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=120&q=80"
                     alt="Doctor"
-                    className="h-16 w-16 rounded-2xl object-cover"
+                    className="h-16 w-16 rounded-2xl object-cover pointer-events-none"
                   />
                 </div>
               </Link>
@@ -203,7 +203,7 @@ export function PatientHome() {
                   <img
                     src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=120&q=80"
                     alt="Doctor"
-                    className="h-16 w-16 rounded-2xl object-cover"
+                    className="h-16 w-16 rounded-2xl object-cover pointer-events-none"
                   />
                 </div>
               </Link>
@@ -239,7 +239,7 @@ export function PatientHome() {
               </h3>
             </div>
 
-            <div className="flex gap-2.5 overflow-x-auto no-scrollbar">
+            <div className="flex gap-2.5 overflow-x-auto no-scrollbar overscroll-x-contain">
               {/* Doctor 1 */}
               {DOCTORS[0] && (
                 <Link
@@ -250,7 +250,7 @@ export function PatientHome() {
                   <img
                     src={DOCTORS[0].image}
                     alt={DOCTORS[0].fullName}
-                    className="h-11 w-11 rounded-xl object-cover"
+                    className="h-11 w-11 rounded-xl object-cover pointer-events-none"
                   />
                   <div className="min-w-0 flex-1">
                     <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
@@ -282,16 +282,16 @@ export function PatientHome() {
 
           {/* ================= 4. PROMO HERO BANNER SLIDER (SCREEN 1) ================= */}
           {banners[activeBannerIndex] && (
-            <section className="relative">
+            <section className="relative overflow-hidden max-w-full">
               <div className="overflow-hidden rounded-3xl">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={banners[activeBannerIndex]!.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className={`p-5 rounded-3xl bg-gradient-to-r ${banners[activeBannerIndex]!.bgGradient} text-white relative overflow-hidden shadow-lg`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className={`p-5 rounded-3xl bg-gradient-to-r ${banners[activeBannerIndex]!.bgGradient} text-white relative overflow-hidden shadow-lg gpu-accelerate`}
                   >
                     <div className="max-w-[65%] space-y-2">
                       <span className="inline-block text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
@@ -314,7 +314,7 @@ export function PatientHome() {
                     <img
                       src={banners[activeBannerIndex]!.image}
                       alt="Promo"
-                      className="absolute right-0 bottom-0 top-0 w-36 h-full object-cover opacity-85 mix-blend-luminosity"
+                      className="absolute right-0 bottom-0 top-0 w-36 h-full object-cover opacity-85 mix-blend-luminosity pointer-events-none"
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -412,7 +412,7 @@ export function PatientHome() {
               </Link>
             </div>
 
-            <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar overscroll-x-contain pb-2 pt-1">
               {HEALTH_ARTICLES_DATA.slice(0, 5).map((art) => (
                 <Link
                   key={art.id}

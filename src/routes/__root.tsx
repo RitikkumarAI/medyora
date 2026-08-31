@@ -93,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "viewport",
         content:
-          "width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, user-scalable=yes",
+          "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content",
       },
       { title: "Medyora — Book Verified Doctors Online & Live Queue Tracking | Binarize Technologies" },
       {
@@ -158,11 +158,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden max-w-full touch-pan-y select-none">
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-600 selection:text-white">
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden max-w-full touch-pan-y overscroll-none select-none">
         {children}
         <Scripts />
       </body>
