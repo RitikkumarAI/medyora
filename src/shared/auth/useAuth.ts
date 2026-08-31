@@ -26,15 +26,15 @@ const DEFAULT_PATIENT_USER: AuthUser = {
 };
 
 const DEFAULT_DOCTOR_USER: AuthUser = {
-  id: "doc_rajesh_1",
-  name: "Dr. Rajesh Sharma",
-  phone: "+91 98111 22334",
+  id: "doc_specialist_1",
+  name: "Dr. Medical Specialist",
+  phone: "+91 98765 43210",
   avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80",
   role: "doctor",
-  email: "dr.rajesh@medyora.health",
+  email: "doctor@medyora.health",
   medicalRegNo: "MCI-74892",
-  speciality: "Senior Cardiologist",
-  clinicName: "Apex Heart & Vascular Clinic",
+  speciality: "Senior Consultant Specialist",
+  clinicName: "Apex Multi-Speciality Clinic",
 };
 
 function getStoredUser(): AuthUser | null {
@@ -90,7 +90,7 @@ export function useAuth() {
       phone: doctorInfo?.phone || DEFAULT_DOCTOR_USER.phone,
       avatar: DEFAULT_DOCTOR_USER.avatar,
       role: "doctor",
-      email: "dr.rajesh@medyora.health",
+      email: "doctor@medyora.health",
       medicalRegNo: doctorInfo?.medicalRegNo || DEFAULT_DOCTOR_USER.medicalRegNo,
       speciality: doctorInfo?.speciality || DEFAULT_DOCTOR_USER.speciality,
       clinicName: doctorInfo?.clinicName || DEFAULT_DOCTOR_USER.clinicName,

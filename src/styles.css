@@ -235,11 +235,49 @@
   -webkit-app-region: no-drag;
 }
 
-/* Smooth scrolling and native touch momentum */
+/* Smooth scrolling, native touch momentum & 60-120fps hardware acceleration */
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
   text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+body {
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+/* Zero tap delay & instant hardware touch response */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[tabindex] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* GPU hardware compositing utility for mobile buttery smoothness */
+@utility gpu-accelerate {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+@utility hardware-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {

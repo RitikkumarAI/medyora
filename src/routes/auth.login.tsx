@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { ArrowLeft, Globe, Stethoscope, User, ShieldCheck, CheckCircle2, Lock, Sparkles } from "lucide-react";
+import { ArrowLeft, Globe, Stethoscope, User, ShieldCheck, CheckCircle2, Lock, Sparkles, KeyRound, Smartphone } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,13 +22,13 @@ export function LoginPage() {
 
   const [activeTab, setActiveTab] = useState<"patient" | "doctor">(search.role || "patient");
 
-  // Patient Login Form State
+  // Patient Login Form State (Clean defaults for testing)
   const [patientPhone, setPatientPhone] = useState("");
 
-  // Doctor Login Form State
-  const [medicalRegNo, setMedicalRegNo] = useState("MCI-74892");
-  const [doctorPhone, setDoctorPhone] = useState("9811122334");
-  const [doctorPin, setDoctorPin] = useState("1234");
+  // Doctor Login Form State (Clean defaults for testing)
+  const [medicalRegNo, setMedicalRegNo] = useState("");
+  const [doctorPhone, setDoctorPhone] = useState("");
+  const [doctorPin, setDoctorPin] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -37,56 +37,56 @@ export function LoginPage() {
     }
   }, [search.role]);
 
+  // Universal Master Testing Bypass for Patient
   const handlePatientSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!patientPhone || patientPhone.length < 10) {
-      toast.error("Please enter a valid 10-digit mobile number");
-      return;
-    }
     setIsSubmitting(true);
+    
+    // Testing mode fallback: accepts any input or defaults to master test phone
+    const effectivePhone = patientPhone.trim() || "9876543210";
+    
     setTimeout(() => {
-      loginAsPatient(patientPhone, "Patient User");
+      loginAsPatient(effectivePhone, "Patient User");
       toast.success("Welcome to Medyora Patient Care");
       setIsSubmitting(false);
-      navigate({ to: "/" });
-    }, 400);
+      navigate({ to: "/patient" });
+    }, 250);
   };
 
+  // Universal Master Testing Bypass for Doctor
   const handleDoctorSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!medicalRegNo) {
-      toast.error("Please enter your Medical Council Registration Number");
-      return;
-    }
-    if (!doctorPhone || doctorPhone.length < 10) {
-      toast.error("Please enter your registered doctor mobile number");
-      return;
-    }
     setIsSubmitting(true);
+
+    // Testing mode fallback: accepts any input or defaults to master test credentials
+    const effectiveRegNo = (medicalRegNo.trim() || "MCI-74892").toUpperCase();
+    const effectivePhone = doctorPhone.trim() || "9876543210";
+    const doctorName = effectiveRegNo ? `Dr. Specialist (${effectiveRegNo})` : "Dr. Verified Medical Officer";
+
     setTimeout(() => {
       loginAsDoctor({
-        name: "Dr. Rajesh Sharma",
-        medicalRegNo: medicalRegNo.toUpperCase(),
-        phone: doctorPhone,
-        speciality: "Senior Cardiologist",
-        clinicName: "Apex Heart & Vascular Clinic",
+        name: doctorName,
+        medicalRegNo: effectiveRegNo,
+        phone: effectivePhone,
+        speciality: "Senior Consultant Specialist",
+        clinicName: "Apex Multi-Speciality Clinic",
       });
-      toast.success("Doctor Credentials Verified! Welcome Dr. Rajesh Sharma");
+      toast.success(`Doctor Console Verified! Welcome ${doctorName}`);
       setIsSubmitting(false);
       navigate({ to: "/doctor" });
-    }, 400);
+    }, 250);
   };
 
-  const handleDemoDoctorLogin = () => {
-    loginAsDoctor({
-      name: "Dr. Rajesh Sharma",
-      medicalRegNo: "MCI-74892",
-      phone: "+91 98111 22334",
-      speciality: "Cardiologist",
-      clinicName: "Apex Heart & Vascular Clinic",
-    });
-    toast.success("Signed in as Dr. Rajesh Sharma (Verified Doctor)");
-    navigate({ to: "/doctor" });
+  const handleFillTestCredentials = () => {
+    if (activeTab === "patient") {
+      setPatientPhone("9876543210");
+      toast.info("Filled Master Test Mobile: 9876543210");
+    } else {
+      setMedicalRegNo("MCI-74892");
+      setDoctorPhone("9876543210");
+      setDoctorPin("1234");
+      toast.info("Filled Master Doctor Credentials: MCI-74892 / 9876543210");
+    }
   };
 
   const toggleLanguage = () => {
@@ -99,7 +99,7 @@ export function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors px-6 py-8">
       {/* Top Header */}
-      <header className="flex items-center justify-between max-w-md mx-auto w-full mb-6">
+      <header className="flex items-center justify-between max-w-md mx-auto w-full mb-5">
         <Button
           variant="ghost"
           size="icon"
@@ -125,7 +125,7 @@ export function LoginPage() {
 
       <div className="flex-1 flex flex-col max-w-md mx-auto w-full">
         {/* Brand Logo & Welcome */}
-        <div className="text-center mb-6 space-y-2">
+        <div className="text-center mb-5 space-y-1.5">
           <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-white dark:bg-slate-800 p-2 shadow-md border border-slate-200/80 dark:border-slate-700 mx-auto">
             <img src="/Logo.webp" alt="Medyora Logo" className="h-full w-full object-contain" />
           </div>
@@ -137,8 +137,28 @@ export function LoginPage() {
           </p>
         </div>
 
+        {/* Universal Testing Mode Active Badge */}
+        <div className="mb-4 p-3 rounded-2xl bg-emerald-50/90 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/80 text-emerald-900 dark:text-emerald-200 text-xs shadow-xs flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <div className="space-y-0.5">
+              <p className="font-extrabold text-[11px]">Testing Mode Active (Auth Bypass)</p>
+              <p className="text-[10px] text-emerald-700 dark:text-emerald-300 font-medium">
+                Test Number: <span className="font-bold">9876543210</span> • OTP/PIN: <span className="font-bold">123456</span>
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleFillTestCredentials}
+            className="px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] shadow-xs shrink-0 transition-colors"
+          >
+            Fill Test Data
+          </button>
+        </div>
+
         {/* Dual Role Gateway Switcher */}
-        <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-slate-200/70 dark:bg-slate-900 border border-slate-300/60 dark:border-slate-800 mb-6">
+        <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-slate-200/70 dark:bg-slate-900 border border-slate-300/60 dark:border-slate-800 mb-5">
           <button
             type="button"
             onClick={() => setActiveTab("patient")}
@@ -168,7 +188,7 @@ export function LoginPage() {
 
         {/* ================= PATIENT LOGIN GATEWAY ================= */}
         {activeTab === "patient" && (
-          <form onSubmit={handlePatientSubmit} className="space-y-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          <form onSubmit={handlePatientSubmit} className="space-y-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
             <div className="space-y-1">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">Patient Login</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -188,12 +208,11 @@ export function LoginPage() {
                   </div>
                   <Input
                     type="tel"
-                    placeholder="Enter 10-digit phone"
+                    placeholder="e.g. 9876543210 (or any number)"
                     className="h-12 rounded-xl text-sm font-semibold border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-blue-600"
                     value={patientPhone}
                     onChange={(e) => setPatientPhone(e.target.value)}
                     maxLength={10}
-                    required
                   />
                 </div>
               </div>
@@ -224,7 +243,7 @@ export function LoginPage() {
                   onClick={() => {
                     loginAsPatient("9876543210", "Google User");
                     toast.success("Signed in with Google");
-                    navigate({ to: "/" });
+                    navigate({ to: "/patient" });
                   }}
                   variant="outline"
                   className="h-11 rounded-xl font-bold border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs"
@@ -237,7 +256,7 @@ export function LoginPage() {
                   onClick={() => {
                     loginAsPatient("9876543210", "Apple User");
                     toast.success("Signed in with Apple");
-                    navigate({ to: "/" });
+                    navigate({ to: "/patient" });
                   }}
                   variant="outline"
                   className="h-11 rounded-xl font-bold border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs"
@@ -252,13 +271,13 @@ export function LoginPage() {
 
         {/* ================= DOCTOR & CLINIC GATEWAY ================= */}
         {activeTab === "doctor" && (
-          <form onSubmit={handleDoctorSubmit} className="space-y-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-blue-600/30 dark:border-blue-500/30 shadow-md">
+          <form onSubmit={handleDoctorSubmit} className="space-y-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-blue-600/30 dark:border-blue-500/30 shadow-md">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg font-bold text-slate-900 dark:text-white">Doctor Console Login</h2>
                   <span className="text-[10px] font-extrabold uppercase bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded-full">
-                    Verified
+                    Verified Portal
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -275,11 +294,10 @@ export function LoginPage() {
                 </label>
                 <Input
                   type="text"
-                  placeholder="e.g. MCI-74892 or DMC-28491"
+                  placeholder="e.g. MCI-74892 (or any ID)"
                   className="h-11 rounded-xl text-xs font-mono font-bold uppercase border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-blue-600"
                   value={medicalRegNo}
                   onChange={(e) => setMedicalRegNo(e.target.value)}
-                  required
                 />
               </div>
 
@@ -289,12 +307,11 @@ export function LoginPage() {
                 </label>
                 <Input
                   type="tel"
-                  placeholder="10-digit mobile number"
+                  placeholder="e.g. 9876543210 (or any number)"
                   className="h-11 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-blue-600"
                   value={doctorPhone}
                   onChange={(e) => setDoctorPhone(e.target.value)}
                   maxLength={10}
-                  required
                 />
               </div>
 
@@ -310,7 +327,6 @@ export function LoginPage() {
                   value={doctorPin}
                   onChange={(e) => setDoctorPin(e.target.value)}
                   maxLength={6}
-                  required
                 />
               </div>
 
@@ -321,16 +337,6 @@ export function LoginPage() {
               >
                 {isSubmitting ? "Verifying..." : "Verify & Launch Doctor Console"}
               </Button>
-
-              {/* 1-Click Demo Login Shortcut */}
-              <button
-                type="button"
-                onClick={handleDemoDoctorLogin}
-                className="w-full py-2.5 px-3 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center gap-2 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                <span>1-Click Sign In as Dr. Rajesh Sharma (MD)</span>
-              </button>
             </div>
           </form>
         )}

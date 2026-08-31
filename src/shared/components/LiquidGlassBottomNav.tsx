@@ -21,7 +21,7 @@ export function LiquidGlassBottomNav({ items, className }: LiquidGlassBottomNavP
   return (
     <nav
       className={cn(
-        "lg:hidden fixed bottom-4 inset-x-3 sm:inset-x-6 max-w-[430px] mx-auto z-50 pointer-events-auto select-none",
+        "lg:hidden fixed bottom-4 inset-x-3 sm:inset-x-6 max-w-[430px] mx-auto z-50 pointer-events-auto select-none gpu-accelerate",
         className
       )}
       role="navigation"
@@ -30,14 +30,14 @@ export function LiquidGlassBottomNav({ items, className }: LiquidGlassBottomNavP
       {/* Ambient Prismatic Refraction Aura (Liquid Glass dispersion glow underneath) */}
       <div 
         aria-hidden="true"
-        className="absolute -inset-1 rounded-[36px] bg-gradient-to-r from-pink-400/25 via-sky-400/25 to-purple-400/25 blur-xl opacity-80 dark:opacity-40 pointer-events-none transition-all duration-500"
+        className="absolute -inset-1 rounded-[36px] bg-gradient-to-r from-pink-400/20 via-sky-400/20 to-purple-400/20 blur-lg opacity-70 dark:opacity-30 pointer-events-none transition-all duration-300 transform-gpu"
       />
 
       {/* Outer Chromatic Iridescent Border Layer */}
-      <div className="relative p-[1.5px] rounded-[32px] bg-gradient-to-r from-pink-300/80 via-sky-300/85 via-indigo-300/80 to-purple-300/80 dark:from-pink-500/40 dark:via-sky-400/50 dark:to-purple-500/40 shadow-[0_20px_50px_rgba(15,23,42,0.16),0_6px_20px_rgba(37,99,235,0.1)] dark:shadow-[0_24px_50px_rgba(0,0,0,0.65)]">
+      <div className="relative p-[1.5px] rounded-[32px] bg-gradient-to-r from-pink-300/80 via-sky-300/85 via-indigo-300/80 to-purple-300/80 dark:from-pink-500/40 dark:via-sky-400/50 dark:to-purple-500/40 shadow-[0_20px_50px_rgba(15,23,42,0.16),0_6px_20px_rgba(37,99,235,0.1)] dark:shadow-[0_24px_50px_rgba(0,0,0,0.65)] transform-gpu">
         
         {/* Inner Ultra-Transparent Liquid Glass Body */}
-        <div className="relative flex items-center justify-around h-[70px] p-1.5 rounded-[30.5px] bg-white/35 dark:bg-slate-900/40 backdrop-blur-[24px] backdrop-saturate-[190%] backdrop-contrast-[110%] shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(147,197,253,0.35)] dark:shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),inset_0_-1.5px_2px_rgba(168,85,247,0.25)] overflow-hidden">
+        <div className="relative flex items-center justify-around h-[70px] p-1.5 rounded-[30.5px] bg-white/75 dark:bg-slate-900/80 backdrop-blur-md shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(147,197,253,0.35)] dark:shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),inset_0_-1.5px_2px_rgba(168,85,247,0.25)] overflow-hidden transform-gpu">
           
           {/* Top Specular Glare (Glass refraction lens highlight) */}
           <div 

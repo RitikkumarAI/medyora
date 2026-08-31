@@ -65,15 +65,15 @@ export function DoctorLayout() {
             <Button
               onClick={() => {
                 loginAsDoctor({
-                  name: "Dr. Rajesh Sharma",
+                  name: "Dr. Medical Specialist",
                   medicalRegNo: "MCI-74892",
-                  speciality: "Senior Cardiologist",
+                  speciality: "Senior Consultant Specialist",
                 });
-                toast.success("Authenticated as Dr. Rajesh Sharma");
+                toast.success("Doctor Console Activated (Testing Mode)");
               }}
               className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-600/20"
             >
-              Sign In as Dr. Rajesh Sharma (1-Click)
+              Enter Doctor Console (Testing Mode)
             </Button>
 
             <Button
@@ -82,7 +82,7 @@ export function DoctorLayout() {
               className="w-full h-12 rounded-xl border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs"
             >
               <Link to="/auth/login" search={{ role: "doctor" }}>
-                Enter Medical Reg. No. & PIN
+                Enter Custom Doctor Reg. No. & PIN
               </Link>
             </Button>
 
@@ -91,9 +91,9 @@ export function DoctorLayout() {
               variant="ghost"
               className="w-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white"
             >
-              <Link to="/">
+              <Link to="/patient">
                 <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
-                Back to Patient Website
+                Back to Patient Portal
               </Link>
             </Button>
           </div>
@@ -144,11 +144,11 @@ export function DoctorLayout() {
               />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1">
-                  <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.name || "Dr. Rajesh Sharma"}</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.name || "Dr. Medical Specialist"}</p>
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                 </div>
                 <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold truncate">
-                  {user?.speciality || "Senior Cardiologist"}
+                  {user?.speciality || "Consultant Specialist"}
                 </p>
                 <p className="text-[9px] text-slate-400 font-mono truncate">
                   Reg: {user?.medicalRegNo || "MCI-74892"}

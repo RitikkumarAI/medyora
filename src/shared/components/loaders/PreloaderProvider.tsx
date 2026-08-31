@@ -8,11 +8,24 @@ interface PreloaderContextType {
 const PreloaderContext = createContext<PreloaderContextType | null>(null);
 
 export function PreloaderProvider({ children }: { children: React.ReactNode }) {
-  // Always trigger loading screen on initial mount / page load
-  const [isVisible, setIsVisible] = useState(true);
+  // Only trigger preloader on the very first visit in a session to keep navigation snappy & instant
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      const seen = window.sessionStorage.getItem("medyora_preloader_seen");
+      return !seen;
+    } catch {
+      return false;
+    }
+  });
 
   const hidePreloader = useCallback(() => {
     setIsVisible(false);
+    try {
+      window.sessionStorage.setItem("medyora_preloader_seen", "true");
+    } catch {
+      // safe fallback
+    }
   }, []);
 
   return (

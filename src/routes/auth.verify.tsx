@@ -3,6 +3,8 @@ import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-r
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/shared/auth/useAuth";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth/verify")({
   validateSearch: (search: Record<string, unknown>): { to?: string | undefined } => ({
@@ -14,10 +16,11 @@ export const Route = createFileRoute("/auth/verify")({
 function VerifyPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { loginAsPatient, loginAsDoctor } = useAuth();
   const search = Route.useSearch();
-  const phone = search?.to || "9999999991"; // Default patient testing number
+  const phone = search?.to || "9876543210"; // Default master test phone
   
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["1", "2", "3", "4", "5", "6"]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (index: number, value: string) => {
@@ -35,10 +38,14 @@ function VerifyPage() {
   };
 
   const verifyOtp = () => {
-    // Role-based routing simulation
-    if (phone === "9999999992") {
+    // Testing mode bypass
+    if (phone === "9999999992" || phone === "doctor") {
+      loginAsDoctor({ name: "Dr. Verified Specialist", phone: `+91 ${phone}` });
+      toast.success("Doctor Credentials Verified! Welcome Doctor");
       navigate({ to: "/doctor" });
     } else {
+      loginAsPatient(phone, "Patient User");
+      toast.success("OTP Verified! Welcome to Medyora");
       navigate({ to: "/patient" }); 
     }
   };
