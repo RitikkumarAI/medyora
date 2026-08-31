@@ -429,7 +429,7 @@ export function GlobalAICopilot() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94 }}
             onClick={() => setIsOpen(true)}
-            className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white font-bold text-xs shadow-xl shadow-blue-600/35 border border-white/20 hover:shadow-2xl transition-all"
+            className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full bg-white/20 dark:bg-slate-800/30 backdrop-blur-xl text-slate-800 dark:text-white font-bold text-xs shadow-[0_8px_32px_0_rgba(37,99,235,0.15)] border border-white/50 dark:border-white/10 hover:shadow-2xl hover:bg-white/30 dark:hover:bg-slate-800/40 transition-all"
             aria-label="Open Care AI Copilot"
           >
             {/* Animated Glowing Pulse */}
@@ -438,12 +438,12 @@ export function GlobalAICopilot() {
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
             </span>
 
-            <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-xs">
-              <Sparkles className="h-3.5 w-3.5 text-white animate-pulse" />
+            <div className="h-6 w-6 rounded-full bg-blue-500/10 dark:bg-white/20 flex items-center justify-center backdrop-blur-xs">
+              <Sparkles className="h-3.5 w-3.5 text-blue-600 dark:text-white animate-pulse" />
             </div>
             <span className="hidden sm:inline font-extrabold tracking-wide">Ask Care AI</span>
             <span className="sm:hidden font-extrabold">Care AI</span>
-            <span className="bg-white/20 text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-slate-200 dark:bg-slate-700 text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider text-slate-700 dark:text-slate-200">
               24/7
             </span>
           </motion.button>
