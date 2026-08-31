@@ -33,7 +33,6 @@ export function SiteHeader() {
     { to: "/patient/care-ai", label: "Care AI ✨" },
     { to: "/patient/feed", label: "Health Feed" },
     { to: "/patient/family", label: t("nav.health_records") },
-    { to: "/doctor", label: t("nav.for_doctors") },
   ];
 
   return (

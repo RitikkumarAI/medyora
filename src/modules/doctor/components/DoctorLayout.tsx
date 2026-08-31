@@ -1,14 +1,16 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, Outlet, useRouterState, useNavigate } from "@tanstack/react-router";
 import { 
   LayoutDashboard, Calendar, Users, Settings, Activity, 
   FileText, Star, TrendingUp, Stethoscope, ChevronRight, 
-  Shield, LogOut, Search
+  ShieldCheck, LogOut, Search, Lock, ArrowLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/shared/components/Logo";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/shared/theme/ThemeToggle";
 import { platform } from "@/shared/native/platform";
+import { useAuth } from "@/shared/auth/useAuth";
+import { toast } from "sonner";
 
 const DOCTOR_SIDEBAR_NAV = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/doctor" },
@@ -24,10 +26,81 @@ const DOCTOR_SIDEBAR_NAV = [
 export function DoctorLayout() {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const navigate = useNavigate();
+  const { user, isDoctor, logout, loginAsDoctor } = useAuth();
 
   const handleOpenCommandPalette = () => {
     window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
+
+  const handleDoctorLogout = () => {
+    logout();
+    toast.success("Doctor session logged out safely");
+    navigate({ to: "/auth/login", search: { role: "doctor" } });
+  };
+
+  // If user is not logged in as doctor, display secure clinical barrier
+  if (!isDoctor) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col items-center justify-center p-6 transition-colors">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl text-center space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-xs">
+            <Lock className="w-8 h-8" />
+          </div>
+
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-400 text-xs font-bold">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Doctor Verification Required</span>
+            </div>
+            <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              Doctor & Clinic Portal
+            </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+              This area is restricted to verified medical specialists and clinic staff for patient queue telemetry and prescription authoring.
+            </p>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <Button
+              onClick={() => {
+                loginAsDoctor({
+                  name: "Dr. Rajesh Sharma",
+                  medicalRegNo: "MCI-74892",
+                  speciality: "Senior Cardiologist",
+                });
+                toast.success("Authenticated as Dr. Rajesh Sharma");
+              }}
+              className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-600/20"
+            >
+              Sign In as Dr. Rajesh Sharma (1-Click)
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className="w-full h-12 rounded-xl border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs"
+            >
+              <Link to="/auth/login" search={{ role: "doctor" }}>
+                Enter Medical Reg. No. & PIN
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="ghost"
+              className="w-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            >
+              <Link to="/">
+                <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
+                Back to Patient Website
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
@@ -35,7 +108,7 @@ export function DoctorLayout() {
       {/* ================= DESKTOP DOCTOR SHELL (>= md) ================= */}
       <div className="hidden md:flex min-h-screen">
         
-        {/* Left Sidebar (Screen 11) */}
+        {/* Left Sidebar */}
         <aside className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800 p-5 flex flex-col justify-between shrink-0 sticky top-0 h-screen overflow-y-auto" role="navigation" aria-label="Doctor Practice Navigation">
           <div className="space-y-4">
             <div className="px-2 flex items-center justify-between">
@@ -55,27 +128,35 @@ export function DoctorLayout() {
             >
               <span className="flex items-center gap-2">
                 <Search className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-                Command Menu
+                Clinical Search
               </span>
               <kbd className="text-[10px] bg-white dark:bg-slate-700 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600">
                 {platform.isMacOS ? "⌘K" : "Ctrl+K"}
               </kbd>
             </button>
 
-            {/* Doctor mini profile */}
-            <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center gap-3">
+            {/* Authenticated Doctor Profile Card */}
+            <div className="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-200/60 dark:border-slate-800 flex items-center gap-3">
               <img
-                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80"
-                alt="Dr. Rajesh Sharma"
-                className="h-10 w-10 rounded-xl object-cover border border-slate-200 dark:border-slate-700"
+                src={user?.avatar || "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80"}
+                alt={user?.name || "Doctor"}
+                className="h-10 w-10 rounded-xl object-cover border border-blue-200 dark:border-blue-700"
               />
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">Dr. Rajesh Sharma</p>
-                <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold truncate">Cardiologist</p>
+                <div className="flex items-center gap-1">
+                  <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.name || "Dr. Rajesh Sharma"}</p>
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                </div>
+                <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold truncate">
+                  {user?.speciality || "Senior Cardiologist"}
+                </p>
+                <p className="text-[9px] text-slate-400 font-mono truncate">
+                  Reg: {user?.medicalRegNo || "MCI-74892"}
+                </p>
               </div>
             </div>
 
-            {/* Navigation links */}
+            {/* Clinical Navigation links */}
             <nav className="space-y-1">
               {DOCTOR_SIDEBAR_NAV.map((item) => {
                 const isActive = currentPath === item.to || (item.to !== "/doctor" && currentPath.startsWith(item.to));
@@ -98,16 +179,17 @@ export function DoctorLayout() {
             </nav>
           </div>
 
-          {/* Quick links to Patient Portal & Admin */}
+          {/* Doctor Logout & Safe Exit */}
           <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-            <div className="grid grid-cols-2 gap-1.5">
-              <Button asChild variant="outline" size="sm" className="h-8 text-[10px] font-bold rounded-xl border-slate-200 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-200">
-                <Link to="/patient">Patient App</Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="h-8 text-[10px] font-bold rounded-xl border-slate-200 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-200">
-                <Link to="/admin">Admin</Link>
-              </Button>
-            </div>
+            <Button
+              onClick={handleDoctorLogout}
+              variant="outline"
+              size="sm"
+              className="w-full h-9 text-xs font-bold rounded-xl border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center gap-2"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Log Out Doctor Console</span>
+            </Button>
           </div>
         </aside>
 
@@ -119,6 +201,24 @@ export function DoctorLayout() {
 
       {/* ================= MOBILE DOCTOR SHELL (< md) ================= */}
       <div className="flex md:hidden flex-col min-h-screen">
+        <header className="p-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between sticky top-0 z-40">
+          <div className="flex items-center gap-2">
+            <Logo />
+            <span className="text-[10px] font-black uppercase bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded-md">
+              Doctor
+            </span>
+          </div>
+          <Button
+            onClick={handleDoctorLogout}
+            variant="ghost"
+            size="sm"
+            className="h-8 px-2 text-[10px] font-bold text-rose-600"
+          >
+            <LogOut className="w-3.5 h-3.5 mr-1" />
+            Exit
+          </Button>
+        </header>
+
         <main id="main-content" tabIndex={-1} className="flex-1 overflow-y-auto pb-24 focus:outline-none">
           <Outlet />
         </main>
