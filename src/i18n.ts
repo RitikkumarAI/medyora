@@ -689,8 +689,15 @@ const resources = {
   },
 };
 
-// Auto-detect language from localStorage if present
-const savedLang = typeof window !== 'undefined' ? localStorage.getItem('medyora_lang') || 'en' : 'en';
+// Auto-detect language safely
+let savedLang = 'en';
+if (typeof window !== 'undefined') {
+  try {
+    savedLang = localStorage.getItem('medyora_lang') || 'en';
+  } catch {
+    savedLang = 'en';
+  }
+}
 
 // Set document direction and lang attribute initially
 if (typeof document !== 'undefined') {
@@ -713,7 +720,11 @@ i18n
 export function changeAppLanguage(code: string) {
   i18n.changeLanguage(code);
   if (typeof window !== 'undefined') {
-    localStorage.setItem('medyora_lang', code);
+    try {
+      localStorage.setItem('medyora_lang', code);
+    } catch {
+      // Ignored: Storage access denied
+    }
     const isRtl = RTL_LANGUAGES.includes(code as (typeof RTL_LANGUAGES)[number]);
     document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     document.documentElement.lang = code;

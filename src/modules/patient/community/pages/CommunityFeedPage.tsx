@@ -60,7 +60,7 @@ export function CommunityFeedPage() {
     doctorName: "Dr. Rajesh Sharma",
     doctorRole: "Senior Cardiologist",
     doctorAvatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
-    image: "/specialities/heart_specialist.svg",
+    image: "/specialities/heart_specialist.webp",
     summary: "",
     keyTakeaway1: "",
     keyTakeaway2: "",
@@ -136,7 +136,7 @@ export function CommunityFeedPage() {
       summary: publishForm.summary.trim(),
       category: publishForm.category,
       readTime: publishForm.readTime || "5 min",
-      image: publishForm.image || "/specialities/general_physician.jpg",
+      image: publishForm.image || "/specialities/general_physician.webp",
       author: {
         name: publishForm.doctorName,
         role: publishForm.doctorRole,
@@ -166,7 +166,7 @@ export function CommunityFeedPage() {
       doctorName: "Dr. Rajesh Sharma",
       doctorRole: "Senior Cardiologist",
       doctorAvatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
-      image: "/specialities/heart_specialist.svg",
+      image: "/specialities/heart_specialist.webp",
       summary: "",
       keyTakeaway1: "",
       keyTakeaway2: "",
@@ -498,7 +498,9 @@ export function CommunityFeedPage() {
                               {article.author.name}
                             </span>
                             {article.author.verified !== false && (
-                              <ShieldCheck className="h-4 w-4 text-blue-600 shrink-0" title="Verified Medical Doctor" />
+                              <span title="Verified Medical Doctor">
+                                <ShieldCheck className="h-4 w-4 text-blue-600 shrink-0" />
+                              </span>
                             )}
                           </div>
                           <p className="text-[11px] text-slate-500 font-medium">

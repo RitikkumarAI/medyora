@@ -20,8 +20,8 @@ export function SubscriptionsPage() {
     }, 1200);
   };
 
-  const primaryPlan = SUBSCRIPTION_PLANS[0]; // Medyora Care Plan
-  const plusPlan = SUBSCRIPTION_PLANS[1]; // Medyora PLUS
+  const primaryPlan = SUBSCRIPTION_PLANS[0]!; // Medyora Care Plan
+  const plusPlan = SUBSCRIPTION_PLANS[1]!; // Medyora PLUS
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors">

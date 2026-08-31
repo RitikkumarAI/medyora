@@ -69,7 +69,11 @@ function read<T>(key: string, fallback: T): T {
 
 function write<T>(key: string, value: T) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(key, JSON.stringify(value));
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Ignored
+  }
   window.dispatchEvent(new CustomEvent(EVENT));
 }
 

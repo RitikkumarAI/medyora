@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { 
   Sparkles, Bot, Send, Mic, MicOff, X, User, Stethoscope, 
   AlertTriangle, ArrowRight, RefreshCw, Volume2, VolumeX, ShieldCheck, 
@@ -38,6 +38,8 @@ type ActiveViewMode = "chat" | "symptom_checker" | "image_analyzer" | "lab_analy
 export function GlobalAICopilot() {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAuthOrOnboarding = pathname === "/" || pathname.startsWith("/auth");
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [activeTab, setActiveTab] = useState<ActiveViewMode>("chat");
@@ -105,10 +107,11 @@ export function GlobalAICopilot() {
 
     // Load saved sessions from storage
     const saved = loadSavedSessions();
-    if (saved.length > 0) {
+    const firstSaved = saved[0];
+    if (firstSaved) {
       setSessions(saved);
-      setCurrentSessionId(saved[0].id);
-      setMessages(saved[0].messages);
+      setCurrentSessionId(firstSaved.id);
+      setMessages(firstSaved.messages);
     } else {
       startNewSession();
     }
@@ -210,9 +213,10 @@ export function GlobalAICopilot() {
     setSessions(filtered);
     saveSessions(filtered);
     if (currentSessionId === sessionId) {
-      if (filtered.length > 0) {
-        setCurrentSessionId(filtered[0].id);
-        setMessages(filtered[0].messages);
+      const firstFiltered = filtered[0];
+      if (firstFiltered) {
+        setCurrentSessionId(firstFiltered.id);
+        setMessages(firstFiltered.messages);
       } else {
         startNewSession();
       }
@@ -418,9 +422,9 @@ export function GlobalAICopilot() {
 
   return (
     <>
-      {/* ================= 1. GLOBAL FLOATING AI TRIGGER BUTTON (Visible when user has account/logged in) ================= */}
-      {isLoggedIn && (
-        <div className="fixed bottom-20 md:bottom-6 right-5 z-40 flex items-center gap-2">
+      {/* ================= 1. GLOBAL FLOATING AI TRIGGER BUTTON (Visible only when logged in and inside main app) ================= */}
+      {isLoggedIn && !isAuthOrOnboarding && (
+        <div className="fixed bottom-24 md:bottom-6 right-5 z-40 flex items-center gap-2">
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94 }}

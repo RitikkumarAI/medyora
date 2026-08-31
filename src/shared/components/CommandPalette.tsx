@@ -209,8 +209,8 @@ export function CommandPalette() {
               className="rounded-xl cursor-pointer"
             >
               <Heart className="mr-2 h-4 w-4 text-rose-500" />
-              <span>{doc.name}</span>
-              <span className="ml-2 text-xs text-muted-foreground">({doc.specialty})</span>
+              <span>{doc.fullName || doc.name}</span>
+              <span className="ml-2 text-xs text-muted-foreground">({doc.speciality})</span>
             </CommandItem>
           ))}
         </CommandGroup>

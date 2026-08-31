@@ -24,7 +24,7 @@ export function MedicalSchema({
     "@type": "MedicalOrganization",
     name: "Medyora",
     url: "https://medyora.com",
-    logo: "https://medyora.com/Logo.png",
+    logo: "https://medyora.com/Logo.webp",
     description:
       "Enterprise healthcare platform for instant doctor discovery, verified booking, and real-time clinic queue management.",
     telephone: "+91-800-MEDYORA",

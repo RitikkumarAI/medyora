@@ -15,8 +15,8 @@ export function useNetworkStatus() {
 
   const [networkInfo, setNetworkInfo] = useState<{
     effectiveType: string;
-    downlink?: number;
-    rtt?: number;
+    downlink?: number | undefined;
+    rtt?: number | undefined;
   }>({
     effectiveType: "4g",
   });

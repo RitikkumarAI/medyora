@@ -320,6 +320,8 @@ export const MEDICINE_CATEGORIES = [
   { id: "diabetes", name: "Diabetes", icon: "Activity", color: "from-cyan-500 to-blue-500" },
 ];
 
+export const MEDICINES_DATA = MEDICINES;
+
 // ================= 3. SUBSCRIPTION PLANS (CARE & PLUS) =================
 export interface SubscriptionPlan {
   id: string;
@@ -582,6 +584,7 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
 // ================= 6. VIDEO CONSULTATIONS =================
 export interface VideoConsultation {
   id: string;
+  doctorId?: string | undefined;
   doctorName: string;
   speciality: string;
   qualification: string;
@@ -591,6 +594,8 @@ export interface VideoConsultation {
   status: "upcoming" | "completed" | "cancelled";
   meetingId: string;
   hasPrescription: boolean;
+  prescriptionAvailable?: boolean | undefined;
+  roomUrl?: string | undefined;
   fee: number;
 }
 

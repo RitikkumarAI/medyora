@@ -106,7 +106,7 @@ export function SurgeriesPage() {
                   </h3>
                   <Button
                     onClick={() => {
-                      setSelectedSurgery(SURGERIES[0]);
+                      setSelectedSurgery(SURGERIES[0] || null);
                       setIsEstimateModalOpen(true);
                     }}
                     className="w-full h-11 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs shadow-lg shadow-blue-600/40"

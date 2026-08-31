@@ -89,7 +89,7 @@ export function PatientAppointments() {
             </div>
           </div>
           <Button asChild size="sm" className="h-8 px-3 rounded-xl bg-white text-blue-800 hover:bg-blue-50 font-black text-xs shrink-0 shadow-xs">
-            <Link to="/booking/dr-rajesh-sharma">
+            <Link to="/booking/$doctorId" params={{ doctorId: "dr-rajesh-sharma" }}>
               Book (₹0 Fee)
             </Link>
           </Button>

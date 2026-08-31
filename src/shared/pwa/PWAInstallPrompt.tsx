@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Download, X, Smartphone, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePWAInstall } from "./usePWAInstall";
+import { safeSessionStorage } from "@/shared/utils/safeStorage";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function PWAInstallPrompt() {
@@ -9,7 +10,7 @@ export function PWAInstallPrompt() {
   const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
-    const dismissed = sessionStorage.getItem("medyora-pwa-dismissed");
+    const dismissed = safeSessionStorage.getItem("medyora-pwa-dismissed");
     if (dismissed) {
       setIsDismissed(true);
     }
@@ -17,7 +18,7 @@ export function PWAInstallPrompt() {
 
   const handleDismiss = () => {
     setIsDismissed(true);
-    sessionStorage.setItem("medyora-pwa-dismissed", "true");
+    safeSessionStorage.setItem("medyora-pwa-dismissed", "true");
   };
 
   const handleInstall = async () => {

@@ -81,7 +81,11 @@ function read(): AdminState {
 
 function write(next: AdminState) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(KEY, JSON.stringify(next));
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(next));
+  } catch {
+    // Ignored
+  }
   window.dispatchEvent(new CustomEvent(EVENT));
 }
 

@@ -22,14 +22,13 @@ const DEFAULT_USER: AuthUser = {
 };
 
 function getStoredUser(): AuthUser | null {
-  if (typeof window === "undefined") return DEFAULT_USER;
+  if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (!raw) return DEFAULT_USER; // Default authenticated session for testing/demo
-    if (raw === "logged_out") return null;
+    if (!raw || raw === "logged_out") return null;
     return JSON.parse(raw) as AuthUser;
   } catch {
-    return DEFAULT_USER;
+    return null;
   }
 }
 

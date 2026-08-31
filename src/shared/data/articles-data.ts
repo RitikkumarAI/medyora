@@ -1168,12 +1168,26 @@ export function getStoredArticles(): HealthArticle[] {
   }
 }
 
-export function publishNewArticle(newArticle: HealthArticle): void {
-  if (typeof window === "undefined") return;
-  const current = getStoredArticles();
-  const updated = [newArticle, ...current.filter((a) => a.id !== newArticle.id)];
-  localStorage.setItem(ARTICLES_STORAGE_KEY, JSON.stringify(updated));
-  window.dispatchEvent(new CustomEvent("medyora:articles-updated"));
+export function publishNewArticle(
+  newArticle: Omit<HealthArticle, "id" | "publishedDate" | "likes"> & {
+    id?: string;
+    publishedDate?: string;
+    likes?: number;
+  }
+): HealthArticle {
+  const fullArticle: HealthArticle = {
+    ...newArticle,
+    id: newArticle.id || `article-${Date.now()}`,
+    publishedDate: newArticle.publishedDate || "Just now",
+    likes: newArticle.likes ?? 0,
+  };
+  if (typeof window !== "undefined") {
+    const current = getStoredArticles();
+    const updated = [fullArticle, ...current.filter((a) => a.id !== fullArticle.id)];
+    localStorage.setItem(ARTICLES_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent("medyora:articles-updated"));
+  }
+  return fullArticle;
 }
 
 export const HEALTH_ARTICLES_DATA = BASE_HEALTH_ARTICLES;

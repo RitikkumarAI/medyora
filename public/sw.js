@@ -9,8 +9,8 @@ const OFFLINE_FALLBACK_PAGE = "/offline.html";
 
 const PRECACHE_ASSETS = [
   "/",
-  "/favicon.png",
-  "/Logo.png",
+  "/favicon.webp",
+  "/Logo.webp",
   "/manifest.json",
 ];
 
@@ -90,7 +90,7 @@ self.addEventListener("fetch", (event) => {
           .catch(() => {
             // Return empty fallback for missing images if offline
             if (request.destination === "image") {
-              return caches.match("/Logo.png");
+              return caches.match("/Logo.webp");
             }
           });
       })
@@ -168,8 +168,8 @@ self.addEventListener("push", (event) => {
 
   const options = {
     body: data.body,
-    icon: "/Logo.png",
-    badge: "/favicon.png",
+    icon: "/Logo.webp",
+    badge: "/favicon.webp",
     vibrate: [100, 50, 100],
     data: {
       url: data.url || "/patient/queue",

@@ -17,7 +17,11 @@ function read(): Appointment[] {
 
 function write(list: Appointment[]) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(KEY, JSON.stringify(list));
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(list));
+  } catch {
+    // Ignored
+  }
   window.dispatchEvent(new CustomEvent("mediconnect:appointments"));
 }
 

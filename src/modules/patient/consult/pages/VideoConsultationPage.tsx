@@ -95,18 +95,23 @@ export function VideoConsultationPage() {
     toast.success(`Connecting to secure encrypted room with ${consult.doctorName}...`);
   };
 
-  const handleStartInstantConsult = (spec: typeof INSTANT_SPECIALITIES[0]) => {
+  const handleStartInstantConsult = (spec: (typeof INSTANT_SPECIALITIES)[0]) => {
+    if (!spec) return;
     const instantCall: VideoConsultation = {
       id: `instant-${Date.now()}`,
       doctorId: "dr-instant",
       doctorName: spec.doctor,
       doctorImage: spec.image,
       speciality: spec.name,
+      qualification: "Senior Specialist (MD/MS)",
+      fee: spec.price,
+      meetingId: `meet-${Date.now()}`,
+      hasPrescription: false,
       appointmentDate: "Today",
       appointmentTime: "Connecting Now",
       status: "upcoming",
       roomUrl: "https://meet.medyora.live/room-secure",
-      prescriptionAvailable: false
+      prescriptionAvailable: false,
     };
     setActiveCall(instantCall);
     toast.success(`Connecting you to ${spec.doctor}. Please grant camera & microphone access.`);
@@ -174,7 +179,11 @@ export function VideoConsultationPage() {
                     Need quick advice for fever, cough, or stomach issues?
                   </h3>
                   <Button
-                    onClick={() => handleStartInstantConsult(INSTANT_SPECIALITIES[0])}
+                    onClick={() => {
+                      if (INSTANT_SPECIALITIES[0]) {
+                        handleStartInstantConsult(INSTANT_SPECIALITIES[0]);
+                      }
+                    }}
                     className="w-full h-11 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs shadow-lg shadow-blue-600/40"
                   >
                     Start Instant Consultation (₹299) →
@@ -339,7 +348,7 @@ export function VideoConsultationPage() {
                     size="sm"
                     className="h-9 rounded-xl bg-blue-600 font-bold text-xs"
                   >
-                    <Link to="/booking/$doctorId" params={{ doctorId: consult.doctorId }}>Rebook</Link>
+                    <Link to="/booking/$doctorId" params={{ doctorId: consult.doctorId || "dr-1" }}>Rebook</Link>
                   </Button>
                 </div>
               </div>

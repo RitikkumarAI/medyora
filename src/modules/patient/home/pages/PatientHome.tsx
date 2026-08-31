@@ -241,23 +241,25 @@ export function PatientHome() {
 
             <div className="flex gap-2.5 overflow-x-auto no-scrollbar">
               {/* Doctor 1 */}
-              <Link
-                to="/doctors/$doctorId"
-                params={{ doctorId: DOCTORS[0].id }}
-                className="shrink-0 flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs w-64"
-              >
-                <img
-                  src={DOCTORS[0].image}
-                  alt={DOCTORS[0].fullName}
-                  className="h-11 w-11 rounded-xl object-cover"
-                />
-                <div className="min-w-0 flex-1">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                    {DOCTORS[0].fullName}
-                  </h4>
-                  <p className="text-[11px] text-slate-400 truncate">{DOCTORS[0].speciality}</p>
-                </div>
-              </Link>
+              {DOCTORS[0] && (
+                <Link
+                  to="/doctors/$doctorId"
+                  params={{ doctorId: DOCTORS[0].id }}
+                  className="shrink-0 flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs w-64"
+                >
+                  <img
+                    src={DOCTORS[0].image}
+                    alt={DOCTORS[0].fullName}
+                    className="h-11 w-11 rounded-xl object-cover"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                      {DOCTORS[0].fullName}
+                    </h4>
+                    <p className="text-[11px] text-slate-400 truncate">{DOCTORS[0].speciality}</p>
+                  </div>
+                </Link>
+              )}
 
               {/* Hospital */}
               <Link
@@ -279,58 +281,60 @@ export function PatientHome() {
           </section>
 
           {/* ================= 4. PROMO HERO BANNER SLIDER (SCREEN 1) ================= */}
-          <section className="relative">
-            <div className="overflow-hidden rounded-3xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={banners[activeBannerIndex].id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className={`p-5 rounded-3xl bg-gradient-to-r ${banners[activeBannerIndex].bgGradient} text-white relative overflow-hidden shadow-lg`}
-                >
-                  <div className="max-w-[65%] space-y-2">
-                    <span className="inline-block text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
-                      {banners[activeBannerIndex].tag}
-                    </span>
-                    <h3 className="font-bold text-base leading-tight">
-                      {banners[activeBannerIndex].title}
-                    </h3>
-                    <Button
-                      asChild
-                      size="sm"
-                      className="h-8 text-xs font-bold bg-white hover:bg-slate-100 text-slate-900 rounded-xl px-3.5 shadow-sm"
-                    >
-                      <Link to={banners[activeBannerIndex].link}>
-                        {banners[activeBannerIndex].cta}
-                      </Link>
-                    </Button>
-                  </div>
+          {banners[activeBannerIndex] && (
+            <section className="relative">
+              <div className="overflow-hidden rounded-3xl">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={banners[activeBannerIndex]!.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className={`p-5 rounded-3xl bg-gradient-to-r ${banners[activeBannerIndex]!.bgGradient} text-white relative overflow-hidden shadow-lg`}
+                  >
+                    <div className="max-w-[65%] space-y-2">
+                      <span className="inline-block text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
+                        {banners[activeBannerIndex]!.tag}
+                      </span>
+                      <h3 className="font-bold text-base leading-tight">
+                        {banners[activeBannerIndex]!.title}
+                      </h3>
+                      <Button
+                        asChild
+                        size="sm"
+                        className="h-8 text-xs font-bold bg-white hover:bg-slate-100 text-slate-900 rounded-xl px-3.5 shadow-sm"
+                      >
+                        <Link to={banners[activeBannerIndex]!.link}>
+                          {banners[activeBannerIndex]!.cta}
+                        </Link>
+                      </Button>
+                    </div>
 
-                  <img
-                    src={banners[activeBannerIndex].image}
-                    alt="Promo"
-                    className="absolute right-0 bottom-0 top-0 w-36 h-full object-cover opacity-85 mix-blend-luminosity"
+                    <img
+                      src={banners[activeBannerIndex]!.image}
+                      alt="Promo"
+                      className="absolute right-0 bottom-0 top-0 w-36 h-full object-cover opacity-85 mix-blend-luminosity"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Slider Dots */}
+              <div className="flex justify-center gap-1.5 mt-2.5">
+                {banners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveBannerIndex(idx)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      activeBannerIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-slate-300 dark:bg-slate-700"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
                   />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Slider Dots */}
-            <div className="flex justify-center gap-1.5 mt-2.5">
-              {banners.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveBannerIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    idx === activeBannerIndex ? "w-6 bg-blue-600" : "w-1.5 bg-slate-300 dark:bg-slate-700"
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* ================= 5. FIND DOCTORS BY SPECIALITY (PRACTO STYLE TABS) ================= */}
           <section className="space-y-3.5">
@@ -469,44 +473,46 @@ export function PatientHome() {
               </Link>
             </div>
 
-            <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
-                  Answered
-                </span>
-              </div>
-
-              <p className="text-xs font-bold text-slate-900 dark:text-white leading-relaxed">
-                {featuredQuestion.question}
-              </p>
-
-              {featuredQuestion.doctorAnswer && (
-                <div className="flex items-center gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <img
-                    src={featuredQuestion.doctorAnswer.avatar}
-                    alt={featuredQuestion.doctorAnswer.doctorName}
-                    className="h-8 w-8 rounded-full object-cover"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1">
-                      <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
-                        {featuredQuestion.doctorAnswer.doctorName}
-                      </p>
-                      <CheckCircle2 className="h-3 w-3 text-blue-600 shrink-0" />
-                    </div>
-                    <p className="text-[10px] text-slate-400 truncate">
-                      {featuredQuestion.doctorAnswer.speciality}
-                    </p>
-                  </div>
+            {featuredQuestion && (
+              <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
+                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
+                    Answered
+                  </span>
                 </div>
-              )}
 
-              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-400">
-                <span>👁️ {featuredQuestion.viewsCount} views</span>
-                <span>💬 {featuredQuestion.commentsCount} comments</span>
+                <p className="text-xs font-bold text-slate-900 dark:text-white leading-relaxed">
+                  {featuredQuestion.question}
+                </p>
+
+                {featuredQuestion.doctorAnswer && (
+                  <div className="flex items-center gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <img
+                      src={featuredQuestion.doctorAnswer.avatar}
+                      alt={featuredQuestion.doctorAnswer.doctorName}
+                      className="h-8 w-8 rounded-full object-cover"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1">
+                        <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                          {featuredQuestion.doctorAnswer.doctorName}
+                        </p>
+                        <CheckCircle2 className="h-3 w-3 text-blue-600 shrink-0" />
+                      </div>
+                      <p className="text-[10px] text-slate-400 truncate">
+                        {featuredQuestion.doctorAnswer.speciality}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between pt-2 text-[11px] text-slate-400">
+                  <span>👁️ {featuredQuestion.viewsCount} views</span>
+                  <span>💬 {featuredQuestion.commentsCount} comments</span>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* "Got a health query?" CTA Card */}
             <Link

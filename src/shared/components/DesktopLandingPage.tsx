@@ -205,7 +205,7 @@ export function DesktopLandingPage() {
               className="relative w-full max-w-[620px] rounded-[36px] overflow-hidden border-2 border-white/40 dark:border-slate-800 shadow-[0_25px_60px_rgba(0,0,0,0.15)] bg-white dark:bg-slate-900"
             >
               <img
-                src="/hero-family.jpg"
+                src="/hero-family.webp"
                 alt="Happy Family Using Medyora"
                 className="w-full h-auto object-cover object-center aspect-[4/3]"
               />

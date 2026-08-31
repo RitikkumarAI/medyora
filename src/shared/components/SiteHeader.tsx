@@ -9,7 +9,6 @@ import { ThemeToggle } from "@/shared/theme/ThemeToggle";
 import { platform } from "@/shared/native/platform";
 import { useAuth } from "@/shared/auth/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
-
 export function SiteHeader() {
   const { t, i18n } = useTranslation();
   const { user, isLoggedIn } = useAuth();

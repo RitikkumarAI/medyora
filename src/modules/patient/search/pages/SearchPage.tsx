@@ -220,44 +220,46 @@ export function SearchPage() {
                 </Link>
               </div>
 
-              <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
-                    Answered
-                  </span>
-                </div>
-
-                <p className="text-xs font-bold text-slate-900 dark:text-white leading-relaxed">
-                  {featuredQuestion.question}
-                </p>
-
-                {featuredQuestion.doctorAnswer && (
-                  <div className="flex items-center gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <img
-                      src={featuredQuestion.doctorAnswer.avatar}
-                      alt={featuredQuestion.doctorAnswer.doctorName}
-                      className="h-8 w-8 rounded-full object-cover"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1">
-                        <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
-                          {featuredQuestion.doctorAnswer.doctorName}
-                        </p>
-                        <CheckCircle2 className="h-3 w-3 text-blue-600 shrink-0" />
-                      </div>
-                      <p className="text-[10px] text-slate-400 truncate">
-                        {featuredQuestion.doctorAnswer.speciality}
-                      </p>
-                    </div>
+              {featuredQuestion && (
+                <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
+                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
+                      Answered
+                    </span>
                   </div>
-                )}
 
-                <div className="flex items-center justify-between pt-2 text-[11px] text-slate-400">
-                  <span>👁️ {featuredQuestion.viewsCount} views</span>
-                  <span>💬 {featuredQuestion.commentsCount} comments</span>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white leading-relaxed">
+                    {featuredQuestion.question}
+                  </p>
+
+                  {featuredQuestion.doctorAnswer && (
+                    <div className="flex items-center gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                      <img
+                        src={featuredQuestion.doctorAnswer.avatar}
+                        alt={featuredQuestion.doctorAnswer.doctorName}
+                        className="h-8 w-8 rounded-full object-cover"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1">
+                          <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                            {featuredQuestion.doctorAnswer.doctorName}
+                          </p>
+                          <CheckCircle2 className="h-3 w-3 text-blue-600 shrink-0" />
+                        </div>
+                        <p className="text-[10px] text-slate-400 truncate">
+                          {featuredQuestion.doctorAnswer.speciality}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between pt-2 text-[11px] text-slate-400">
+                    <span>👁️ {featuredQuestion.viewsCount} views</span>
+                    <span>💬 {featuredQuestion.commentsCount} comments</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* "Got a health query?" CTA Card */}
               <Link

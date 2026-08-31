@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
@@ -21,6 +21,8 @@ import { PWAInstallPrompt } from "@/shared/pwa/PWAInstallPrompt";
 import { CommandPalette } from "@/shared/components/CommandPalette";
 import { MedicalSchema } from "@/shared/seo/MedicalSchema";
 import { GlobalAICopilot } from "@/modules/patient/care-ai/components/GlobalAICopilot";
+import { PreloaderProvider, usePreloader } from "@/shared/components/loaders/PreloaderProvider";
+import { CinematicMedicalPreloader } from "@/shared/components/loaders/CinematicMedicalPreloader";
 
 function NotFoundComponent() {
   return (
@@ -57,6 +59,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
+        {error?.message && (
+          <p className="mt-2 text-xs font-mono text-rose-500/80 bg-rose-500/10 p-2 rounded-lg break-all text-left">
+            {error.message}
+          </p>
+        )}
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -110,7 +117,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Doctor discovery, instant booking, digital prescriptions, and live queue tracking on one unified healthcare platform.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/medyora-logo.png" },
+      { property: "og:image", content: "/medyora-logo.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@medyora" },
       { name: "twitter:title", content: "Medyora — Healthcare Platform" },
@@ -118,7 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "twitter:description",
         content: "Discover top verified specialists and track live clinic queues with Medyora.",
       },
-      { name: "twitter:image", content: "/medyora-logo.png" },
+      { name: "twitter:image", content: "/medyora-logo.webp" },
     ],
     links: [
       {
@@ -131,8 +138,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/Logo.png" },
+      { rel: "icon", href: "/favicon.webp", type: "image/webp" },
+      { rel: "apple-touch-icon", href: "/Logo.webp" },
       { rel: "manifest", href: "/manifest.json" },
     ],
   }),
@@ -156,6 +163,17 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function GlobalPreloaderGate() {
+  const { isVisible, hidePreloader } = usePreloader();
+  if (!isVisible) return null;
+  return (
+    <CinematicMedicalPreloader
+      onComplete={hidePreloader}
+      durationMs={3000}
+    />
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -173,19 +191,22 @@ function RootComponent() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="medyora-theme">
       <QueryClientProvider client={queryClient}>
-        <SkipToContent targetId="main-content" />
-        <OfflineStatusBanner />
-        
-        {/* Core Router Outlet */}
-        <Outlet />
-        
-        {/* Cross-Platform Global Modals, AI Copilot & Notifications */}
-        <GlobalAICopilot />
-        <CommandPalette />
-        <PWAInstallPrompt />
-        <LiveAnnouncer />
-        <MedicalSchema />
-        <Toaster position="top-center" richColors closeButton />
+        <PreloaderProvider>
+          <GlobalPreloaderGate />
+          <SkipToContent targetId="main-content" />
+          <OfflineStatusBanner />
+          
+          {/* Core Router Outlet */}
+          <Outlet />
+          
+          {/* Cross-Platform Global Modals, AI Copilot & Notifications */}
+          <GlobalAICopilot />
+          <CommandPalette />
+          <PWAInstallPrompt />
+          <LiveAnnouncer />
+          <MedicalSchema />
+          <Toaster position="top-center" richColors closeButton />
+        </PreloaderProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

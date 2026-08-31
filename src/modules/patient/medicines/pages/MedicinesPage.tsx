@@ -111,7 +111,11 @@ export function MedicinesPage() {
             </h2>
             <Button
               size="sm"
-              onClick={() => handleAddToCart(MEDICINES[0].id, MEDICINES[0].name)}
+              onClick={() => {
+                if (MEDICINES[0]) {
+                  handleAddToCart(MEDICINES[0].id, MEDICINES[0].name);
+                }
+              }}
               className="h-8 text-xs font-bold bg-white hover:bg-slate-100 text-slate-900 rounded-xl px-4 shadow-sm"
             >
               Order Now

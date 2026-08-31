@@ -100,7 +100,9 @@ export function LabTestsPage() {
             <Button
               size="sm"
               onClick={() => {
-                toggleAddToCart(HEALTH_PACKAGES[0].id, HEALTH_PACKAGES[0].name);
+                if (HEALTH_PACKAGES[0]) {
+                  toggleAddToCart(HEALTH_PACKAGES[0].id, HEALTH_PACKAGES[0].name);
+                }
               }}
               className="h-8 text-xs font-bold bg-white hover:bg-slate-100 text-slate-900 rounded-xl px-4 shadow-sm"
             >

@@ -11,11 +11,14 @@ export const maskPhoneNumber = (phone: string): string => {
 
 export const maskEmail = (email: string): string => {
   if (!email || !email.includes("@")) return "***@***.com";
-  const [user, domain] = email.split("@");
+  const [user = "", domain = ""] = email.split("@");
+  if (!user || !domain) return "***@***.com";
+  const first = user[0] ?? "";
+  const last = user[user.length - 1] ?? "";
   if (user.length <= 2) {
-    return `${user[0]}*@${domain}`;
+    return `${first}*@${domain}`;
   }
-  return `${user[0]}${"*".repeat(Math.min(user.length - 2, 5))}${user[user.length - 1]}@${domain}`;
+  return `${first}${"*".repeat(Math.min(user.length - 2, 5))}${last}@${domain}`;
 };
 
 export const maskHealthId = (healthId: string): string => {

@@ -10,7 +10,7 @@ export function OptimizedImage({
   src,
   alt = "",
   className,
-  fallbackSrc = "/Logo.png",
+  fallbackSrc = "/Logo.webp",
   aspectRatio,
   ...props
 }: OptimizedImageProps) {

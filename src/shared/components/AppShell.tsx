@@ -89,25 +89,32 @@ export function AppShell({ title, subtitle, nav, bottomNav, actions, children }:
           </div>
         </header>
 
-        <main id="main-content" tabIndex={-1} className="flex-1 px-4 py-6 sm:px-6 focus:outline-none">
+        <main id="main-content" tabIndex={-1} className="flex-1 px-4 py-6 sm:px-6 focus:outline-none pb-28 lg:pb-6">
           {children}
         </main>
       </div>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="fixed inset-x-0 bottom-0 z-50 flex border-t border-border bg-card/95 backdrop-blur pb-safe lg:hidden">
-        {mobileNav.map((item) => (
-          <Link
-            key={item.label}
-            to={item.to}
-            activeOptions={{ exact: item.to === rootTo }}
-            activeProps={{ className: "text-primary font-bold" }}
-            className="flex flex-1 flex-col items-center gap-1 py-2.5 text-[11px] font-medium text-muted-foreground"
-          >
-            <item.icon className="size-5" />
-            {item.label}
-          </Link>
-        ))}
+      {/* Mobile Floating Liquid Glass Bottom Navigation */}
+      <nav 
+        className="lg:hidden fixed bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-6 max-w-[420px] mx-auto z-50 pointer-events-auto select-none"
+        role="navigation"
+        aria-label="Portal Navigation"
+      >
+        <div className="relative flex items-center justify-around h-[68px] px-2 rounded-[26px] sm:rounded-[28px] bg-white/75 dark:bg-slate-900/80 backdrop-blur-2xl backdrop-saturate-[1.8] border border-white/60 dark:border-white/10 shadow-[0_12px_40px_rgba(15,23,42,0.12),0_2px_6px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)] dark:shadow-[0_16px_45px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.15)] overflow-hidden">
+          <div className="absolute top-0 inset-x-6 h-[1px] bg-gradient-to-r from-transparent via-white/80 dark:via-white/20 to-transparent pointer-events-none" />
+          {mobileNav.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              activeOptions={{ exact: item.to === rootTo }}
+              activeProps={{ className: "text-blue-600 dark:text-blue-400 font-bold" }}
+              className="relative flex-1 flex flex-col items-center justify-center gap-1 py-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+            >
+              <item.icon className="h-5 w-5" />
+              <span>{item.label}</span>
+            </Link>
+          ))}
+        </div>
       </nav>
     </div>
   );
