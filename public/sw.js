@@ -4,7 +4,7 @@
  * background sync, and push notifications.
  */
 
-const CACHE_NAME = "medyora-cache-v1";
+const CACHE_NAME = "medyora-cache-v2";
 const OFFLINE_FALLBACK_PAGE = "/offline.html";
 
 const PRECACHE_ASSETS = [

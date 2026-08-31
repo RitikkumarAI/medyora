@@ -25,25 +25,25 @@
   "dir": "auto",
   "icons": [
     {
-      "src": "/favicon.webp",
+      "src": "/favicon.webp?v=2",
       "sizes": "64x64",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/Logo.webp",
+      "src": "/Logo.webp?v=2",
       "sizes": "192x192",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/medyora-logo.webp",
+      "src": "/medyora-logo.webp?v=2",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/medyora-logo.webp",
+      "src": "/medyora-logo.webp?v=2",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "maskable"
