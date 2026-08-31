@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Stethoscope, Heart, Pill, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Stethoscope, Heart, Pill, ShieldCheck, CheckCircle2, Sparkles } from "lucide-react";
 
 interface CinematicMedicalPreloaderProps {
   onComplete?: () => void;
-  durationMs?: number; // default ~3000ms (3 seconds)
+  durationMs?: number; // default ~1300ms for snappy, fast loading
 }
 
 const STAGES = [
   {
-    threshold: 35,
+    threshold: 40,
     title: "Finding verified doctors & specialists...",
     icon: Stethoscope,
-    badge: "Specialist Network",
   },
   {
-    threshold: 70,
+    threshold: 75,
     title: "Syncing clinic schedules & digital prescriptions...",
     icon: Pill,
-    badge: "Digital Healthcare",
   },
   {
     threshold: 100,
     title: "Welcome to Medyora",
     icon: ShieldCheck,
-    badge: "Verified Platform",
   },
 ];
 
 export function CinematicMedicalPreloader({
   onComplete,
-  durationMs = 3000,
+  durationMs = 1300,
 }: CinematicMedicalPreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
@@ -54,8 +51,8 @@ export function CinematicMedicalPreloader({
           setIsExiting(true);
           setTimeout(() => {
             onComplete?.();
-          }, 400);
-        }, 150);
+          }, 250);
+        }, 100);
       }
     };
 
@@ -75,66 +72,61 @@ export function CinematicMedicalPreloader({
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.02,
-            transition: { duration: 0.4, ease: "easeInOut" },
+            scale: 1.01,
+            transition: { duration: 0.25, ease: "easeOut" },
           }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 select-none px-6 transition-colors duration-300"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 select-none px-6 transition-colors duration-200"
           style={{
             backgroundImage: `
-              radial-gradient(ellipse 60% 50% at 50% 20%, rgba(37, 99, 235, 0.07), transparent 70%),
-              radial-gradient(ellipse 50% 40% at 80% 80%, rgba(16, 185, 129, 0.05), transparent 70%),
-              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(59, 130, 246, 0.05), transparent 70%)
+              radial-gradient(ellipse 60% 50% at 50% 20%, rgba(37, 99, 235, 0.08), transparent 70%),
+              radial-gradient(ellipse 50% 40% at 80% 80%, rgba(16, 185, 129, 0.06), transparent 70%),
+              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(59, 130, 246, 0.06), transparent 70%)
             `,
           }}
         >
           {/* Central Elegant Medical Card */}
           <motion.div
-            initial={{ scale: 0.92, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative flex flex-col items-center max-w-sm sm:max-w-md w-full p-8 rounded-3xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 shadow-[0_20px_50px_rgba(37,99,235,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl text-center"
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="relative flex flex-col items-center max-w-sm sm:max-w-md w-full p-7 rounded-3xl bg-white/95 dark:bg-slate-900/95 border border-slate-200/80 dark:border-slate-800 shadow-[0_20px_50px_rgba(37,99,235,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl text-center"
           >
             {/* Medyora Logo with Soft Ripple Glow */}
-            <div className="relative mb-5 flex items-center justify-center">
+            <div className="relative mb-4 flex items-center justify-center">
               <motion.div
-                animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -inset-3 rounded-3xl bg-blue-500/20 dark:bg-blue-500/30 blur-md pointer-events-none"
               />
-              <div className="relative h-20 w-20 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-md flex items-center justify-center p-3">
+              <div className="relative h-18 w-18 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-center p-2.5">
                 <img
                   src="/Logo.webp"
                   alt="Medyora Logo"
                   className="h-full w-full object-contain"
                 />
-                <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
-                  <CheckCircle2 className="h-4 w-4 stroke-[2.5]" />
+                <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
+                  <CheckCircle2 className="h-3.5 w-3.5 stroke-[2.5]" />
                 </div>
               </div>
             </div>
 
             {/* Brand Title: Medyora */}
-            <motion.div
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.4 }}
-              className="mb-1"
-            >
+            <div className="mb-1">
               <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
                 Medy<span className="text-blue-600 dark:text-blue-400">ora</span>
               </h1>
-            </motion.div>
+            </div>
 
             {/* Subtitle */}
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-6">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-5">
               Doctor Appointments • Digital Rx • Live Clinic Queue
             </p>
 
             {/* Clean Animated ECG Heartbeat Rhythm */}
-            <div className="relative w-full h-12 mb-6 px-3 flex items-center justify-center bg-slate-50 dark:bg-slate-950/60 rounded-2xl border border-slate-100 dark:border-slate-800/80 overflow-hidden">
+            <div className="relative w-full h-11 mb-5 px-3 flex items-center justify-center bg-slate-50 dark:bg-slate-950/60 rounded-2xl border border-slate-100 dark:border-slate-800/80 overflow-hidden">
               <svg
                 className="w-full h-full"
-                viewBox="0 0 300 48"
+                viewBox="0 0 300 44"
                 fill="none"
                 preserveAspectRatio="none"
               >
@@ -148,14 +140,14 @@ export function CinematicMedicalPreloader({
 
                 {/* Heartbeat pulse wave */}
                 <motion.path
-                  d="M 0 24 L 40 24 L 55 24 L 62 18 L 70 30 L 78 24 L 95 24 L 105 6 L 115 42 L 125 18 L 132 30 L 140 24 L 180 24 L 195 24 L 202 18 L 210 30 L 218 24 L 235 24 L 245 6 L 255 42 L 265 18 L 272 30 L 280 24 L 300 24"
+                  d="M 0 22 L 40 22 L 55 22 L 62 16 L 70 28 L 78 22 L 95 22 L 105 5 L 115 39 L 125 16 L 132 28 L 140 22 L 180 22 L 195 22 L 202 16 L 210 28 L 218 22 L 235 22 L 245 5 L 255 39 L 265 16 L 272 28 L 280 22 L 300 22"
                   stroke="url(#ecgWaveLight)"
-                  strokeWidth="2.2"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                 />
               </svg>
 
@@ -167,7 +159,7 @@ export function CinematicMedicalPreloader({
             </div>
 
             {/* 3 Medical Badges */}
-            <div className="grid grid-cols-3 gap-2 w-full mb-6">
+            <div className="grid grid-cols-3 gap-2 w-full mb-5">
               <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100/60 dark:border-blue-900/30">
                 <Stethoscope className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Doctors</span>
@@ -183,7 +175,7 @@ export function CinematicMedicalPreloader({
             </div>
 
             {/* Clean Progress Bar & Status Text */}
-            <div className="w-full space-y-2.5">
+            <div className="w-full space-y-2 mb-4">
               <div className="flex items-center justify-between text-xs font-semibold">
                 <span className="text-slate-600 dark:text-slate-300 truncate max-w-[220px] text-left">
                   {currentStage.title}
@@ -201,6 +193,15 @@ export function CinematicMedicalPreloader({
                   transition={{ ease: "easeOut" }}
                 />
               </div>
+            </div>
+
+            {/* Binarize Technologies Product Credit Badge */}
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 w-full flex items-center justify-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-400">
+              <span>A Product of</span>
+              <span className="text-blue-600 dark:text-blue-400 font-extrabold tracking-tight">
+                Binarize Technologies
+              </span>
+              <span className="text-amber-500 text-xs">⭐</span>
             </div>
           </motion.div>
         </motion.div>

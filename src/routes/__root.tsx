@@ -95,13 +95,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, user-scalable=yes",
       },
-      { title: "Medyora — Book Verified Doctors Online & Live Queue Tracking" },
+      { title: "Medyora — Book Verified Doctors Online & Live Queue Tracking | Binarize Technologies" },
       {
         name: "description",
         content:
-          "Discover verified doctors, book instant in-clinic or video appointments, and track live clinic queues in real-time with Medyora.",
+          "Discover verified doctors, book instant appointments, and track live clinic queues in real-time with Medyora. Developed and maintained by Binarize Technologies.",
       },
-      { name: "author", content: "Medyora Health" },
+      { name: "author", content: "Binarize Technologies" },
+      { name: "publisher", content: "Binarize Technologies" },
       { name: "theme-color", content: "#2563EB" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -109,18 +110,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-title", content: "Medyora" },
       { name: "application-name", content: "Medyora" },
       { name: "format-detection", content: "telephone=no" },
-      { property: "og:site_name", content: "Medyora" },
-      { property: "og:title", content: "Medyora — Book Verified Doctors Online" },
+      { property: "og:site_name", content: "Medyora by Binarize Technologies" },
+      { property: "og:title", content: "Medyora — Book Verified Doctors Online & Live Clinic Queues" },
       {
         property: "og:description",
         content:
-          "Doctor discovery, instant booking, digital prescriptions, and live queue tracking on one unified healthcare platform.",
+          "Doctor discovery, instant booking, digital prescriptions, and live queue tracking on one unified healthcare platform built by Binarize Technologies.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "/medyora-logo.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@medyora" },
-      { name: "twitter:title", content: "Medyora — Healthcare Platform" },
+      { name: "twitter:creator", content: "@binarizetech" },
+      { name: "twitter:title", content: "Medyora — Healthcare Platform by Binarize Technologies" },
       {
         name: "twitter:description",
         content: "Discover top verified specialists and track live clinic queues with Medyora.",
@@ -134,6 +136,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
+      { rel: "canonical", href: "https://medyora.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
@@ -169,7 +173,7 @@ function GlobalPreloaderGate() {
   return (
     <CinematicMedicalPreloader
       onComplete={hidePreloader}
-      durationMs={3000}
+      durationMs={1300}
     />
   );
 }

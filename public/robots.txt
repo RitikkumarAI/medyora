@@ -1,6 +1,18 @@
 User-agent: *
 Allow: /
 Disallow: /auth/verify
+Disallow: /admin/
 Disallow: /api/
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Applebot
+Allow: /
 
 Sitemap: https://medyora.com/sitemap.xml
