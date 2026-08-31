@@ -30,9 +30,9 @@ function IndexPage() {
       <div className="hidden lg:block">
         <DesktopLandingPage />
       </div>
-      <div className="block lg:hidden overflow-x-hidden max-w-[100vw] w-full select-none">
+      <div className="block lg:hidden w-full">
         {isPatient ? (
-          <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans pb-24 overflow-x-hidden max-w-[100vw] w-full">
+          <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans pb-24 w-full">
             <PatientHome />
             <LiquidGlassBottomNav items={PATIENT_NAV} />
           </div>
