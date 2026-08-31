@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BookingSuccessRouteImport } from './routes/booking-success'
 import { Route as DoctorRouteImport } from './routes/doctor'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as PatientRouteImport } from './routes/patient'
 import { Route as SpecialitiesRouteImport } from './routes/specialities'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -39,6 +40,10 @@ import { Route as DoctorScheduleRouteImport } from './routes/doctor.schedule'
 import { Route as DoctorSettingsRouteImport } from './routes/doctor.settings'
 import { Route as DoctorsIndexRouteImport } from './routes/doctors.index'
 import { Route as DoctorsDoctorIdRouteImport } from './routes/doctors.$doctorId'
+import { Route as LegalCachingRouteImport } from './routes/legal.caching'
+import { Route as LegalCookiesRouteImport } from './routes/legal.cookies'
+import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal.privacy-policy'
+import { Route as LegalTermsOfServiceRouteImport } from './routes/legal.terms-of-service'
 import { Route as PatientIndexRouteImport } from './routes/patient.index'
 import { Route as PatientAppointmentsRouteImport } from './routes/patient.appointments'
 import { Route as PatientArticlesRouteImport } from './routes/patient.articles'
@@ -94,6 +99,11 @@ const BookingSuccessRoute = BookingSuccessRouteImport.update({
 const DoctorRoute = DoctorRouteImport.update({
   id: '/doctor',
   path: '/doctor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PatientRoute = PatientRouteImport.update({
@@ -220,6 +230,26 @@ const DoctorsDoctorIdRoute = DoctorsDoctorIdRouteImport.update({
   id: '/doctors/$doctorId',
   path: '/doctors/$doctorId',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCachingRoute = LegalCachingRouteImport.update({
+  id: '/caching',
+  path: '/caching',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalCookiesRoute = LegalCookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalPrivacyPolicyRoute = LegalPrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalTermsOfServiceRoute = LegalTermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => LegalRoute,
 } as any)
 const PatientIndexRoute = PatientIndexRouteImport.update({
   id: '/',
@@ -387,6 +417,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/booking-success': typeof BookingSuccessRoute
   '/doctor': typeof DoctorRouteWithChildren
+  '/legal': typeof LegalRouteWithChildren
   '/patient': typeof PatientRouteWithChildren
   '/specialities': typeof SpecialitiesRoute
   '/admin/appointments': typeof AdminAppointmentsRoute
@@ -409,6 +440,10 @@ export interface FileRoutesByFullPath {
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor/settings': typeof DoctorSettingsRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
+  '/legal/caching': typeof LegalCachingRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/articles': typeof PatientArticlesRouteWithChildren
   '/patient/care-ai': typeof PatientCareAiRoute
@@ -448,6 +483,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/booking-success': typeof BookingSuccessRoute
+  '/legal': typeof LegalRouteWithChildren
   '/specialities': typeof SpecialitiesRoute
   '/admin/appointments': typeof AdminAppointmentsRoute
   '/admin/cms': typeof AdminCmsRoute
@@ -469,6 +505,10 @@ export interface FileRoutesByTo {
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor/settings': typeof DoctorSettingsRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
+  '/legal/caching': typeof LegalCachingRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/care-ai': typeof PatientCareAiRoute
   '/patient/compare': typeof PatientCompareRoute
@@ -510,6 +550,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/booking-success': typeof BookingSuccessRoute
   '/doctor': typeof DoctorRouteWithChildren
+  '/legal': typeof LegalRouteWithChildren
   '/patient': typeof PatientRouteWithChildren
   '/specialities': typeof SpecialitiesRoute
   '/admin/appointments': typeof AdminAppointmentsRoute
@@ -532,6 +573,10 @@ export interface FileRoutesById {
   '/doctor/schedule': typeof DoctorScheduleRoute
   '/doctor/settings': typeof DoctorSettingsRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
+  '/legal/caching': typeof LegalCachingRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/articles': typeof PatientArticlesRouteWithChildren
   '/patient/care-ai': typeof PatientCareAiRoute
@@ -575,6 +620,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/booking-success'
     | '/doctor'
+    | '/legal'
     | '/patient'
     | '/specialities'
     | '/admin/appointments'
@@ -597,6 +643,10 @@ export interface FileRouteTypes {
     | '/doctor/schedule'
     | '/doctor/settings'
     | '/doctors/$doctorId'
+    | '/legal/caching'
+    | '/legal/cookies'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/patient/appointments'
     | '/patient/articles'
     | '/patient/care-ai'
@@ -636,6 +686,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/booking-success'
+    | '/legal'
     | '/specialities'
     | '/admin/appointments'
     | '/admin/cms'
@@ -657,6 +708,10 @@ export interface FileRouteTypes {
     | '/doctor/schedule'
     | '/doctor/settings'
     | '/doctors/$doctorId'
+    | '/legal/caching'
+    | '/legal/cookies'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/patient/appointments'
     | '/patient/care-ai'
     | '/patient/compare'
@@ -697,6 +752,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/booking-success'
     | '/doctor'
+    | '/legal'
     | '/patient'
     | '/specialities'
     | '/admin/appointments'
@@ -719,6 +775,10 @@ export interface FileRouteTypes {
     | '/doctor/schedule'
     | '/doctor/settings'
     | '/doctors/$doctorId'
+    | '/legal/caching'
+    | '/legal/cookies'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/patient/appointments'
     | '/patient/articles'
     | '/patient/care-ai'
@@ -761,6 +821,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   BookingSuccessRoute: typeof BookingSuccessRoute
   DoctorRoute: typeof DoctorRouteWithChildren
+  LegalRoute: typeof LegalRouteWithChildren
   PatientRoute: typeof PatientRouteWithChildren
   SpecialitiesRoute: typeof SpecialitiesRoute
   AuthLanguageRoute: typeof AuthLanguageRoute
@@ -808,6 +869,13 @@ declare module '@tanstack/react-router' {
       path: '/doctor'
       fullPath: '/doctor'
       preLoaderRoute: typeof DoctorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/patient': {
@@ -984,6 +1052,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/doctors/$doctorId'
       preLoaderRoute: typeof DoctorsDoctorIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/legal/caching': {
+      id: '/legal/caching'
+      path: '/caching'
+      fullPath: '/legal/caching'
+      preLoaderRoute: typeof LegalCachingRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/cookies': {
+      id: '/legal/cookies'
+      path: '/cookies'
+      fullPath: '/legal/cookies'
+      preLoaderRoute: typeof LegalCookiesRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/privacy-policy': {
+      id: '/legal/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/legal/privacy-policy'
+      preLoaderRoute: typeof LegalPrivacyPolicyRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/terms-of-service': {
+      id: '/legal/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/legal/terms-of-service'
+      preLoaderRoute: typeof LegalTermsOfServiceRouteImport
+      parentRoute: typeof LegalRoute
     }
     '/patient/': {
       id: '/patient/'
@@ -1260,6 +1356,22 @@ const DoctorRouteChildren: DoctorRouteChildren = {
 const DoctorRouteWithChildren =
   DoctorRoute._addFileChildren(DoctorRouteChildren)
 
+interface LegalRouteChildren {
+  LegalCachingRoute: typeof LegalCachingRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalPrivacyPolicyRoute: typeof LegalPrivacyPolicyRoute
+  LegalTermsOfServiceRoute: typeof LegalTermsOfServiceRoute
+}
+
+const LegalRouteChildren: LegalRouteChildren = {
+  LegalCachingRoute: LegalCachingRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalPrivacyPolicyRoute: LegalPrivacyPolicyRoute,
+  LegalTermsOfServiceRoute: LegalTermsOfServiceRoute,
+}
+
+const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
+
 interface PatientArticlesRouteChildren {
   PatientArticlesArticleIdRoute: typeof PatientArticlesArticleIdRoute
   PatientArticlesIndexRoute: typeof PatientArticlesIndexRoute
@@ -1350,6 +1462,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   BookingSuccessRoute: BookingSuccessRoute,
   DoctorRoute: DoctorRouteWithChildren,
+  LegalRoute: LegalRouteWithChildren,
   PatientRoute: PatientRouteWithChildren,
   SpecialitiesRoute: SpecialitiesRoute,
   AuthLanguageRoute: AuthLanguageRoute,
