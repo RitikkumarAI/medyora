@@ -45,6 +45,7 @@ import {
   type MedicalSearchResult,
 } from "../services/care-ai-engine";
 import { SpecialtyAIClinic } from "../components/SpecialtyAIClinic";
+import { ClinicalAIChatbot } from "../components/ClinicalAIChatbot";
 import { type SpecialtyCategoryId } from "../services/specialty-xai-engine";
 
 export function CareAIPage() {
@@ -52,8 +53,8 @@ export function CareAIPage() {
   const initialSpecialty = (search?.["specialty"] as SpecialtyCategoryId) || "cardiology";
 
   const [activeNavTab, setActiveNavTab] = useState<
-    "specialty_xai" | "daily_copilot" | "preventive_family" | "emergency"
-  >("specialty_xai");
+    "chatbot" | "specialty_xai" | "daily_copilot" | "preventive_family" | "emergency"
+  >("chatbot");
 
   const briefing = getDailyCopilotBriefing("Ritik");
   const family = getFamilyHealthProfiles();
@@ -115,21 +116,26 @@ export function CareAIPage() {
           {/* Quick Action Navigation Chips */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 pt-2">
             <Button
-              onClick={() => setActiveNavTab("specialty_xai")}
+              onClick={() => setActiveNavTab("chatbot")}
               className={`h-12 px-6 rounded-2xl font-black text-xs sm:text-sm shadow-lg flex items-center gap-2 transition-all ${
+                activeNavTab === "chatbot"
+                  ? "bg-blue-600 text-white shadow-blue-600/40 ring-2 ring-blue-400"
+                  : "bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700"
+              }`}
+            >
+              <Bot className="h-4 w-4 text-white animate-pulse" />
+              Clinical AI Chatbot (Interactive)
+            </Button>
+            <Button
+              onClick={() => setActiveNavTab("specialty_xai")}
+              className={`h-12 px-5 rounded-2xl font-bold text-xs sm:text-sm shadow-sm flex items-center gap-2 transition-all ${
                 activeNavTab === "specialty_xai"
                   ? "bg-blue-600 text-white shadow-blue-600/40 ring-2 ring-blue-400"
                   : "bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700"
               }`}
             >
-              <Stethoscope className="h-4 w-4 text-white animate-pulse" />
-              Specialty AI Clinic (XAI)
-            </Button>
-            <Button
-              onClick={() => launchAICopilotWithMode("chat")}
-              className="h-12 px-5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 font-bold text-xs sm:text-sm backdrop-blur-md flex items-center gap-2 shadow-sm"
-            >
-              <Sparkles className="h-4 w-4 text-amber-400" /> 24/7 AI Copilot Chat
+              <Stethoscope className="h-4 w-4 text-blue-400" />
+              14 Specialty Clinics
             </Button>
             <Button
               onClick={() => launchAICopilotWithMode("symptom_checker")}
@@ -175,8 +181,23 @@ export function CareAIPage() {
       </section>
 
       {/* ================= 2. TAB NAVIGATION BAR ================= */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full -mt-7 relative z-30">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full -mt-7 relative z-30">
         <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-x-auto scrollbar-none no-scrollbar">
+          <button
+            onClick={() => setActiveNavTab("chatbot")}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
+              activeNavTab === "chatbot"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Bot className="h-4 w-4" />
+            <span>Clinical AI Doctor Chatbot</span>
+            <span className="text-[10px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded-md font-extrabold uppercase">
+              ChatGPT Flow
+            </span>
+          </button>
+
           <button
             onClick={() => setActiveNavTab("specialty_xai")}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black transition-all shrink-0 ${
@@ -186,10 +207,7 @@ export function CareAIPage() {
             }`}
           >
             <Stethoscope className="h-4 w-4" />
-            <span>Specialty AI Clinic (XAI)</span>
-            <span className="text-[10px] bg-blue-500/30 text-white px-1.5 py-0.5 rounded-md font-extrabold uppercase">
-              Flagship
-            </span>
+            <span>Specialty AI Clinic (14)</span>
           </button>
 
           <button
@@ -231,7 +249,11 @@ export function CareAIPage() {
       </div>
 
       {/* ================= 3. ACTIVE TAB MAIN CONTENT ================= */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 w-full mt-6 space-y-8">
+      <main
+        className={`mx-auto px-3 sm:px-6 w-full mt-6 space-y-8 transition-all ${
+          activeNavTab === "chatbot" ? "max-w-[1600px]" : "max-w-5xl"
+        }`}
+      >
         {/* Search Result Banner if query submitted */}
         {searchResult && (
           <motion.div
@@ -290,6 +312,13 @@ export function CareAIPage() {
               </div>
             )}
           </motion.div>
+        )}
+
+        {/* TAB 0: CLINICAL AI CHATBOT (CHATGPT INTERACTIVE CLINIC) */}
+        {activeNavTab === "chatbot" && (
+          <div className="w-full">
+            <ClinicalAIChatbot initialSpecialty={initialSpecialty} />
+          </div>
         )}
 
         {/* TAB 1: SPECIALTY AI CLINIC (XAI) */}

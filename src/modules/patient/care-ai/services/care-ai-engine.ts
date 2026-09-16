@@ -318,6 +318,24 @@ export interface ChatMessage {
   fitnessPlan?: FitnessCoachPlan;
   hospitalResults?: HospitalFinderResult[];
   medicalSearch?: MedicalSearchResult;
+  specialtyXAIResult?: import("./specialty-xai-engine").SpecialtyXAIAnalysisResult;
+  categoryChips?: {
+    id: string;
+    label: string;
+    iconName: string;
+    hindiName: string;
+    tagline: string;
+  }[];
+  symptomPills?: string[];
+  reportUploadPrompt?: {
+    specialtyId: import("./specialty-xai-engine").SpecialtyCategoryId;
+    specialtyName: string;
+  };
+  attachedReportSnippet?: {
+    title: string;
+    date: string;
+    labName: string;
+  };
   actionLinks?: { label: string; to: string; variant?: "default" | "outline" | "destructive" }[];
 }
 
