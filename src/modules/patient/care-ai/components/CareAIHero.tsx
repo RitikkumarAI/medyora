@@ -106,7 +106,7 @@ export function CareAIHero({ onActionClick }: CareAIHeroProps) {
           </div>
 
           {/* 3D AI Doctor Robot Mascot Illustration */}
-          <div className="relative w-44 h-44 sm:w-52 sm:h-52 lg:w-56 lg:h-56 rounded-3xl overflow-hidden border border-cyan-400/20 bg-gradient-to-b from-blue-900/30 to-slate-950/80 shadow-2xl group">
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-3xl overflow-hidden border-2 border-cyan-400/30 bg-gradient-to-b from-blue-900/40 to-slate-950 shadow-2xl shadow-cyan-500/15 group">
             <img
               src="/ai_doctor_robot.jpg"
               alt="Medyora AI Health Assistant Doctor Robot"

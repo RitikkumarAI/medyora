@@ -45,8 +45,12 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
       <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/15 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none" />
         <div className="flex items-center gap-3 relative z-10">
-          <div className="h-10 w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-inner">
-            <Sparkles className="h-5 w-5 animate-pulse text-sky-200" />
+          <div className="h-10 w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-inner overflow-hidden shrink-0">
+            <img
+              src="/ai_doctor_robot.jpg"
+              alt="Medyora AI Robot Doctor"
+              className="w-full h-full object-cover object-[50%_25%]"
+            />
           </div>
           <div>
             <h2 className="text-sm font-black tracking-tight text-white flex items-center gap-1.5">

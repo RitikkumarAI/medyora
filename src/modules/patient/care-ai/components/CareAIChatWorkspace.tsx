@@ -212,8 +212,12 @@ export function CareAIChatWorkspace({
           return (
             <div key={msg.id} className="flex items-start gap-3">
               {/* AI Brand Avatar */}
-              <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
-                <Bot className="h-4 w-4" />
+              <div className="h-9 w-9 rounded-full overflow-hidden border-2 border-cyan-400/40 shadow-md shadow-blue-500/20 shrink-0 bg-slate-900">
+                <img
+                  src="/ai_doctor_robot.jpg"
+                  alt="Medyora AI Robot Doctor"
+                  className="w-full h-full object-cover object-[50%_25%]"
+                />
               </div>
 
               <div className="space-y-3 max-w-2xl w-full">
