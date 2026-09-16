@@ -64,9 +64,11 @@ import {
 } from "../services/care-ai-engine";
 import { DOCTORS } from "@/shared/data/mock";
 import { useAuth } from "@/shared/auth/useAuth";
+import { SpecialtyAIClinic } from "./SpecialtyAIClinic";
 
 type ActiveViewMode =
   | "chat"
+  | "specialty_clinic"
   | "symptom_checker"
   | "image_analyzer"
   | "lab_analyzer"
@@ -628,6 +630,7 @@ export function GlobalAICopilot() {
               <div className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 overflow-x-auto no-scrollbar shrink-0 text-xs">
                 {[
                   { id: "chat", label: "Assistant Chat", icon: Bot },
+                  { id: "specialty_clinic", label: "Specialty Clinic (XAI)", icon: Stethoscope },
                   { id: "symptom_checker", label: "Symptom Triage", icon: Activity },
                   { id: "image_analyzer", label: "Scan & X-Ray AI", icon: ImageIcon },
                   { id: "lab_analyzer", label: "Lab Report OCR", icon: FileText },
@@ -1090,6 +1093,26 @@ export function GlobalAICopilot() {
                         </p>
                       </div>
                     </>
+                  )}
+
+                  {/* TAB 1.5: MULTI-SPECIALTY CLINIC (XAI) */}
+                  {activeTab === "specialty_clinic" && (
+                    <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                      <div className="flex items-center justify-between p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60">
+                        <div className="flex items-center gap-2 text-xs font-bold text-blue-900 dark:text-blue-200">
+                          <Sparkles className="h-4 w-4 text-blue-600 animate-pulse" />
+                          <span>14 Medical Specialties • Multi-Report Explainable AI (XAI)</span>
+                        </div>
+                        <Link
+                          to="/patient/care-ai"
+                          onClick={() => setIsOpen(false)}
+                          className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                        >
+                          Full Screen Clinic <ExternalLink className="h-3 w-3" />
+                        </Link>
+                      </div>
+                      <SpecialtyAIClinic />
+                    </div>
                   )}
 
                   {/* TAB 2: SYMPTOM CHECKER MODE */}

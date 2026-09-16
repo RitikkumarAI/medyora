@@ -10,6 +10,7 @@ import {
   X,
   MapPin,
   Scale,
+  Sparkles,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -363,6 +364,28 @@ function DoctorsListing() {
 
         {/* ================= DOCTOR CARDS (Screen 02) ================= */}
         <main className={`flex-1 min-w-0 space-y-4 ${compareList.length > 0 ? "pb-28" : "pb-8"}`}>
+          {/* AI Diagnostic Report Analysis Banner */}
+          <div className="p-4 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-0.5">
+              <div className="flex items-center gap-1.5 text-[11px] font-black uppercase text-blue-200">
+                <Sparkles className="h-3.5 w-3.5 text-amber-300 animate-pulse" />
+                <span>Medyora Care AI • Multi-Specialty XAI</span>
+              </div>
+              <h3 className="text-sm font-black">Have past diagnostic reports or blood tests?</h3>
+              <p className="text-xs text-blue-100 font-medium">
+                Upload your ECG, Lipid, CBC, or MRI scans to get transparent Explainable AI findings
+                & diet guidance.
+              </p>
+            </div>
+            <Button
+              asChild
+              size="sm"
+              className="rounded-xl bg-white text-blue-700 hover:bg-blue-50 font-black text-xs shrink-0 shadow-sm"
+            >
+              <Link to="/patient/care-ai">Analyze Reports with AI →</Link>
+            </Button>
+          </div>
+
           {filteredDoctors.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Search className="h-12 w-12 text-slate-200 dark:text-slate-800 mb-4" />
