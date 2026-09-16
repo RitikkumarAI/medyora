@@ -1,7 +1,5 @@
 import { Outlet, useLocation } from "@tanstack/react-router";
-import { 
-  Home, Search, Video, MessageSquare, User
-} from "lucide-react";
+import { Home, Search, Video, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/shared/components/SiteHeader";
 import { SiteFooter } from "@/shared/components/SiteFooter";
@@ -52,30 +50,26 @@ export function PatientLayout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors font-sans w-full">
-      
       {/* Universal Top Site Header */}
       <SiteHeader />
 
       {/* Main Full-Width Content Container without any cramping sidebars */}
-      <main 
-        id="main-content" 
-        tabIndex={-1} 
+      <main
+        id="main-content"
+        tabIndex={-1}
         className={cn(
           "flex-1 w-full min-w-0 focus:outline-none",
-          isRootTab ? "pb-28 lg:pb-12" : "pb-12"
+          isRootTab ? "pb-28 lg:pb-12" : "pb-12",
         )}
       >
         <Outlet />
       </main>
 
       {/* Mobile Floating Liquid Glass Bottom Navigation */}
-      {isRootTab && (
-        <LiquidGlassBottomNav items={PATIENT_NAV} />
-      )}
+      {isRootTab && <LiquidGlassBottomNav items={PATIENT_NAV} />}
 
       {/* Global Site Footer */}
       <SiteFooter />
-
     </div>
   );
 }

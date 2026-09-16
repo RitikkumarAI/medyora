@@ -44,12 +44,15 @@ export function SiteHeader() {
       role="banner"
     >
       <div className="mx-auto flex h-20 w-full max-w-[1536px] items-center justify-between gap-6 px-6 sm:px-10 lg:px-16">
-        
         {/* Brand Logo */}
         <Logo />
 
         {/* Desktop Navigation in Clean Linear Sequence */}
-        <nav className="hidden items-center gap-6 xl:gap-8 lg:flex" role="navigation" aria-label="Main Navigation">
+        <nav
+          className="hidden items-center gap-6 xl:gap-8 lg:flex"
+          role="navigation"
+          aria-label="Main Navigation"
+        >
           {navItems.map((item, idx) => (
             <Link
               key={idx}
@@ -257,7 +260,9 @@ export function SiteHeader() {
                   />
                   <div>
                     <p className="text-xs font-bold text-slate-900 dark:text-white">{user.name}</p>
-                    <p className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">{user.phone} • {user.role === "doctor" ? "Doctor Portal" : "My Account"}</p>
+                    <p className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                      {user.phone} • {user.role === "doctor" ? "Doctor Portal" : "My Account"}
+                    </p>
                   </div>
                 </Link>
               ) : (

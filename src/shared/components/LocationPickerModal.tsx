@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react";
-import { 
-  MapPin, Navigation, Search, X, Check, Building, Compass, Sparkles 
-} from "lucide-react";
+import { MapPin, Navigation, Search, X, Check, Building, Compass, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CITIES, POPULAR_LOCATIONS } from "@/shared/data/mock";
@@ -35,10 +33,7 @@ export function LocationPickerModal({
 
     POPULAR_LOCATIONS.forEach((loc) => {
       loc.areas.forEach((area) => {
-        if (
-          area.toLowerCase().includes(term) ||
-          loc.city.toLowerCase().includes(term)
-        ) {
+        if (area.toLowerCase().includes(term) || loc.city.toLowerCase().includes(term)) {
           matchedAreas.push({ city: loc.city, area });
         }
       });
@@ -67,7 +62,7 @@ export function LocationPickerModal({
           onSelect(fallbackLoc);
           onClose();
         },
-        { timeout: 5000 }
+        { timeout: 5000 },
       );
     } else {
       setIsDetecting(false);
@@ -81,9 +76,8 @@ export function LocationPickerModal({
   if (!isOpen) return null;
 
   const currentCityAreas =
-    POPULAR_LOCATIONS.find(
-      (l) => l.city.toLowerCase() === activeCityTab.toLowerCase()
-    )?.areas || [];
+    POPULAR_LOCATIONS.find((l) => l.city.toLowerCase() === activeCityTab.toLowerCase())?.areas ||
+    [];
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
@@ -95,7 +89,6 @@ export function LocationPickerModal({
 
       {/* Modal Card */}
       <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-[36px] sm:rounded-3xl shadow-2xl p-6 flex flex-col max-h-[90vh] animate-in slide-in-from-bottom-full sm:zoom-in-95 duration-300 z-10 border border-slate-100 dark:border-slate-800">
-        
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
@@ -104,7 +97,9 @@ export function LocationPickerModal({
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">Choose Location</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Find doctors & clinics near you</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                Find doctors & clinics near you
+              </p>
             </div>
           </div>
           <Button
@@ -126,13 +121,17 @@ export function LocationPickerModal({
           >
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-xl bg-white/20 flex items-center justify-center">
-                <Navigation className={`h-4 w-4 ${isDetecting ? 'animate-spin' : 'group-hover:rotate-45 transition-transform'}`} />
+                <Navigation
+                  className={`h-4 w-4 ${isDetecting ? "animate-spin" : "group-hover:rotate-45 transition-transform"}`}
+                />
               </div>
               <div className="text-left">
                 <p className="text-sm font-bold leading-tight">
                   {isDetecting ? "Detecting GPS Location..." : "Use Current Location"}
                 </p>
-                <p className="text-[11px] text-blue-100 font-normal">Enable GPS for closest doctors</p>
+                <p className="text-[11px] text-blue-100 font-normal">
+                  Enable GPS for closest doctors
+                </p>
               </div>
             </div>
             <span className="text-xs bg-white/25 px-2.5 py-1 rounded-lg font-semibold">GPS</span>
@@ -162,16 +161,21 @@ export function LocationPickerModal({
 
         {/* Scrollable Results Area */}
         <div className="flex-1 overflow-y-auto pt-2 space-y-4 max-h-[360px] pr-1">
-          
           {/* If Search is Active */}
           {filteredLocations && (
             <div className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Search Results</p>
-              
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Search Results
+              </p>
+
               {filteredLocations.cities.length === 0 && filteredLocations.areas.length === 0 && (
                 <div className="text-center py-6">
-                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">No areas found for "{searchTerm}"</p>
-                  <p className="text-xs text-slate-400 mt-1">Try searching for Bangalore, Delhi, Indiranagar, etc.</p>
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+                    No areas found for "{searchTerm}"
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Try searching for Bangalore, Delhi, Indiranagar, etc.
+                  </p>
                 </div>
               )}
 
@@ -189,7 +193,9 @@ export function LocationPickerModal({
                     <Building className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
                     <div>
                       <p className="text-sm font-bold text-slate-900 dark:text-white">{city}</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">All Areas in {city}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                        All Areas in {city}
+                      </p>
                     </div>
                   </div>
                   {selectedCity === city && !selectedArea && (
@@ -211,7 +217,9 @@ export function LocationPickerModal({
                   <div className="flex items-center gap-3">
                     <MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <div>
-                      <p className="text-sm font-bold text-slate-900 dark:text-white">{item.area}</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">
+                        {item.area}
+                      </p>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.city}</p>
                     </div>
                   </div>
@@ -227,7 +235,9 @@ export function LocationPickerModal({
           {!filteredLocations && (
             <div className="space-y-4">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Major Cities</p>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                  Major Cities
+                </p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => {
@@ -304,9 +314,7 @@ export function LocationPickerModal({
               </div>
             </div>
           )}
-
         </div>
-
       </div>
     </div>
   );

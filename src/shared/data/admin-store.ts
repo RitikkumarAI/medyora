@@ -121,9 +121,7 @@ export function useAdminSettings() {
   const toggleSlot = useCallback((doctorId: string, slot: string) => {
     const current = read();
     const blocked = current.blockedSlots[doctorId] ?? [];
-    const next = blocked.includes(slot)
-      ? blocked.filter((s) => s !== slot)
-      : [...blocked, slot];
+    const next = blocked.includes(slot) ? blocked.filter((s) => s !== slot) : [...blocked, slot];
     write({ ...current, blockedSlots: { ...current.blockedSlots, [doctorId]: next } });
   }, []);
 

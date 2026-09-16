@@ -90,12 +90,20 @@ export function useAppointments() {
 
   const reschedule = useCallback((id: string, date: string, time: string) => {
     const newToken = `#${Math.floor(Math.random() * 20) + 1}`;
-    write(read().map((a) => (a.id === id ? { ...a, date, time, token: newToken, status: "Confirmed" as const } : a)));
+    write(
+      read().map((a) =>
+        a.id === id ? { ...a, date, time, token: newToken, status: "Confirmed" as const } : a,
+      ),
+    );
   }, []);
 
   const rescheduleToday = useCallback((id: string, newTime: string) => {
     const newToken = `#${Math.floor(Math.random() * 15) + 15}`; // later token for same day
-    write(read().map((a) => (a.id === id ? { ...a, time: newTime, token: newToken, status: "Confirmed" as const } : a)));
+    write(
+      read().map((a) =>
+        a.id === id ? { ...a, time: newTime, token: newToken, status: "Confirmed" as const } : a,
+      ),
+    );
   }, []);
 
   return { appointments, cancel, reschedule, rescheduleToday };

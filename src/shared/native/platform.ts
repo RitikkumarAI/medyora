@@ -19,12 +19,20 @@ export const getPlatform = () => {
     };
   }
 
-  const userAgent = navigator.userAgent || navigator.vendor || (window as unknown as { opera?: string }).opera || "";
-  
+  const userAgent =
+    navigator.userAgent ||
+    navigator.vendor ||
+    (window as unknown as { opera?: string }).opera ||
+    "";
+
   // Mobile OS detection
-  const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as unknown as { MSStream?: unknown }).MSStream;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(userAgent) && !(window as unknown as { MSStream?: unknown }).MSStream;
   const isAndroid = /android/i.test(userAgent);
-  const isNativeMobile = (window as unknown as { Capacitor?: { isNativePlatform: () => boolean } })?.Capacitor?.isNativePlatform?.() || false;
+  const isNativeMobile =
+    (
+      window as unknown as { Capacitor?: { isNativePlatform: () => boolean } }
+    )?.Capacitor?.isNativePlatform?.() || false;
 
   // Desktop OS detection
   const isMacOS = /Macintosh|Mac OS X/i.test(userAgent) && !isIOS;

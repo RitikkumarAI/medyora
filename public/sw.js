@@ -7,12 +7,7 @@
 const CACHE_NAME = "medyora-cache-v7";
 const OFFLINE_FALLBACK_PAGE = "/offline.html";
 
-const PRECACHE_ASSETS = [
-  "/",
-  "/favicon.webp",
-  "/Logo.webp",
-  "/manifest.json",
-];
+const PRECACHE_ASSETS = ["/", "/favicon.webp", "/Logo.webp", "/manifest.json"];
 
 // Install Event: Pre-cache shell assets
 self.addEventListener("install", (event) => {
@@ -24,7 +19,7 @@ self.addEventListener("install", (event) => {
           console.warn("[SW] Pre-cache error:", err);
         });
       })
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting()),
   );
 });
 
@@ -39,10 +34,10 @@ self.addEventListener("activate", (event) => {
             if (cacheName !== CACHE_NAME) {
               return caches.delete(cacheName);
             }
-          })
+          }),
         );
       })
-      .then(() => self.clients.claim())
+      .then(() => self.clients.claim()),
   );
 });
 
@@ -93,7 +88,7 @@ self.addEventListener("fetch", (event) => {
               return caches.match("/Logo.webp");
             }
           });
-      })
+      }),
     );
     return;
   }
@@ -142,17 +137,15 @@ self.addEventListener("fetch", (event) => {
             </html>`,
             {
               headers: { "Content-Type": "text/html; charset=utf-8" },
-            }
+            },
           );
-        })
+        }),
     );
     return;
   }
 
   // 3. Default Handler: Network with cache fallback
-  event.respondWith(
-    fetch(request).catch(() => caches.match(request))
-  );
+  event.respondWith(fetch(request).catch(() => caches.match(request)));
 });
 
 // Push Notifications Handler
@@ -194,6 +187,6 @@ self.addEventListener("notificationclick", (event) => {
       if (clients.openWindow) {
         return clients.openWindow(targetUrl);
       }
-    })
+    }),
   );
 });

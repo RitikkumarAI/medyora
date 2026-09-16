@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, ShieldCheck, Check, Sparkles, Crown, 
-  Users, Video, Calendar, Star, Zap, ChevronRight 
+import {
+  ArrowLeft,
+  ShieldCheck,
+  Check,
+  Sparkles,
+  Crown,
+  Users,
+  Video,
+  Calendar,
+  Star,
+  Zap,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SUBSCRIPTION_PLANS, type SubscriptionPlan } from "@/shared/data/superapp-mock";
@@ -25,7 +34,6 @@ export function SubscriptionsPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors">
-      
       {/* ================= HEADER (SCREEN 8) ================= */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs flex items-center gap-2">
         <Button
@@ -37,11 +45,12 @@ export function SubscriptionsPage() {
         >
           <ArrowLeft className="h-5 w-5 text-slate-700 dark:text-slate-300" />
         </Button>
-        <h1 className="text-base font-bold text-slate-900 dark:text-white">Subscriptions & Plans</h1>
+        <h1 className="text-base font-bold text-slate-900 dark:text-white">
+          Subscriptions & Plans
+        </h1>
       </header>
 
       <main className="p-4 space-y-5 max-w-lg mx-auto w-full">
-        
         {/* ================= 1. PRIMARY MEDYORA CARE PLAN (SCREEN 8) ================= */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -56,7 +65,10 @@ export function SubscriptionsPage() {
             </div>
             <h2 className="text-2xl font-black tracking-tight text-white">Care Plan</h2>
             <p className="text-sm font-semibold text-blue-100 pt-1">
-              For only <span className="text-white font-extrabold text-lg">₹{primaryPlan.pricePerYear}/year</span>
+              For only{" "}
+              <span className="text-white font-extrabold text-lg">
+                ₹{primaryPlan.pricePerYear}/year
+              </span>
             </p>
           </div>
 
@@ -67,9 +79,7 @@ export function SubscriptionsPage() {
                 <div className="h-5 w-5 rounded-full bg-white/20 flex items-center justify-center shrink-0">
                   <Check className="h-3.5 w-3.5 text-white stroke-[3]" />
                 </div>
-                <span className="text-xs font-medium text-blue-50 leading-tight">
-                  {benefit}
-                </span>
+                <span className="text-xs font-medium text-blue-50 leading-tight">{benefit}</span>
               </div>
             ))}
           </div>
@@ -101,13 +111,18 @@ export function SubscriptionsPage() {
         >
           <div className="space-y-1">
             <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base text-slate-900 dark:text-white">Medyora</span>
+              <span className="font-extrabold text-base text-slate-900 dark:text-white">
+                Medyora
+              </span>
               <span className="font-black text-xs uppercase bg-gradient-to-r from-pink-600 to-purple-600 text-white px-2 py-0.5 rounded-md">
                 PLUS
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Starts from <strong className="text-slate-900 dark:text-white">₹{plusPlan.pricePerYear}/year</strong>
+              Starts from{" "}
+              <strong className="text-slate-900 dark:text-white">
+                ₹{plusPlan.pricePerYear}/year
+              </strong>
             </p>
           </div>
 
@@ -124,7 +139,9 @@ export function SubscriptionsPage() {
         <div className="grid grid-cols-3 gap-2.5 pt-2 text-center">
           <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs">
             <ShieldCheck className="h-5 w-5 text-blue-600 mx-auto mb-1" />
-            <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300">100% Verified</p>
+            <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300">
+              100% Verified
+            </p>
           </div>
           <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs">
             <Users className="h-5 w-5 text-purple-600 mx-auto mb-1" />
@@ -132,12 +149,12 @@ export function SubscriptionsPage() {
           </div>
           <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs">
             <Zap className="h-5 w-5 text-amber-500 mx-auto mb-1" />
-            <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Zero Wait Time</p>
+            <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300">
+              Zero Wait Time
+            </p>
           </div>
         </div>
-
       </main>
-
     </div>
   );
 }

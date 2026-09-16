@@ -21,44 +21,20 @@ export function LiquidGlassBottomNav({ items, className }: LiquidGlassBottomNavP
   return (
     <nav
       className={cn(
-        "lg:hidden fixed bottom-4 inset-x-3 sm:inset-x-6 max-w-[430px] mx-auto z-50 pointer-events-auto select-none gpu-accelerate",
-        className
+        "lg:hidden fixed bottom-4 inset-x-3 sm:inset-x-6 max-w-[430px] mx-auto z-50 pointer-events-auto select-none",
+        className,
       )}
       role="navigation"
       aria-label="Mobile Bottom Navigation"
     >
-      {/* Ambient Prismatic Refraction Aura (Liquid Glass dispersion glow underneath) */}
-      <div 
-        aria-hidden="true"
-        className="absolute -inset-1 rounded-[36px] bg-gradient-to-r from-pink-400/20 via-sky-400/20 to-purple-400/20 blur-lg opacity-70 dark:opacity-30 pointer-events-none transition-all duration-300 transform-gpu"
-      />
-
       {/* Outer Chromatic Iridescent Border Layer */}
-      <div className="relative p-[1.5px] rounded-[32px] bg-gradient-to-r from-pink-300/80 via-sky-300/85 via-indigo-300/80 to-purple-300/80 dark:from-pink-500/40 dark:via-sky-400/50 dark:to-purple-500/40 shadow-[0_20px_50px_rgba(15,23,42,0.16),0_6px_20px_rgba(37,99,235,0.1)] dark:shadow-[0_24px_50px_rgba(0,0,0,0.65)] transform-gpu">
-        
-        {/* Inner Ultra-Transparent Liquid Glass Body */}
-        <div className="relative flex items-center justify-around h-[70px] p-1.5 rounded-[30.5px] bg-white/20 dark:bg-slate-900/20 backdrop-blur-xl shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(147,197,253,0.35)] dark:shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),inset_0_-1.5px_2px_rgba(168,85,247,0.25)] overflow-hidden transform-gpu">
-          
-          {/* Top Specular Glare (Glass refraction lens highlight) */}
-          <div 
-            aria-hidden="true" 
-            className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-white/95 dark:via-white/40 to-transparent pointer-events-none z-20" 
-          />
-
-          {/* Bottom Prismatic Caustic Highlight */}
-          <div 
-            aria-hidden="true" 
-            className="absolute bottom-0 inset-x-12 h-[1px] bg-gradient-to-r from-transparent via-pink-400/40 via-cyan-400/50 to-transparent pointer-events-none z-20" 
-          />
-
-          {/* Left & Right Glass Lens Curvature Highlights */}
-          <div 
+      <div className="relative p-[1.5px] rounded-[30px] bg-gradient-to-r from-blue-400/50 via-indigo-400/50 to-purple-400/50 dark:from-blue-500/30 dark:via-indigo-500/30 dark:to-purple-500/30 shadow-[0_12px_36px_rgba(15,23,42,0.12)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.5)]">
+        {/* Inner Liquid Glass Body */}
+        <div className="relative flex items-center justify-around h-[68px] p-1.5 rounded-[28.5px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] overflow-hidden">
+          {/* Top Specular Glare */}
+          <div
             aria-hidden="true"
-            className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-12 rounded-full bg-gradient-to-r from-white/50 to-transparent blur-[2px] pointer-events-none z-10"
-          />
-          <div 
-            aria-hidden="true"
-            className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-12 rounded-full bg-gradient-to-l from-white/50 to-transparent blur-[2px] pointer-events-none z-10"
+            className="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/80 dark:via-white/30 to-transparent pointer-events-none z-20"
           />
 
           {/* Nav Items */}
@@ -107,7 +83,7 @@ export function LiquidGlassBottomNav({ items, className }: LiquidGlassBottomNavP
                         "h-[21px] w-[21px] transition-colors duration-200",
                         isActive
                           ? "text-blue-600 dark:text-blue-400 stroke-[2.4px] drop-shadow-[0_1px_4px_rgba(37,99,235,0.3)]"
-                          : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white stroke-[1.85px]"
+                          : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white stroke-[1.85px]",
                       )}
                     />
 
@@ -125,7 +101,7 @@ export function LiquidGlassBottomNav({ items, className }: LiquidGlassBottomNavP
                       "text-[10px] tracking-tight transition-all duration-200 leading-none",
                       isActive
                         ? "font-bold text-slate-900 dark:text-white"
-                        : "font-medium text-slate-700 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200"
+                        : "font-medium text-slate-700 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200",
                     )}
                   >
                     {item.label}

@@ -87,7 +87,9 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() =>
               runCommand(() => {
-                window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "symptom_checker" } }));
+                window.dispatchEvent(
+                  new CustomEvent("open-care-ai", { detail: { mode: "symptom_checker" } }),
+                );
               })
             }
             className="rounded-xl cursor-pointer"
@@ -99,7 +101,9 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() =>
               runCommand(() => {
-                window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "image_analyzer" } }));
+                window.dispatchEvent(
+                  new CustomEvent("open-care-ai", { detail: { mode: "image_analyzer" } }),
+                );
               })
             }
             className="rounded-xl cursor-pointer"
@@ -111,7 +115,9 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() =>
               runCommand(() => {
-                window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "lab_analyzer" } }));
+                window.dispatchEvent(
+                  new CustomEvent("open-care-ai", { detail: { mode: "lab_analyzer" } }),
+                );
               })
             }
             className="rounded-xl cursor-pointer"
@@ -123,7 +129,9 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() =>
               runCommand(() => {
-                window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "emergency_sos" } }));
+                window.dispatchEvent(
+                  new CustomEvent("open-care-ai", { detail: { mode: "emergency_sos" } }),
+                );
               })
             }
             className="rounded-xl cursor-pointer text-rose-600"
@@ -138,9 +146,7 @@ export function CommandPalette() {
         {/* Quick Navigation Group */}
         <CommandGroup heading="Navigation">
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/doctors" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/doctors" }))}
             className="rounded-xl cursor-pointer"
           >
             <Stethoscope className="mr-2 h-4 w-4 text-blue-600" />
@@ -149,9 +155,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/patient/queue" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/patient/queue" }))}
             className="rounded-xl cursor-pointer"
           >
             <Activity className="mr-2 h-4 w-4 text-emerald-600" />
@@ -160,9 +164,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/patient/appointments" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/patient/appointments" }))}
             className="rounded-xl cursor-pointer"
           >
             <Calendar className="mr-2 h-4 w-4 text-purple-600" />
@@ -171,9 +173,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/patient/prescriptions" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/patient/prescriptions" }))}
             className="rounded-xl cursor-pointer"
           >
             <FileText className="mr-2 h-4 w-4 text-amber-600" />
@@ -181,9 +181,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/patient/family" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/patient/family" }))}
             className="rounded-xl cursor-pointer"
           >
             <Users className="mr-2 h-4 w-4 text-indigo-600" />
@@ -203,7 +201,7 @@ export function CommandPalette() {
                   navigate({
                     to: "/doctors/$doctorId",
                     params: { doctorId: doc.id },
-                  })
+                  }),
                 )
               }
               className="rounded-xl cursor-pointer"
@@ -227,7 +225,7 @@ export function CommandPalette() {
                   navigate({
                     to: "/doctors",
                     search: { q: spec.name },
-                  })
+                  }),
                 )
               }
               className="rounded-xl cursor-pointer"
@@ -244,9 +242,7 @@ export function CommandPalette() {
         {/* Portals & Apps */}
         <CommandGroup heading="Portals">
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/doctor" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/doctor" }))}
             className="rounded-xl cursor-pointer"
           >
             <LayoutDashboard className="mr-2 h-4 w-4 text-blue-500" />
@@ -254,9 +250,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/admin" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/admin" }))}
             className="rounded-xl cursor-pointer"
           >
             <Shield className="mr-2 h-4 w-4 text-indigo-500" />
@@ -281,9 +275,7 @@ export function CommandPalette() {
           </CommandItem>
 
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate({ to: "/auth/language" }))
-            }
+            onSelect={() => runCommand(() => navigate({ to: "/auth/language" }))}
             className="rounded-xl cursor-pointer"
           >
             <Globe className="mr-2 h-4 w-4 text-teal-500" />
@@ -306,7 +298,7 @@ export function CommandPalette() {
                 shareContent({
                   title: "Medyora Healthcare Platform",
                   url: window.location.href,
-                })
+                }),
               )
             }
             className="rounded-xl cursor-pointer"

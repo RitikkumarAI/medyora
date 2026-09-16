@@ -1,8 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import { 
-  Sparkles, Bot, Send, Mic, X, User, Stethoscope, 
-  AlertTriangle, ArrowRight, RefreshCw, Volume2, ShieldCheck, HeartPulse
+import {
+  Sparkles,
+  Bot,
+  Send,
+  Mic,
+  X,
+  User,
+  Stethoscope,
+  AlertTriangle,
+  ArrowRight,
+  RefreshCw,
+  Volume2,
+  ShieldCheck,
+  HeartPulse,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,13 +37,7 @@ const QUICK_PROMPTS = [
   "Recommend top cardiologists near me",
 ];
 
-export function CareAIChatModal({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+export function CareAIChatModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome-msg",
@@ -83,16 +88,30 @@ export function CareAIChatModal({
 
       const lower = query.toLowerCase();
 
-      if (lower.includes("chest pain") || lower.includes("heart") || lower.includes("stroke") || lower.includes("emergency")) {
-        aiResponseText = "⚠️ EMERGENCY ALERT: Chest pain or sudden shortness of breath can be a sign of a cardiac event. If you experience radiating pain to the arm, jaw, sweating, or dizziness, call an ambulance (112) or go to the nearest emergency room immediately.";
+      if (
+        lower.includes("chest pain") ||
+        lower.includes("heart") ||
+        lower.includes("stroke") ||
+        lower.includes("emergency")
+      ) {
+        aiResponseText =
+          "⚠️ EMERGENCY ALERT: Chest pain or sudden shortness of breath can be a sign of a cardiac event. If you experience radiating pain to the arm, jaw, sweating, or dizziness, call an ambulance (112) or go to the nearest emergency room immediately.";
         recDocs = DOCTORS.filter((d) => d.speciality.toLowerCase().includes("cardio")).slice(0, 2);
         links = [{ label: "Book Senior Cardiologist", to: "/doctors" }];
       } else if (lower.includes("headache") || lower.includes("fever")) {
-        aiResponseText = "Mild headache and low-grade fever are commonly associated with viral infections, tension, or dehydration. Stay well-hydrated, rest in a quiet dark room, and monitor your temperature. If fever exceeds 102°F or lasts >3 days, consult a physician.";
-        recDocs = DOCTORS.filter((d) => d.speciality.toLowerCase().includes("physician")).slice(0, 2);
-        links = [{ label: "Book General Physician", to: "/doctors" }, { label: "Complete Blood Count Test", to: "/patient/lab-tests" }];
+        aiResponseText =
+          "Mild headache and low-grade fever are commonly associated with viral infections, tension, or dehydration. Stay well-hydrated, rest in a quiet dark room, and monitor your temperature. If fever exceeds 102°F or lasts >3 days, consult a physician.";
+        recDocs = DOCTORS.filter((d) => d.speciality.toLowerCase().includes("physician")).slice(
+          0,
+          2,
+        );
+        links = [
+          { label: "Book General Physician", to: "/doctors" },
+          { label: "Complete Blood Count Test", to: "/patient/lab-tests" },
+        ];
       } else if (lower.includes("skin") || lower.includes("acne") || lower.includes("hair")) {
-        aiResponseText = "For persistent acne and skin inflammation, a dermatologist can formulate a personalized routine with active ingredients like Salicylic acid, Retinoids, or Azelaic acid. Avoid picking blemishes to prevent scarring.";
+        aiResponseText =
+          "For persistent acne and skin inflammation, a dermatologist can formulate a personalized routine with active ingredients like Salicylic acid, Retinoids, or Azelaic acid. Avoid picking blemishes to prevent scarring.";
         recDocs = DOCTORS.filter((d) => d.speciality.toLowerCase().includes("derma")).slice(0, 2);
         links = [{ label: "Consult Dermatologist", to: "/doctors" }];
       } else {
@@ -216,7 +235,10 @@ export function CareAIChatModal({
                                 {doc.speciality} • ₹{doc.fee}
                               </p>
                             </div>
-                            <Button size="sm" className="h-7 text-[11px] rounded-lg bg-blue-600 hover:bg-blue-700 text-white">
+                            <Button
+                              size="sm"
+                              className="h-7 text-[11px] rounded-lg bg-blue-600 hover:bg-blue-700 text-white"
+                            >
                               Book
                             </Button>
                           </Link>
@@ -298,7 +320,9 @@ export function CareAIChatModal({
                 size="icon"
                 onClick={handleVoiceSimulate}
                 className={`rounded-2xl shrink-0 h-12 w-12 ${
-                  isRecording ? "bg-red-50 text-red-600 border-red-300 animate-pulse" : "border-slate-200 dark:border-slate-700"
+                  isRecording
+                    ? "bg-red-50 text-red-600 border-red-300 animate-pulse"
+                    : "border-slate-200 dark:border-slate-700"
                 }`}
                 title="Voice symptom input"
               >
@@ -323,7 +347,8 @@ export function CareAIChatModal({
 
             <p className="mt-2 text-[10px] text-center text-slate-400 flex items-center justify-center gap-1">
               <ShieldCheck className="h-3 w-3 text-blue-500" />
-              Care AI provides educational insights and does not replace official physician diagnosis.
+              Care AI provides educational insights and does not replace official physician
+              diagnosis.
             </p>
           </div>
         </motion.div>

@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import React, { useEffect, lazy, Suspense, type ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
@@ -18,11 +18,26 @@ import { SkipToContent } from "@/shared/accessibility/SkipToContent";
 import { LiveAnnouncer } from "@/shared/accessibility/LiveAnnouncer";
 import { OfflineStatusBanner } from "@/shared/offline/OfflineStatusBanner";
 import { PWAInstallPrompt } from "@/shared/pwa/PWAInstallPrompt";
-import { CommandPalette } from "@/shared/components/CommandPalette";
 import { MedicalSchema } from "@/shared/seo/MedicalSchema";
-import { GlobalAICopilot } from "@/modules/patient/care-ai/components/GlobalAICopilot";
 import { PreloaderProvider, usePreloader } from "@/shared/components/loaders/PreloaderProvider";
-import { CinematicMedicalPreloader } from "@/shared/components/loaders/CinematicMedicalPreloader";
+
+const GlobalAICopilot = lazy(() =>
+  import("@/modules/patient/care-ai/components/GlobalAICopilot").then((m) => ({
+    default: m.GlobalAICopilot,
+  })),
+);
+
+const CommandPalette = lazy(() =>
+  import("@/shared/components/CommandPalette").then((m) => ({
+    default: m.CommandPalette,
+  })),
+);
+
+const CinematicMedicalPreloader = lazy(() =>
+  import("@/shared/components/loaders/CinematicMedicalPreloader").then((m) => ({
+    default: m.CinematicMedicalPreloader,
+  })),
+);
 
 function NotFoundComponent() {
   return (
@@ -95,7 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content",
       },
-      { title: "Medyora — Book Verified Doctors Online & Live Queue Tracking | Binarize Technologies" },
+      {
+        title:
+          "Medyora — Book Verified Doctors Online & Live Queue Tracking | Binarize Technologies",
+      },
       {
         name: "description",
         content:
@@ -111,7 +129,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "application-name", content: "Medyora" },
       { name: "format-detection", content: "telephone=no" },
       { property: "og:site_name", content: "Medyora by Binarize Technologies" },
-      { property: "og:title", content: "Medyora — Book Verified Doctors Online & Live Clinic Queues" },
+      {
+        property: "og:title",
+        content: "Medyora — Book Verified Doctors Online & Live Clinic Queues",
+      },
       {
         property: "og:description",
         content:
@@ -174,10 +195,9 @@ function GlobalPreloaderGate() {
   const { isVisible, hidePreloader } = usePreloader();
   if (!isVisible) return null;
   return (
-    <CinematicMedicalPreloader
-      onComplete={hidePreloader}
-      durationMs={1300}
-    />
+    <Suspense fallback={null}>
+      <CinematicMedicalPreloader onComplete={hidePreloader} durationMs={350} />
+    </Suspense>
   );
 }
 
@@ -191,15 +211,6 @@ function RootComponent() {
         navigator.serviceWorker.register("/sw.js").catch((err) => {
           console.warn("[SW] Registration error:", err);
         });
-
-        // Automatically reload the page when a new service worker takes over
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          if (!refreshing) {
-            refreshing = true;
-            window.location.reload();
-          }
-        });
       });
     }
   }, []);
@@ -211,13 +222,15 @@ function RootComponent() {
           <GlobalPreloaderGate />
           <SkipToContent targetId="main-content" />
           <OfflineStatusBanner />
-          
+
           {/* Core Router Outlet */}
           <Outlet />
-          
-          {/* Cross-Platform Global Modals, AI Copilot & Notifications */}
-          <GlobalAICopilot />
-          <CommandPalette />
+
+          {/* Cross-Platform Global Modals, AI Copilot & Notifications (Code Split) */}
+          <Suspense fallback={null}>
+            <GlobalAICopilot />
+            <CommandPalette />
+          </Suspense>
           <PWAInstallPrompt />
           <LiveAnnouncer />
           <MedicalSchema />

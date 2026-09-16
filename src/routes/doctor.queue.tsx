@@ -41,7 +41,9 @@ function QueuePage() {
           onClick={() => {
             const next = callNext();
             toast[next ? "success" : "info"](
-              next ? `Now calling ${next.patient} (${next.token})` : "No patients left in the queue",
+              next
+                ? `Now calling ${next.patient} (${next.token})`
+                : "No patients left in the queue",
             );
           }}
         >
@@ -50,8 +52,16 @@ function QueuePage() {
       }
     >
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Now consulting" value={consulting?.token ?? "—"} hint={consulting?.patient ?? "Queue idle"} />
-        <StatCard label="Waiting" value={String(waiting.length)} hint={`~${waiting.length * 12} min to clear`} />
+        <StatCard
+          label="Now consulting"
+          value={consulting?.token ?? "—"}
+          hint={consulting?.patient ?? "Queue idle"}
+        />
+        <StatCard
+          label="Waiting"
+          value={String(waiting.length)}
+          hint={`~${waiting.length * 12} min to clear`}
+        />
         <StatCard label="Completed" value={String(done)} hint="Consultations finished today" />
       </div>
 

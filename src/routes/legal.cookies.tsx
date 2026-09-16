@@ -9,7 +9,7 @@ function CookiesPolicy() {
     <article className="prose prose-slate dark:prose-invert max-w-none">
       <h1>Cookies Policy</h1>
       <p>Last updated: August 2026</p>
-      
+
       <h2>1. What are Cookies?</h2>
       <p>
         Cookies are small text files that are placed on your computer or mobile device when you
@@ -18,9 +18,7 @@ function CookiesPolicy() {
       </p>
 
       <h2>2. How We Use Cookies</h2>
-      <p>
-        Medyora uses cookies to improve your experience on our platform, including:
-      </p>
+      <p>Medyora uses cookies to improve your experience on our platform, including:</p>
       <ul>
         <li>Keeping you signed in.</li>
         <li>Understanding how you use our platform.</li>
@@ -30,13 +28,20 @@ function CookiesPolicy() {
 
       <h2>3. Types of Cookies We Use</h2>
       <p>
-        We use both session and persistent cookies on the platform and we use different types
-        of cookies to run the platform:
+        We use both session and persistent cookies on the platform and we use different types of
+        cookies to run the platform:
       </p>
       <ul>
-        <li><strong>Essential Cookies:</strong> Necessary for the operation of the platform.</li>
-        <li><strong>Performance Cookies:</strong> Used to analyze how visitors use the platform.</li>
-        <li><strong>Functionality Cookies:</strong> Used to recognize you when you return to the platform.</li>
+        <li>
+          <strong>Essential Cookies:</strong> Necessary for the operation of the platform.
+        </li>
+        <li>
+          <strong>Performance Cookies:</strong> Used to analyze how visitors use the platform.
+        </li>
+        <li>
+          <strong>Functionality Cookies:</strong> Used to recognize you when you return to the
+          platform.
+        </li>
       </ul>
 
       <h2>4. Managing Cookies</h2>

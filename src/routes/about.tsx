@@ -1,5 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeartPulse, ShieldCheck, Sparkles, Users, Cpu, Lock, Globe, Building2, CheckCircle2, ArrowRight } from "lucide-react";
+import {
+  HeartPulse,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Cpu,
+  Lock,
+  Globe,
+  Building2,
+  CheckCircle2,
+  ArrowRight,
+} from "lucide-react";
 import { SiteHeader } from "@/shared/components/SiteHeader";
 import { SiteFooter } from "@/shared/components/SiteFooter";
 
@@ -59,7 +70,8 @@ const TECH_PILLARS = [
   {
     icon: Cpu,
     title: "High-Performance Edge Architecture",
-    description: "Engineered with sub-50ms query response times, edge-rendered routes, and instant PWA hydration.",
+    description:
+      "Engineered with sub-50ms query response times, edge-rendered routes, and instant PWA hydration.",
   },
   {
     icon: Globe,
@@ -69,12 +81,14 @@ const TECH_PILLARS = [
   {
     icon: Sparkles,
     title: "Care AI Diagnostic Copilot",
-    description: "Proprietary medical AI assistant built for instant symptom triage, clinic recommendations, and OTC guidance.",
+    description:
+      "Proprietary medical AI assistant built for instant symptom triage, clinic recommendations, and OTC guidance.",
   },
   {
     icon: Building2,
     title: "Enterprise Clinic Management",
-    description: "Full clinic queue software, digital prescription generator, and automated patient notifications.",
+    description:
+      "Full clinic queue software, digital prescription generator, and automated patient notifications.",
   },
 ];
 
@@ -82,7 +96,7 @@ function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <SiteHeader />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative px-6 py-16 sm:py-24 sm:px-10 lg:px-16 w-full max-w-[1536px] mx-auto text-center">
@@ -93,11 +107,15 @@ function AboutPage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white leading-tight">
-              Transforming Healthcare with <span className="text-blue-600 dark:text-blue-400">Intelligent Technology</span>
+              Transforming Healthcare with{" "}
+              <span className="text-blue-600 dark:text-blue-400">Intelligent Technology</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              Medyora is an enterprise healthcare super-app developed, engineered, and maintained by <strong>Binarize Technologies</strong>. We built a unified platform where verified doctor discovery, instant appointments, live clinic queue radar, digital prescriptions, and AI triage seamlessly collaborate.
+              Medyora is an enterprise healthcare super-app developed, engineered, and maintained by{" "}
+              <strong>Binarize Technologies</strong>. We built a unified platform where verified
+              doctor discovery, instant appointments, live clinic queue radar, digital
+              prescriptions, and AI triage seamlessly collaborate.
             </p>
           </div>
         </section>
@@ -110,8 +128,12 @@ function AboutPage() {
                 key={s.label}
                 className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm text-center space-y-1 hover:border-blue-400 dark:hover:border-blue-600 transition-colors"
               >
-                <p className="text-3xl sm:text-4xl font-black text-blue-600 dark:text-blue-400">{s.value}</p>
-                <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">{s.label}</p>
+                <p className="text-3xl sm:text-4xl font-black text-blue-600 dark:text-blue-400">
+                  {s.value}
+                </p>
+                <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
+                  {s.label}
+                </p>
               </div>
             ))}
           </div>
@@ -129,14 +151,18 @@ function AboutPage() {
                 Built by Binarize Technologies for the Next Billion Healthcare Users
               </h2>
               <p className="text-sm sm:text-base text-blue-100 leading-relaxed font-normal">
-                Binarize Technologies powers digital transformation for critical human workflows. Medyora represents our flagship healthcare technology stack — engineered with edge architecture, instant client-side transitions, offline-first sync, and AI clinical intelligence.
+                Binarize Technologies powers digital transformation for critical human workflows.
+                Medyora represents our flagship healthcare technology stack — engineered with edge
+                architecture, instant client-side transitions, offline-first sync, and AI clinical
+                intelligence.
               </p>
               <div className="pt-2 flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 text-xs font-semibold text-white/90">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Continuous 24/7 Monitoring
                 </div>
                 <div className="flex items-center gap-2 text-xs font-semibold text-white/90">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> ISO & HIPAA Aligned Architecture
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> ISO & HIPAA Aligned
+                  Architecture
                 </div>
                 <div className="flex items-center gap-2 text-xs font-semibold text-white/90">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Zero Data Selling Guarantee
@@ -153,7 +179,8 @@ function AboutPage() {
               Technology Stack by Binarize Technologies
             </h2>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Designed for extreme speed, instant responsiveness, and military-grade clinical security.
+              Designed for extreme speed, instant responsiveness, and military-grade clinical
+              security.
             </p>
           </div>
 
@@ -167,7 +194,9 @@ function AboutPage() {
                   <p.icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-bold text-base text-slate-900 dark:text-white">{p.title}</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{p.description}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {p.description}
+                </p>
               </div>
             ))}
           </div>
@@ -194,8 +223,12 @@ function AboutPage() {
                   <v.icon className="size-6" />
                 </span>
                 <div>
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">{v.title}</h3>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{v.text}</p>
+                  <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                    {v.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {v.text}
+                  </p>
                 </div>
               </div>
             ))}

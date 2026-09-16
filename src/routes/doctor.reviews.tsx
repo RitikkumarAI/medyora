@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { createFileRoute } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute('/doctor/reviews')({
+export const Route = createFileRoute("/doctor/reviews")({
   component: () => (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
       <Button variant="outline" className="mb-8" onClick={() => window.history.back()}>
@@ -11,5 +11,5 @@ export const Route = createFileRoute('/doctor/reviews')({
       <h1 className="text-2xl font-black text-slate-900 mb-2">Reviews Module</h1>
       <p className="text-slate-500">Coming soon in the next phase!</p>
     </div>
-  )
-})
+  ),
+});

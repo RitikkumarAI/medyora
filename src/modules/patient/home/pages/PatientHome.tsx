@@ -1,26 +1,53 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { 
-  Search, MapPin, Sparkles, Video, UserCheck, FlaskConical, 
-  Stethoscope, Pill, ShieldCheck, ChevronRight, ChevronDown, 
-  Star, Heart, MessageSquare, ArrowRight, CheckCircle2, 
-  Clock, Share2, Award, Building2, Flame, BookOpen
+import {
+  Search,
+  MapPin,
+  Sparkles,
+  Video,
+  UserCheck,
+  FlaskConical,
+  Stethoscope,
+  Pill,
+  ShieldCheck,
+  ChevronRight,
+  ChevronDown,
+  Star,
+  Heart,
+  MessageSquare,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Share2,
+  Award,
+  Building2,
+  Flame,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DOCTORS, SPECIALIZATIONS, GENERAL_CARE_SPECIALITIES, ADVANCED_CARE_SPECIALITIES } from "@/shared/data/mock";
+import {
+  DOCTORS,
+  SPECIALIZATIONS,
+  GENERAL_CARE_SPECIALITIES,
+  ADVANCED_CARE_SPECIALITIES,
+} from "@/shared/data/mock";
 import { COMMUNITY_QUESTIONS } from "@/shared/data/superapp-mock";
-import { HEALTH_ARTICLES_DATA } from "@/shared/data/articles-data";
+import { FEATURED_ARTICLE_PREVIEWS } from "@/shared/data/article-previews";
 import { LocationPickerModal } from "@/shared/components/LocationPickerModal";
-import { CareAIChatModal } from "@/modules/patient/care-ai/components/CareAIChatModal";
-import { DesktopLandingPage } from "@/shared/components/DesktopLandingPage";
+import { lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const DesktopLandingPage = lazy(() =>
+  import("@/shared/components/DesktopLandingPage").then((m) => ({
+    default: m.DesktopLandingPage,
+  })),
+);
 
 export function PatientHome() {
   const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState("Bangalore");
   const [selectedArea, setSelectedArea] = useState("Indiranagar");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-  const [isCareAIOpen, setIsCareAIOpen] = useState(false);
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [specialityTab, setSpecialityTab] = useState<"general" | "advanced">("general");
 
@@ -32,7 +59,8 @@ export function PatientHome() {
       cta: "Get Cost Estimate",
       link: "/patient/surgeries",
       bgGradient: "from-blue-700 via-blue-800 to-indigo-900",
-      image: "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "b2",
@@ -41,7 +69,8 @@ export function PatientHome() {
       cta: "Book Now",
       link: "/patient/lab-tests",
       bgGradient: "from-indigo-800 via-purple-900 to-slate-900",
-      image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "b3",
@@ -50,7 +79,8 @@ export function PatientHome() {
       cta: "Order Now",
       link: "/patient/medicines",
       bgGradient: "from-teal-800 via-emerald-900 to-slate-900",
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
     },
   ];
 
@@ -67,7 +97,8 @@ export function PatientHome() {
       title: "In-Person Consultation",
       subtitle: "Find verified clinics",
       link: "/doctors",
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=160&q=80",
+      image:
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=160&q=80",
       isDoctorImage: true,
       badge: "Verified",
     },
@@ -75,7 +106,8 @@ export function PatientHome() {
       title: "Video Consultation",
       subtitle: "Connect in 60 secs",
       link: "/patient/consult",
-      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=160&q=80",
+      image:
+        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=160&q=80",
       isDoctorImage: true,
       badge: "24/7 Available",
     },
@@ -119,15 +151,15 @@ export function PatientHome() {
     <>
       {/* Desktop Landing View (>= lg) */}
       <div className="hidden lg:block">
-        <DesktopLandingPage />
+        <Suspense fallback={null}>
+          <DesktopLandingPage />
+        </Suspense>
       </div>
 
       {/* Mobile Practo Super App Experience (< lg) */}
       <div className="block lg:hidden min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors overflow-x-hidden max-w-[100vw] w-full select-none">
-        
         {/* ================= 1. PRACTO-STYLE HEADER ================= */}
         <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-3 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs">
-          
           {/* Location Selector Pill (Screen 1) */}
           <div className="flex items-center justify-between mb-2.5">
             <button
@@ -153,7 +185,9 @@ export function PatientHome() {
             </Link>
 
             <Button
-              onClick={() => window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "chat" } }))}
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "chat" } }))
+              }
               size="sm"
               className="h-11 px-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-600/20 shrink-0 flex items-center gap-1.5"
             >
@@ -164,7 +198,6 @@ export function PatientHome() {
         </header>
 
         <main className="p-4 space-y-6 overflow-x-hidden max-w-full">
-          
           {/* ================= 2. TOP 6 SERVICES (SCREEN 1) ================= */}
           <section>
             <div className="grid grid-cols-2 gap-3">
@@ -175,7 +208,9 @@ export function PatientHome() {
               >
                 <div>
                   <h3 className="font-bold text-xs text-slate-900 dark:text-white leading-tight">
-                    In-Person<br />Consultation
+                    In-Person
+                    <br />
+                    Consultation
                   </h3>
                   <p className="text-[10px] text-slate-400 mt-1">Verified Doctors</p>
                 </div>
@@ -195,9 +230,13 @@ export function PatientHome() {
               >
                 <div>
                   <h3 className="font-bold text-xs text-slate-900 dark:text-white leading-tight">
-                    Video<br />Consultation
+                    Video
+                    <br />
+                    Consultation
                   </h3>
-                  <p className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-1">Connect in 60s</p>
+                  <p className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-1">
+                    Connect in 60s
+                  </p>
                 </div>
                 <div className="flex justify-end -mr-2 -mb-2">
                   <img
@@ -219,7 +258,9 @@ export function PatientHome() {
                     to={srv.link}
                     className="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs text-center hover:border-blue-500 transition-all"
                   >
-                    <div className={`h-10 w-10 rounded-2xl bg-gradient-to-br ${srv.color} text-white flex items-center justify-center shadow-xs mb-1.5`}>
+                    <div
+                      className={`h-10 w-10 rounded-2xl bg-gradient-to-br ${srv.color} text-white flex items-center justify-center shadow-xs mb-1.5`}
+                    >
                       <IconComponent className="h-5 w-5" />
                     </div>
                     <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 line-clamp-2 leading-tight">
@@ -327,7 +368,9 @@ export function PatientHome() {
                     key={idx}
                     onClick={() => setActiveBannerIndex(idx)}
                     className={`h-1.5 rounded-full transition-all ${
-                      activeBannerIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-slate-300 dark:bg-slate-700"
+                      activeBannerIndex === idx
+                        ? "w-6 bg-blue-600"
+                        : "w-1.5 bg-slate-300 dark:bg-slate-700"
                     }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
@@ -342,7 +385,10 @@ export function PatientHome() {
               <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
                 Find doctors by speciality
               </h3>
-              <Link to="/specialities" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+              <Link
+                to="/specialities"
+                className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+              >
                 Explore all &gt;
               </Link>
             </div>
@@ -375,7 +421,10 @@ export function PatientHome() {
 
             {/* 4x2 Grid of Visual Speciality Cards */}
             <div className="grid grid-cols-4 gap-2.5">
-              {(specialityTab === "general" ? GENERAL_CARE_SPECIALITIES : ADVANCED_CARE_SPECIALITIES).map((item) => (
+              {(specialityTab === "general"
+                ? GENERAL_CARE_SPECIALITIES
+                : ADVANCED_CARE_SPECIALITIES
+              ).map((item) => (
                 <Link
                   key={item.id}
                   to="/doctors"
@@ -405,15 +454,20 @@ export function PatientHome() {
                 <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                   <BookOpen className="h-3.5 w-3.5 text-blue-600" /> Health Articles by Doctors
                 </h3>
-                <p className="text-[11px] text-slate-400">Diet, 10 foods, micronutrients & wellness</p>
+                <p className="text-[11px] text-slate-400">
+                  Diet, 10 foods, micronutrients & wellness
+                </p>
               </div>
-              <Link to="/patient/feed" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+              <Link
+                to="/patient/feed"
+                className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+              >
                 Read all articles →
               </Link>
             </div>
 
             <div className="flex gap-3 overflow-x-auto no-scrollbar overscroll-x-contain pb-2 pt-1">
-              {HEALTH_ARTICLES_DATA.slice(0, 5).map((art) => (
+              {FEATURED_ARTICLE_PREVIEWS.slice(0, 5).map((art) => (
                 <Link
                   key={art.id}
                   to="/patient/articles/$articleId"
@@ -468,7 +522,10 @@ export function PatientHome() {
               <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Free Expert Q&A
               </h3>
-              <Link to="/patient/feed" className="text-xs font-bold text-blue-600 dark:text-blue-400">
+              <Link
+                to="/patient/feed"
+                className="text-xs font-bold text-blue-600 dark:text-blue-400"
+              >
                 See all
               </Link>
             </div>
@@ -476,7 +533,9 @@ export function PatientHome() {
             {featuredQuestion && (
               <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">
+                    Community Question
+                  </span>
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
                     Answered
                   </span>
@@ -533,7 +592,6 @@ export function PatientHome() {
               <ChevronRight className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
             </Link>
           </section>
-
         </main>
 
         {/* Location Picker Modal */}
@@ -547,13 +605,6 @@ export function PatientHome() {
             setSelectedArea(loc.area || "");
           }}
         />
-
-        {/* Care AI Interactive Assistant */}
-        <CareAIChatModal
-          isOpen={isCareAIOpen}
-          onClose={() => setIsCareAIOpen(false)}
-        />
-
       </div>
     </>
   );

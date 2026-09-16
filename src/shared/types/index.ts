@@ -23,14 +23,16 @@ export interface Clinic {
   online?: boolean | undefined;
   type?: "premium" | "regular" | undefined;
   timings?: string | undefined;
-  navigation?: {
-    parking: boolean;
-    lift: boolean;
-    wheelchair: boolean;
-    floor: string;
-    landmark: string;
-    mapsUrl?: string | undefined;
-  } | undefined;
+  navigation?:
+    | {
+        parking: boolean;
+        lift: boolean;
+        wheelchair: boolean;
+        floor: string;
+        landmark: string;
+        mapsUrl?: string | undefined;
+      }
+    | undefined;
 }
 
 export type DoctorVerificationLevel = "verified" | "premium" | "top_rated" | "elite";

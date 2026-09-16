@@ -6,7 +6,9 @@ import { SiteFooter } from "@/shared/components/SiteFooter";
 import { DOCTORS } from "@/shared/data/mock";
 
 export const Route = createFileRoute("/booking-success")({
-  validateSearch: (search: Record<string, unknown>): {
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): {
     doctorId?: string | undefined;
     date?: string | undefined;
     slot?: string | undefined;
@@ -17,7 +19,10 @@ export const Route = createFileRoute("/booking-success")({
     date: typeof search["date"] === "string" ? (search["date"] as string) : undefined,
     slot: typeof search["slot"] === "string" ? (search["slot"] as string) : undefined,
     amount: typeof search["amount"] === "number" ? (search["amount"] as number) : undefined,
-    visitType: typeof search["visitType"] === "string" ? (search["visitType"] as "clinic" | "home") : undefined,
+    visitType:
+      typeof search["visitType"] === "string"
+        ? (search["visitType"] as "clinic" | "home")
+        : undefined,
   }),
   head: () => ({
     meta: [
@@ -57,9 +62,7 @@ function SuccessPage() {
             <div className="mt-6 rounded-2xl bg-accent p-5">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">Your token</p>
               <p className="text-4xl font-bold text-primary">#12</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Estimated wait time · 25 minutes
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">Estimated wait time · 25 minutes</p>
             </div>
 
             <dl className="mt-6 space-y-2 text-left text-sm">
@@ -89,15 +92,7 @@ function SuccessPage() {
   );
 }
 
-function Row({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: typeof Clock;
-  label: string;
-  value: string;
-}) {
+function Row({ icon: Icon, label, value }: { icon: typeof Clock; label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-4 rounded-xl border border-border px-4 py-3">
       <span className="inline-flex items-center gap-2 text-muted-foreground">

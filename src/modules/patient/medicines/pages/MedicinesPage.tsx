@@ -1,9 +1,23 @@
 import { useState, useRef } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, Search, ShoppingCart, MessageCircle, UploadCloud, 
-  FileText, Check, ShieldCheck, Zap, Sparkles, Heart, Smile, 
-  X, Plus, Trash2, ChevronRight, Activity 
+import {
+  ArrowLeft,
+  Search,
+  ShoppingCart,
+  MessageCircle,
+  UploadCloud,
+  FileText,
+  Check,
+  ShieldCheck,
+  Zap,
+  Sparkles,
+  Heart,
+  Smile,
+  X,
+  Plus,
+  Trash2,
+  ChevronRight,
+  Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,14 +52,17 @@ export function MedicinesPage() {
     const file = e.target.files?.[0];
     if (file) {
       setPrescriptionFile(file);
-      toast.success(`Prescription "${file.name}" uploaded successfully! Our pharmacist will review it.`);
+      toast.success(
+        `Prescription "${file.name}" uploaded successfully! Our pharmacist will review it.`,
+      );
     }
   };
 
-  const filteredMedicines = MEDICINES.filter((m) =>
-    m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    m.genericName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    m.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredMedicines = MEDICINES.filter(
+    (m) =>
+      m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.genericName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.category.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const cartItemsDetailed = cart.map((item) => {
@@ -53,11 +70,13 @@ export function MedicinesPage() {
     return { ...med, qty: item.qty };
   });
 
-  const totalAmount = cartItemsDetailed.reduce((sum, item) => sum + item.discountedPrice * item.qty, 0);
+  const totalAmount = cartItemsDetailed.reduce(
+    (sum, item) => sum + item.discountedPrice * item.qty,
+    0,
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-28 font-sans transition-colors">
-      
       {/* ================= HEADER (SCREEN 7) ================= */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
         <div className="flex items-center justify-between">
@@ -102,12 +121,13 @@ export function MedicinesPage() {
       </header>
 
       <main className="p-4 space-y-6">
-        
         {/* ================= HERO PROMO BANNER (SCREEN 7) ================= */}
         <div className="rounded-3xl p-5 bg-gradient-to-r from-teal-700 via-emerald-800 to-slate-900 text-white relative overflow-hidden shadow-lg">
           <div className="max-w-[65%] space-y-2">
             <h2 className="font-extrabold text-lg leading-tight">
-              Flat 20% off<br />On all medicines
+              Flat 20% off
+              <br />
+              On all medicines
             </h2>
             <Button
               size="sm"
@@ -133,7 +153,9 @@ export function MedicinesPage() {
         <section className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <h3 className="text-xs font-bold text-slate-900 dark:text-white">Order with Prescription</h3>
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white">
+                Order with Prescription
+              </h3>
               <p className="text-[11px] text-slate-400">Get medicines delivered at your doorstep</p>
             </div>
             <input
@@ -191,7 +213,9 @@ export function MedicinesPage() {
                 onClick={() => setSearchQuery(cat.name)}
                 className="flex flex-col items-center p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs hover:border-blue-500 transition-all text-center"
               >
-                <div className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${cat.color} text-white flex items-center justify-center mb-1.5 shadow-xs`}>
+                <div
+                  className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${cat.color} text-white flex items-center justify-center mb-1.5 shadow-xs`}
+                >
                   {cat.id === "pain" && <Zap className="h-5 w-5" />}
                   {cat.id === "vitamins" && <Sparkles className="h-5 w-5" />}
                   {cat.id === "healthcare" && <ShieldCheck className="h-5 w-5" />}
@@ -234,9 +258,7 @@ export function MedicinesPage() {
                         <span className="font-bold text-xs text-slate-900 dark:text-white">
                           ₹{med.discountedPrice}
                         </span>
-                        <span className="text-[10px] text-slate-400 line-through">
-                          ₹{med.mrp}
-                        </span>
+                        <span className="text-[10px] text-slate-400 line-through">₹{med.mrp}</span>
                       </div>
                     </div>
                   </div>
@@ -253,7 +275,6 @@ export function MedicinesPage() {
             })}
           </div>
         </section>
-
       </main>
 
       {/* ================= FLOATING CHAT TO ORDER BAR (SCREEN 7) ================= */}
@@ -276,7 +297,9 @@ export function MedicinesPage() {
               <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
                 20+ Experts Online
               </p>
-              <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">Instant order support</p>
+              <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                Instant order support
+              </p>
             </div>
           </div>
 
@@ -305,7 +328,10 @@ export function MedicinesPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-white">
                   Pharmacy Cart ({cart.length})
                 </h3>
-                <button onClick={() => setIsCartOpen(false)} className="p-1 rounded-full text-slate-400">
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="p-1 rounded-full text-slate-400"
+                >
                   <X className="h-5 w-5" />
                 </button>
               </div>
@@ -315,12 +341,22 @@ export function MedicinesPage() {
                   <p className="text-center text-xs text-slate-400 py-8">Your cart is empty.</p>
                 ) : (
                   cartItemsDetailed.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800">
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800"
+                    >
                       <div>
                         <p className="font-bold text-xs">{item.name}</p>
-                        <p className="text-[11px] text-blue-600 font-semibold">₹{item.discountedPrice} × {item.qty} = ₹{item.discountedPrice * item.qty}</p>
+                        <p className="text-[11px] text-blue-600 font-semibold">
+                          ₹{item.discountedPrice} × {item.qty} = ₹{item.discountedPrice * item.qty}
+                        </p>
                       </div>
-                      <Button size="sm" variant="ghost" onClick={() => handleRemoveFromCart(item.id)} className="text-red-500 h-8 text-xs">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleRemoveFromCart(item.id)}
+                        className="text-red-500 h-8 text-xs"
+                      >
                         Remove
                       </Button>
                     </div>
@@ -350,7 +386,6 @@ export function MedicinesPage() {
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

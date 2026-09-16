@@ -50,7 +50,9 @@ export function PWAInstallPrompt() {
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Install Medyora App</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                  Install Medyora App
+                </h3>
                 <span className="flex items-center gap-0.5 text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded-full">
                   <Sparkles className="h-2.5 w-2.5" /> Fast
                 </span>

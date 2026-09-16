@@ -1,24 +1,31 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (SSR entry wrapper)
-    server: { entry: "server" },
-  },
   build: {
-    minify: "esbuild",
-    cssMinify: "esbuild",
     target: "esnext",
+    minify: true,
+    cssMinify: true,
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'router-vendor': ['@tanstack/react-router'],
+        manualChunks(id: string) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react/") || id.includes("react-dom/")) {
+              return "vendor-react";
+            }
+            if (id.includes("@tanstack/")) {
+              return "vendor-router";
+            }
+            if (id.includes("framer-motion")) {
+              return "vendor-motion";
+            }
+            if (id.includes("lucide-react")) {
+              return "vendor-icons";
+            }
+          }
+          return undefined;
         },
       },
     },
-  },
-  esbuild: {
-    drop: ['console', 'debugger'],
   },
 });

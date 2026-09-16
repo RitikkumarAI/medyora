@@ -9,7 +9,7 @@ function PrivacyPolicy() {
     <article className="prose prose-slate dark:prose-invert max-w-none">
       <h1>Privacy Policy</h1>
       <p>Last updated: August 2026</p>
-      
+
       <h2>1. Introduction</h2>
       <p>
         At Medyora, we take your privacy seriously. This Privacy Policy explains how we collect,
@@ -18,8 +18,8 @@ function PrivacyPolicy() {
 
       <h2>2. Information We Collect</h2>
       <p>
-        We may collect information about you in a variety of ways. The information we may collect
-        on the Site includes:
+        We may collect information about you in a variety of ways. The information we may collect on
+        the Site includes:
       </p>
       <ul>
         <li>
@@ -27,16 +27,16 @@ function PrivacyPolicy() {
           shipping address, email address, and telephone number.
         </li>
         <li>
-          <strong>Medical Data:</strong> Health-related information that you choose to provide
-          for consultations and symptom checking.
+          <strong>Medical Data:</strong> Health-related information that you choose to provide for
+          consultations and symptom checking.
         </li>
       </ul>
 
       <h2>3. Use of Your Information</h2>
       <p>
         Having accurate information about you permits us to provide you with a smooth, efficient,
-        and customized experience. Specifically, we may use information collected about you via
-        the Site to:
+        and customized experience. Specifically, we may use information collected about you via the
+        Site to:
       </p>
       <ul>
         <li>Create and manage your account.</li>

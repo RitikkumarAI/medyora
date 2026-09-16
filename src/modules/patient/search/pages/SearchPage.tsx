@@ -1,13 +1,32 @@
 import { useState, useEffect } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, Search, Mic, Sparkles, Stethoscope, HeartPulse, 
-  Smile, Baby, Flower2, Bone, Brain, CheckCircle2, ChevronRight, 
-  MessageSquare, X, Clock, Star
+import {
+  ArrowLeft,
+  Search,
+  Mic,
+  Sparkles,
+  Stethoscope,
+  HeartPulse,
+  Smile,
+  Baby,
+  Flower2,
+  Bone,
+  Brain,
+  CheckCircle2,
+  ChevronRight,
+  MessageSquare,
+  X,
+  Clock,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DOCTORS, SPECIALIZATIONS, GENERAL_CARE_SPECIALITIES, ADVANCED_CARE_SPECIALITIES } from "@/shared/data/mock";
+import {
+  DOCTORS,
+  SPECIALIZATIONS,
+  GENERAL_CARE_SPECIALITIES,
+  ADVANCED_CARE_SPECIALITIES,
+} from "@/shared/data/mock";
 import { COMMUNITY_QUESTIONS } from "@/shared/data/superapp-mock";
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { CareAIChatModal } from "@/modules/patient/care-ai/components/CareAIChatModal";
@@ -48,7 +67,6 @@ export function SearchPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors">
-      
       {/* ================= HEADER WITH SEARCH & CARE AI ================= */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
         <div className="flex items-center gap-2">
@@ -87,7 +105,9 @@ export function SearchPage() {
           </div>
 
           <Button
-            onClick={() => window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "chat" } }))}
+            onClick={() =>
+              window.dispatchEvent(new CustomEvent("open-care-ai", { detail: { mode: "chat" } }))
+            }
             size="sm"
             className="h-11 px-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-600/20 shrink-0 flex items-center gap-1.5"
           >
@@ -109,8 +129,12 @@ export function SearchPage() {
             {results.length === 0 ? (
               <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800">
                 <Search className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                <h4 className="font-bold text-sm text-slate-800 dark:text-slate-200">No doctors found</h4>
-                <p className="text-xs text-slate-400 mt-1">Try searching by condition, speciality or another city.</p>
+                <h4 className="font-bold text-sm text-slate-800 dark:text-slate-200">
+                  No doctors found
+                </h4>
+                <p className="text-xs text-slate-400 mt-1">
+                  Try searching by condition, speciality or another city.
+                </p>
               </div>
             ) : (
               <div className="grid gap-3">
@@ -130,10 +154,16 @@ export function SearchPage() {
                       <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
                         {doc.fullName}
                       </h4>
-                      <p className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">{doc.speciality}</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">{doc.clinic.name}, {doc.city}</p>
+                      <p className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">
+                        {doc.speciality}
+                      </p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        {doc.clinic.name}, {doc.city}
+                      </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100">₹{doc.fee}</span>
+                        <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100">
+                          ₹{doc.fee}
+                        </span>
                         <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.5 rounded">
                           ★ {doc.rating}
                         </span>
@@ -153,7 +183,10 @@ export function SearchPage() {
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
                   Top Specialities
                 </h3>
-                <Link to="/specialities" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                <Link
+                  to="/specialities"
+                  className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                >
                   See all &gt;
                 </Link>
               </div>
@@ -186,7 +219,10 @@ export function SearchPage() {
 
               {/* 4x2 Grid of Visual Speciality Cards */}
               <div className="grid grid-cols-4 gap-2.5">
-                {(specialityTab === "general" ? GENERAL_CARE_SPECIALITIES : ADVANCED_CARE_SPECIALITIES).map((item) => (
+                {(specialityTab === "general"
+                  ? GENERAL_CARE_SPECIALITIES
+                  : ADVANCED_CARE_SPECIALITIES
+                ).map((item) => (
                   <Link
                     key={item.id}
                     to="/doctors"
@@ -215,7 +251,10 @@ export function SearchPage() {
                 <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Free Expert Q&A
                 </h3>
-                <Link to="/patient/feed" className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                <Link
+                  to="/patient/feed"
+                  className="text-xs font-bold text-blue-600 dark:text-blue-400"
+                >
                   See all
                 </Link>
               </div>
@@ -223,7 +262,9 @@ export function SearchPage() {
               {featuredQuestion && (
                 <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase">Community Question</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">
+                      Community Question
+                    </span>
                     <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
                       Answered
                     </span>
@@ -285,11 +326,7 @@ export function SearchPage() {
       </main>
 
       {/* Care AI Assistant Modal */}
-      <CareAIChatModal
-        isOpen={isCareAIOpen}
-        onClose={() => setIsCareAIOpen(false)}
-      />
-
+      <CareAIChatModal isOpen={isCareAIOpen} onClose={() => setIsCareAIOpen(false)} />
     </div>
   );
 }

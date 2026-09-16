@@ -6,21 +6,11 @@
   "id": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui",
-    "browser"
-  ],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
   "orientation": "any",
   "background_color": "#F8FAFC",
   "theme_color": "#2563EB",
-  "categories": [
-    "medical",
-    "health",
-    "lifestyle",
-    "productivity"
-  ],
+  "categories": ["medical", "health", "lifestyle", "productivity"],
   "lang": "en",
   "dir": "auto",
   "icons": [

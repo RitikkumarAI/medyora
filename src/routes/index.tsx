@@ -1,9 +1,14 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Onboarding } from "@/modules/auth/pages/Onboarding";
-import { DesktopLandingPage } from "@/shared/components/DesktopLandingPage";
 import { PatientHome } from "@/modules/patient/home/pages/PatientHome";
 import { LiquidGlassBottomNav, type NavItem } from "@/shared/components/LiquidGlassBottomNav";
+
+const DesktopLandingPage = lazy(() =>
+  import("@/shared/components/DesktopLandingPage").then((m) => ({
+    default: m.DesktopLandingPage,
+  })),
+);
 import { Home, Search, Video, MessageSquare, User } from "lucide-react";
 import { useAuth } from "@/shared/auth/useAuth";
 
@@ -28,7 +33,9 @@ function IndexPage() {
   return (
     <>
       <div className="hidden lg:block">
-        <DesktopLandingPage />
+        <Suspense fallback={null}>
+          <DesktopLandingPage />
+        </Suspense>
       </div>
       <div className="block lg:hidden w-full">
         {isPatient ? (

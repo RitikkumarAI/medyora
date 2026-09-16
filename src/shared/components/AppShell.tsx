@@ -52,7 +52,11 @@ export function AppShell({ title, subtitle, nav, bottomNav, actions, children }:
           </kbd>
         </button>
 
-        <nav className="mt-4 flex flex-1 flex-col gap-1 overflow-y-auto" role="navigation" aria-label="Portal Sidebar">
+        <nav
+          className="mt-4 flex flex-1 flex-col gap-1 overflow-y-auto"
+          role="navigation"
+          aria-label="Portal Sidebar"
+        >
           {nav.map((item) => (
             <Link
               key={item.label}
@@ -89,13 +93,17 @@ export function AppShell({ title, subtitle, nav, bottomNav, actions, children }:
           </div>
         </header>
 
-        <main id="main-content" tabIndex={-1} className="flex-1 px-4 py-6 sm:px-6 focus:outline-none pb-28 lg:pb-6">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 px-4 py-6 sm:px-6 focus:outline-none pb-28 lg:pb-6"
+        >
           {children}
         </main>
       </div>
 
       {/* Mobile Floating Liquid Glass Bottom Navigation */}
-      <nav 
+      <nav
         className="lg:hidden fixed bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-6 max-w-[420px] mx-auto z-50 pointer-events-auto select-none"
         role="navigation"
         aria-label="Portal Navigation"

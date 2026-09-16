@@ -1,14 +1,24 @@
 import { useState, useMemo } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, Search, Bookmark, Clock, Sparkles, Heart, 
-  Share2, Filter, BookOpen, Check, ShieldCheck, ChevronRight, User, Lightbulb 
+import {
+  ArrowLeft,
+  Search,
+  Bookmark,
+  Clock,
+  Sparkles,
+  Heart,
+  Share2,
+  Filter,
+  BookOpen,
+  Check,
+  ShieldCheck,
+  ChevronRight,
+  User,
+  Lightbulb,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  HEALTH_ARTICLES_DATA, getDailyTip, type HealthArticle 
-} from "@/shared/data/articles-data";
+import { HEALTH_ARTICLES_DATA, getDailyTip, type HealthArticle } from "@/shared/data/articles-data";
 import { toast } from "sonner";
 
 const CATEGORIES = [
@@ -77,8 +87,12 @@ export function ArticlesListing() {
             <ArrowLeft className="h-5 w-5 text-slate-700 dark:text-slate-200" />
           </Button>
           <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">Health & Wellness Articles</h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Medically verified insights & daily tips</p>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+              Health & Wellness Articles
+            </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              Medically verified insights & daily tips
+            </p>
           </div>
         </div>
 
@@ -122,7 +136,6 @@ export function ArticlesListing() {
       </div>
 
       <main className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
-        
         {/* ================= 1. DAILY HEALTH TIP CARD ================= */}
         {!searchQuery && selectedCategory === "All" && (
           <div className="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-[32px] p-5 shadow-lg shadow-emerald-700/15 relative overflow-hidden">
@@ -142,18 +155,20 @@ export function ArticlesListing() {
                 {dailyTip.title}
               </h2>
 
-              <p className="text-xs text-emerald-50 leading-relaxed font-normal">
-                {dailyTip.tip}
-              </p>
+              <p className="text-xs text-emerald-50 leading-relaxed font-normal">{dailyTip.tip}</p>
 
               <div className="bg-white/10 backdrop-blur-xs rounded-2xl p-2.5 border border-white/15 text-[11px] text-emerald-100 flex items-center gap-2">
                 <Check className="h-3.5 w-3.5 text-emerald-300 shrink-0" />
-                <span><strong>Today's Action:</strong> {dailyTip.actionItem}</span>
+                <span>
+                  <strong>Today's Action:</strong> {dailyTip.actionItem}
+                </span>
               </div>
 
               <div className="flex items-center justify-between pt-1 text-[11px] text-emerald-200">
                 <span className="font-semibold">{dailyTip.doctor}</span>
-                <span className="bg-emerald-800/40 px-2 py-0.5 rounded-md text-[10px]">{dailyTip.category}</span>
+                <span className="bg-emerald-800/40 px-2 py-0.5 rounded-md text-[10px]">
+                  {dailyTip.category}
+                </span>
               </div>
             </div>
           </div>
@@ -163,7 +178,9 @@ export function ArticlesListing() {
         {!searchQuery && selectedCategory === "All" && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">Featured Article</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                Featured Article
+              </h2>
             </div>
 
             <Link
@@ -178,7 +195,7 @@ export function ArticlesListing() {
                   className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-                
+
                 <div className="absolute top-3 left-3 flex gap-2">
                   <span className="bg-blue-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">
                     {featuredArticle.category}
@@ -200,7 +217,8 @@ export function ArticlesListing() {
 
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <p className="text-xs font-medium text-slate-200 flex items-center gap-1.5 mb-1">
-                    <Clock className="h-3 w-3" /> {featuredArticle.readTime} read • {featuredArticle.publishedDate}
+                    <Clock className="h-3 w-3" /> {featuredArticle.readTime} read •{" "}
+                    {featuredArticle.publishedDate}
                   </p>
                   <h3 className="font-bold text-base text-white leading-tight drop-shadow-xs line-clamp-2">
                     {featuredArticle.title}
@@ -224,7 +242,9 @@ export function ArticlesListing() {
                       <p className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
                         {featuredArticle.author.name}
                       </p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400">{featuredArticle.author.role}</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                        {featuredArticle.author.role}
+                      </p>
                     </div>
                   </div>
 
@@ -241,15 +261,20 @@ export function ArticlesListing() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              {selectedCategory === "All" ? "Latest Articles" : `${selectedCategory} Articles`} ({filteredArticles.length})
+              {selectedCategory === "All" ? "Latest Articles" : `${selectedCategory} Articles`} (
+              {filteredArticles.length})
             </h2>
           </div>
 
           {filteredArticles.length === 0 ? (
             <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 text-center border border-slate-100 dark:border-slate-800">
               <BookOpen className="h-10 w-10 text-slate-300 dark:text-slate-700 mx-auto mb-2" />
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">No articles found</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Try adjusting your search query or category filter.</p>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                No articles found
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Try adjusting your search query or category filter.
+              </p>
             </div>
           ) : (
             filteredArticles.map((article) => {
@@ -300,7 +325,6 @@ export function ArticlesListing() {
             })
           )}
         </div>
-
       </main>
     </div>
   );

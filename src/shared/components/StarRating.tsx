@@ -22,9 +22,7 @@ export function StarRating({ value, size = 16, showValue, reviews, className }: 
         />
       ))}
       {showValue && <span className="ml-1 text-sm font-semibold">{value.toFixed(1)}</span>}
-      {reviews !== undefined && (
-        <span className="text-xs text-muted-foreground">({reviews})</span>
-      )}
+      {reviews !== undefined && <span className="text-xs text-muted-foreground">({reviews})</span>}
     </span>
   );
 }

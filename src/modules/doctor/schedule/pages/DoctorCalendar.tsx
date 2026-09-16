@@ -11,14 +11,29 @@ const DATES = Array.from({ length: 14 }, (_, i) => {
     dayName: DAYS[(d.getDay() + 6) % 7],
     dateNum: d.getDate(),
     isToday: i === 0,
-    fullDate: d
+    fullDate: d,
   };
 });
 
 const APPOINTMENTS = [
-  { time: "09:00 AM", name: "Ritik Kumar", type: "First Visit", color: "bg-blue-100 text-blue-700" },
-  { time: "09:30 AM", name: "Anjali Singh", type: "Follow up", color: "bg-purple-100 text-purple-700" },
-  { time: "10:00 AM", name: "Rahul Sharma", type: "Consultation", color: "bg-amber-100 text-amber-700" },
+  {
+    time: "09:00 AM",
+    name: "Ritik Kumar",
+    type: "First Visit",
+    color: "bg-blue-100 text-blue-700",
+  },
+  {
+    time: "09:30 AM",
+    name: "Anjali Singh",
+    type: "Follow up",
+    color: "bg-purple-100 text-purple-700",
+  },
+  {
+    time: "10:00 AM",
+    name: "Rahul Sharma",
+    type: "Consultation",
+    color: "bg-amber-100 text-amber-700",
+  },
   { time: "11:30 AM", name: "Neha Patel", type: "First Visit", color: "bg-blue-100 text-blue-700" },
 ];
 
@@ -32,12 +47,20 @@ export function DoctorCalendar() {
       <header className="sticky top-0 z-40 bg-white px-4 pt-6 pb-4 shadow-sm border-b border-slate-100">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={() => router.history.back()} className="h-10 w-10 shrink-0 bg-slate-50 border border-slate-100 shadow-sm rounded-full">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.history.back()}
+              className="h-10 w-10 shrink-0 bg-slate-50 border border-slate-100 shadow-sm rounded-full"
+            >
               <ArrowLeft className="h-5 w-5 text-slate-700" />
             </Button>
             <h1 className="text-xl font-bold text-slate-900">Schedule</h1>
           </div>
-          <Button size="icon" className="h-10 w-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 shadow-sm">
+          <Button
+            size="icon"
+            className="h-10 w-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 shadow-sm"
+          >
             <Plus className="h-5 w-5" />
           </Button>
         </div>
@@ -62,25 +85,34 @@ export function DoctorCalendar() {
               key={i}
               onClick={() => setSelectedDate(i)}
               className={`flex flex-col items-center justify-center min-w-[60px] h-[80px] rounded-[24px] border transition-all ${
-                selectedDate === i 
-                  ? "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-600/30" 
+                selectedDate === i
+                  ? "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-600/30"
                   : "bg-white border-slate-100 text-slate-500 hover:border-slate-300 shadow-sm"
               }`}
             >
-              <span className={`text-[11px] font-bold ${selectedDate === i ? "text-blue-100" : "text-slate-400"}`}>{d.dayName}</span>
-              <span className={`text-lg font-black mt-1 ${selectedDate === i ? "text-white" : "text-slate-900"}`}>{d.dateNum}</span>
+              <span
+                className={`text-[11px] font-bold ${selectedDate === i ? "text-blue-100" : "text-slate-400"}`}
+              >
+                {d.dayName}
+              </span>
+              <span
+                className={`text-lg font-black mt-1 ${selectedDate === i ? "text-white" : "text-slate-900"}`}
+              >
+                {d.dateNum}
+              </span>
             </button>
           ))}
         </div>
       </header>
 
       <main className="flex-1 overflow-y-auto px-5 py-6 space-y-4 pb-24">
-        
         {APPOINTMENTS.map((appt, i) => (
           <div key={i} className="flex gap-4 group">
             {/* Timeline */}
             <div className="flex flex-col items-center pt-2">
-              <span className="text-[11px] font-bold text-slate-500 whitespace-nowrap">{appt.time.split(" ")[0]}</span>
+              <span className="text-[11px] font-bold text-slate-500 whitespace-nowrap">
+                {appt.time.split(" ")[0]}
+              </span>
               <span className="text-[9px] font-bold text-slate-400">{appt.time.split(" ")[1]}</span>
               <div className="w-px h-full bg-slate-200 mt-2" />
             </div>
@@ -96,14 +128,17 @@ export function DoctorCalendar() {
                   </span>
                 </div>
                 <div className="flex items-center gap-4 text-xs font-semibold text-slate-500">
-                  <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> 30 min</span>
-                  <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Token #0{i+1}</span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="h-3.5 w-3.5" /> 30 min
+                  </span>
+                  <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                    Token #0{i + 1}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         ))}
-        
       </main>
     </div>
   );

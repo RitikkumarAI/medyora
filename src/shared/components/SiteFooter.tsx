@@ -26,12 +26,16 @@ const COLUMNS = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors" role="contentinfo">
+    <footer
+      className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors"
+      role="contentinfo"
+    >
       <div className="mx-auto grid w-full max-w-[1536px] gap-10 px-6 py-14 sm:px-10 lg:px-16 md:grid-cols-4">
         <div className="md:col-span-2 space-y-4">
           <Logo />
           <p className="max-w-md text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-            Medyora connects patients with verified doctors, provides real-time clinic queue tracking, and powers digital prescriptions across India.
+            Medyora connects patients with verified doctors, provides real-time clinic queue
+            tracking, and powers digital prescriptions across India.
           </p>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300">
             <Building2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
@@ -60,7 +64,8 @@ export function SiteFooter() {
 
       <div className="border-t border-slate-100 dark:border-slate-800 px-6 py-6 text-center space-y-2">
         <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-          Built and Maintained by <span className="text-blue-600 dark:text-blue-400 font-black">Binarize Technologies</span>
+          Built and Maintained by{" "}
+          <span className="text-blue-600 dark:text-blue-400 font-black">Binarize Technologies</span>
         </p>
         <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
           © 2026 Binarize Technologies. All Rights Reserved.

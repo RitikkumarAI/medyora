@@ -19,7 +19,7 @@ function VerifyPage() {
   const { loginAsPatient, loginAsDoctor } = useAuth();
   const search = Route.useSearch();
   const phone = search?.to || "9876543210"; // Default master test phone
-  
+
   const [otp, setOtp] = useState(["1", "2", "3", "4", "5", "6"]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -46,7 +46,7 @@ function VerifyPage() {
     } else {
       loginAsPatient(phone, "Patient User");
       toast.success("OTP Verified! Welcome to Medyora");
-      navigate({ to: "/patient" }); 
+      navigate({ to: "/patient" });
     }
   };
 
@@ -54,7 +54,12 @@ function VerifyPage() {
     <div className="flex min-h-screen flex-col bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors px-6 py-8">
       {/* Header */}
       <header className="flex items-center mb-10">
-        <Button variant="ghost" size="icon" onClick={() => navigate({ to: "/auth/login" })} className="h-10 w-10 -ml-2 shrink-0 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-full">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate({ to: "/auth/login" })}
+          className="h-10 w-10 -ml-2 shrink-0 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-full"
+        >
           <ArrowLeft className="h-5 w-5 text-slate-700 dark:text-slate-200" />
         </Button>
       </header>
@@ -64,7 +69,7 @@ function VerifyPage() {
         <div className="mb-10">
           <h1 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white">Verify OTP</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-            {t('login.enter_otp')} <br/>
+            {t("login.enter_otp")} <br />
             <span className="font-bold text-slate-900 dark:text-white">+91 {phone}</span>
           </p>
         </div>
@@ -89,14 +94,15 @@ function VerifyPage() {
           </div>
 
           <p className="text-center text-sm font-medium text-slate-500 dark:text-slate-400">
-            {t('login.resend')} <span className="text-blue-600 dark:text-blue-400 font-bold">00:30</span>
+            {t("login.resend")}{" "}
+            <span className="text-blue-600 dark:text-blue-400 font-bold">00:30</span>
           </p>
 
-          <Button 
-            className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-base font-bold shadow-lg shadow-blue-600/25" 
+          <Button
+            className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-base font-bold shadow-lg shadow-blue-600/25"
             onClick={verifyOtp}
           >
-            {t('login.verify_otp')}
+            {t("login.verify_otp")}
           </Button>
         </div>
       </div>

@@ -1,18 +1,18 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
 export const SUPPORTED_LANGUAGES = [
-  { code: 'en', label: 'English', native: 'English', flag: '🇬🇧', dir: 'ltr' },
-  { code: 'hi', label: 'Hindi', native: 'हिंदी', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'mr', label: 'Marathi', native: 'मराठी', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'gu', label: 'Gujarati', native: 'ગુજરાતી', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'bn', label: 'Bengali', native: 'বাংলা', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'ta', label: 'Tamil', native: 'தமிழ்', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'te', label: 'Telugu', native: 'తెలుగు', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'ar', label: 'Arabic', native: 'العربية', flag: '🇦🇪', dir: 'rtl' },
+  { code: "en", label: "English", native: "English", flag: "🇬🇧", dir: "ltr" },
+  { code: "hi", label: "Hindi", native: "हिंदी", flag: "🇮🇳", dir: "ltr" },
+  { code: "mr", label: "Marathi", native: "मराठी", flag: "🇮🇳", dir: "ltr" },
+  { code: "gu", label: "Gujarati", native: "ગુજરાતી", flag: "🇮🇳", dir: "ltr" },
+  { code: "bn", label: "Bengali", native: "বাংলা", flag: "🇮🇳", dir: "ltr" },
+  { code: "ta", label: "Tamil", native: "தமிழ்", flag: "🇮🇳", dir: "ltr" },
+  { code: "te", label: "Telugu", native: "తెలుగు", flag: "🇮🇳", dir: "ltr" },
+  { code: "ar", label: "Arabic", native: "العربية", flag: "🇦🇪", dir: "rtl" },
 ] as const;
 
-export const RTL_LANGUAGES = ['ar', 'ur', 'he', 'fa'] as const;
+export const RTL_LANGUAGES = ["ar", "ur", "he", "fa"] as const;
 
 const resources = {
   en: {
@@ -39,7 +39,8 @@ const resources = {
         headline_2_pre: "Closer Than",
         headline_2_you: "You",
         headline_2_post: "Think.",
-        subtitle: "Find trusted doctors, book appointments in seconds, and manage your health all in one place.",
+        subtitle:
+          "Find trusted doctors, book appointments in seconds, and manage your health all in one place.",
         feat_instant_title: "Instant Booking",
         feat_instant_desc: "Book in just a few taps",
         feat_verified_title: "Verified Doctors",
@@ -123,7 +124,8 @@ const resources = {
         headline_2_pre: "आपकी सोच से",
         headline_2_you: "अधिक",
         headline_2_post: "करीब।",
-        subtitle: "विश्वसनीय डॉक्टर खोजें, सेकंडों में अपॉइंटमेंट बुक करें और अपने स्वास्थ्य का ख्याल रखें — एक ही मंच पर।",
+        subtitle:
+          "विश्वसनीय डॉक्टर खोजें, सेकंडों में अपॉइंटमेंट बुक करें और अपने स्वास्थ्य का ख्याल रखें — एक ही मंच पर।",
         feat_instant_title: "त्वरित बुकिंग",
         feat_instant_desc: "बस कुछ ही टैप में बुक करें",
         feat_verified_title: "सत्यापित डॉक्टर",
@@ -207,7 +209,8 @@ const resources = {
         headline_2_pre: "तुमच्या कल्पनेपेक्षाही",
         headline_2_you: "अधिक",
         headline_2_post: "जवळ.",
-        subtitle: "विश्वसनीय डॉक्टर शोधा, सेकंदात अपॉइंटमेंट बुक करा आणि एकाच ठिकाणी आरोग्य व्यवस्थापित करा.",
+        subtitle:
+          "विश्वसनीय डॉक्टर शोधा, सेकंदात अपॉइंटमेंट बुक करा आणि एकाच ठिकाणी आरोग्य व्यवस्थापित करा.",
         feat_instant_title: "त्वरित बुकिंग",
         feat_instant_desc: "काही सोप्या टॅपमध्ये बुक करा",
         feat_verified_title: "सत्यापित डॉक्टर",
@@ -291,7 +294,8 @@ const resources = {
         headline_2_pre: "તમારી કલ્પના કરતા",
         headline_2_you: "વધુ",
         headline_2_post: "નજીક.",
-        subtitle: "વિશ્વસનીય ડૉક્ટર શોધો, સેકન્ડોમાં અપોઇન્ટમેન્ટ બુક કરો અને સ્વાસ્થ્ય સંભાળ સરળ બનાવો.",
+        subtitle:
+          "વિશ્વસનીય ડૉક્ટર શોધો, સેકન્ડોમાં અપોઇન્ટમેન્ટ બુક કરો અને સ્વાસ્થ્ય સંભાળ સરળ બનાવો.",
         feat_instant_title: "ઇન્સ્ટન્ટ બુકિંગ",
         feat_instant_desc: "માત્ર થોડા ટૅપમાં બુક કરો",
         feat_verified_title: "ચકાસાયેલ ડૉક્ટર્સ",
@@ -375,7 +379,8 @@ const resources = {
         headline_2_pre: "আপনার ভাবনার চেয়েও",
         headline_2_you: "কাছে",
         headline_2_post: "আমরা।",
-        subtitle: "বিশ্বস্ত ডাক্তার খুঁজুন, সহজে বুকিং করুন এবং স্বাস্থ্য পরিচালনা করুন এক নিরাপদ প্ল্যাটফর্মে।",
+        subtitle:
+          "বিশ্বস্ত ডাক্তার খুঁজুন, সহজে বুকিং করুন এবং স্বাস্থ্য পরিচালনা করুন এক নিরাপদ প্ল্যাটফর্মে।",
         feat_instant_title: "তাৎক্ষণিক বুকিং",
         feat_instant_desc: "সহজ কয়েকটি ট্যাপে বুকিং",
         feat_verified_title: "যাচাইকৃত ডাক্তার",
@@ -690,46 +695,43 @@ const resources = {
 };
 
 // Auto-detect language safely
-let savedLang = 'en';
-if (typeof window !== 'undefined') {
+let savedLang = "en";
+if (typeof window !== "undefined") {
   try {
-    savedLang = localStorage.getItem('medyora_lang') || 'en';
+    savedLang = localStorage.getItem("medyora_lang") || "en";
   } catch {
-    savedLang = 'en';
+    savedLang = "en";
   }
 }
 
 // Set document direction and lang attribute initially
-if (typeof document !== 'undefined') {
+if (typeof document !== "undefined") {
   const isRtl = RTL_LANGUAGES.includes(savedLang as (typeof RTL_LANGUAGES)[number]);
-  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  document.documentElement.dir = isRtl ? "rtl" : "ltr";
   document.documentElement.lang = savedLang;
 }
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: savedLang,
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: savedLang,
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export function changeAppLanguage(code: string) {
   i18n.changeLanguage(code);
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     try {
-      localStorage.setItem('medyora_lang', code);
+      localStorage.setItem("medyora_lang", code);
     } catch {
       // Ignored: Storage access denied
     }
     const isRtl = RTL_LANGUAGES.includes(code as (typeof RTL_LANGUAGES)[number]);
-    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    document.documentElement.dir = isRtl ? "rtl" : "ltr";
     document.documentElement.lang = code;
   }
 }
 
 export default i18n;
-

@@ -33,8 +33,7 @@ function SpecialitiesPage() {
   const categories = ["All", "General Care", "Advanced Care", "Specialized Surgery"];
 
   const filteredSpecialities = SPECIALIZATIONS.filter((s) => {
-    const matchesCategory =
-      selectedCategory === "All" || s.category === selectedCategory;
+    const matchesCategory = selectedCategory === "All" || s.category === selectedCategory;
     const matchesQuery =
       s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (s.hindiName && s.hindiName.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -58,7 +57,8 @@ function SpecialitiesPage() {
               Find Doctors by Speciality & Organ
             </h1>
             <p className="mt-2 max-w-2xl text-sm sm:text-base text-blue-100 font-medium">
-              Easily recognize doctors by clear medical images, symptoms, and Hindi guides. Book in-person visits or instant video consultations.
+              Easily recognize doctors by clear medical images, symptoms, and Hindi guides. Book
+              in-person visits or instant video consultations.
             </p>
 
             {/* Search Box */}
@@ -111,7 +111,7 @@ function SpecialitiesPage() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                    
+
                     {/* Hindi Name Overlay Badge */}
                     {s.hindiName && (
                       <span className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-xl bg-black/60 backdrop-blur-md text-white text-xs font-bold border border-white/20">

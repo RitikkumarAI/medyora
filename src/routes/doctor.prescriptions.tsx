@@ -63,8 +63,12 @@ function PrescriptionBuilder() {
       return;
     }
 
-
-    issue({ patient: patient.trim(), diagnosis: diagnosis.trim(), advice: advice.trim(), medicines: filled });
+    issue({
+      patient: patient.trim(),
+      diagnosis: diagnosis.trim(),
+      advice: advice.trim(),
+      medicines: filled,
+    });
     toast.success(`Prescription issued to ${patient.trim()}`);
     setDiagnosis("");
     setAdvice("");

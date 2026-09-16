@@ -23,7 +23,8 @@ export function OfflineStatusBanner() {
           <div className="flex items-center gap-2">
             <WifiOff className="h-4 w-4 shrink-0 animate-pulse text-slate-950" />
             <span>
-              <strong>Offline Mode Active</strong> — Showing locally cached appointments, prescriptions, and doctors.
+              <strong>Offline Mode Active</strong> — Showing locally cached appointments,
+              prescriptions, and doctors.
             </span>
           </div>
 

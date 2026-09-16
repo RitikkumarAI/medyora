@@ -14,12 +14,12 @@ const PAYMENT_METHODS = [
 export function Payment() {
   const { doctorId } = useParams({ strict: false });
   // In a real app, date/time comes from state or search params
-  const search: any = useSearch({ strict: false });
+  const search = useSearch({ strict: false }) as Record<string, string | undefined>;
   const router = useRouter();
-  
-  const doctor = (DOCTORS.find(d => d.id === doctorId) || DOCTORS[0])!;
+
+  const doctor = (DOCTORS.find((d) => d.id === doctorId) || DOCTORS[0])!;
   const [selectedMethod, setSelectedMethod] = useState("upi");
-  
+
   const consultationFee = Number(doctor?.fee || 0);
   const bookingFee = 50;
   const totalAmount = consultationFee + bookingFee;
@@ -28,22 +28,30 @@ export function Payment() {
     <div className="flex flex-col min-h-screen bg-surface pb-24">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur px-4 py-3 shadow-sm flex items-center gap-3 border-b">
-        <Button variant="ghost" size="icon" onClick={() => router.history.back()} className="h-10 w-10 shrink-0 -ml-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.history.back()}
+          className="h-10 w-10 shrink-0 -ml-2"
+        >
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="text-lg font-bold truncate">Payment Summary</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
-        
         {/* Doctor Summary Card */}
         <div className="card-soft p-4 flex gap-4 items-center">
-          <img src={doctor.image} alt={doctor.fullName} className="w-16 h-16 rounded-xl object-cover shadow-sm" />
+          <img
+            src={doctor.image}
+            alt={doctor.fullName}
+            className="w-16 h-16 rounded-xl object-cover shadow-sm"
+          />
           <div>
             <h2 className="font-bold text-sm">{doctor.fullName}</h2>
             <p className="text-xs text-primary font-medium">{doctor.speciality}</p>
             <p className="text-[10px] text-muted-foreground mt-1">
-              {search?.date || "15 May 2025"}, {search?.time || "10:00 AM"}
+              {search?.["date"] || "15 May 2025"}, {search?.["time"] || "10:00 AM"}
             </p>
           </div>
         </div>
@@ -79,8 +87,12 @@ export function Payment() {
                     : "bg-background border-border hover:border-primary/30"
                 }`}
               >
-                <method.icon className={`h-5 w-5 ${selectedMethod === method.id ? "text-primary" : "text-muted-foreground"}`} />
-                <span className={`text-sm font-semibold ${selectedMethod === method.id ? "text-primary" : ""}`}>
+                <method.icon
+                  className={`h-5 w-5 ${selectedMethod === method.id ? "text-primary" : "text-muted-foreground"}`}
+                />
+                <span
+                  className={`text-sm font-semibold ${selectedMethod === method.id ? "text-primary" : ""}`}
+                >
                   {method.label}
                 </span>
               </button>
@@ -91,10 +103,11 @@ export function Payment() {
 
       {/* Fixed Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t pb-safe flex flex-col items-center gap-3">
-        <Button asChild className="w-full h-14 rounded-2xl text-base font-bold shadow-lg shadow-primary/25">
-          <Link to="/booking-success">
-            Pay ₹{totalAmount}
-          </Link>
+        <Button
+          asChild
+          className="w-full h-14 rounded-2xl text-base font-bold shadow-lg shadow-primary/25"
+        >
+          <Link to="/booking-success">Pay ₹{totalAmount}</Link>
         </Button>
         <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
           <ShieldCheck className="h-3.5 w-3.5 text-success" />

@@ -50,7 +50,8 @@ export const LAB_TESTS: LabTest[] = [
     id: "test-cbc",
     name: "Complete Blood Count (CBC)",
     category: "Hematology",
-    description: "Measures red cells, white cells, platelets, and hemoglobin to detect anemia and infections.",
+    description:
+      "Measures red cells, white cells, platelets, and hemoglobin to detect anemia and infections.",
     parametersCount: 24,
     fastingRequired: false,
     sampleType: "Blood",
@@ -148,14 +149,22 @@ export const HEALTH_PACKAGES: HealthPackage[] = [
     originalPrice: 2200,
     discountedPrice: 899,
     badge: "55% OFF",
-    testsIncluded: ["Vitamin D (25-OH)", "Vitamin B12", "Calcium Total", "Iron Studies", "Complete Blood Count"],
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80",
+    testsIncluded: [
+      "Vitamin D (25-OH)",
+      "Vitamin B12",
+      "Calcium Total",
+      "Iron Studies",
+      "Complete Blood Count",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "pkg-advanced-full-body",
     name: "Advanced Full Body Checkup",
     testsCount: 96,
-    description: "Complete wellness screening covering heart, liver, kidney, vitamins, thyroid, and blood count.",
+    description:
+      "Complete wellness screening covering heart, liver, kidney, vitamins, thyroid, and blood count.",
     originalPrice: 5400,
     discountedPrice: 2599,
     badge: "Bestseller",
@@ -169,7 +178,8 @@ export const HEALTH_PACKAGES: HealthPackage[] = [
       "Vitamin D & B12",
       "Urine Routine (20 tests)",
     ],
-    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "pkg-comprehensive-diabetes",
@@ -179,32 +189,61 @@ export const HEALTH_PACKAGES: HealthPackage[] = [
     originalPrice: 3200,
     discountedPrice: 1499,
     badge: "Popular",
-    testsIncluded: ["HbA1c", "Fasting Blood Sugar", "Lipid Profile", "Kidney Function Test", "Microalbumin Urine"],
-    image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=400&q=80",
+    testsIncluded: [
+      "HbA1c",
+      "Fasting Blood Sugar",
+      "Lipid Profile",
+      "Kidney Function Test",
+      "Microalbumin Urine",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "pkg-women-wellness",
     name: "Women's Health & Wellness",
     testsCount: 78,
     targetGender: "Women",
-    description: "Tailored screening for hormone balance, thyroid, anemia, bone health, and vitamins.",
+    description:
+      "Tailored screening for hormone balance, thyroid, anemia, bone health, and vitamins.",
     originalPrice: 4800,
     discountedPrice: 2199,
     badge: "Specialized",
-    testsIncluded: ["Thyroid Full Profile", "Iron & Ferritin", "Vitamin D3", "Calcium", "CBC", "LFT", "KFT", "Lipids"],
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=400&q=80",
+    testsIncluded: [
+      "Thyroid Full Profile",
+      "Iron & Ferritin",
+      "Vitamin D3",
+      "Calcium",
+      "CBC",
+      "LFT",
+      "KFT",
+      "Lipids",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "pkg-senior-citizen",
     name: "Senior Citizen Health Shield",
     testsCount: 88,
     targetAge: "50+ years",
-    description: "Specialized geriatric package covering arthritis, cardiac risks, kidney, and vital organs.",
+    description:
+      "Specialized geriatric package covering arthritis, cardiac risks, kidney, and vital organs.",
     originalPrice: 5900,
     discountedPrice: 2899,
     badge: "Senior Care",
-    testsIncluded: ["Cardiac Risk Markers", "Rheumatoid Factor", "Bone Profile", "LFT", "KFT", "Lipids", "CBC", "Electrolytes"],
-    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=400&q=80",
+    testsIncluded: [
+      "Cardiac Risk Markers",
+      "Rheumatoid Factor",
+      "Bone Profile",
+      "LFT",
+      "KFT",
+      "Lipids",
+      "CBC",
+      "Electrolytes",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=400&q=80",
   },
 ];
 
@@ -213,7 +252,14 @@ export interface Medicine {
   id: string;
   name: string;
   genericName: string;
-  category: "Pain Relief" | "Vitamins" | "Healthcare" | "Baby Care" | "Diabetes" | "Antibiotics" | "Skin Care";
+  category:
+    | "Pain Relief"
+    | "Vitamins"
+    | "Healthcare"
+    | "Baby Care"
+    | "Diabetes"
+    | "Antibiotics"
+    | "Skin Care";
   dosageForm: "Tablet" | "Syrup" | "Capsule" | "Cream" | "Drops";
   packSize: string;
   manufacturer: string;
@@ -237,7 +283,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 28,
     prescriptionRequired: false,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80",
   },
   {
     id: "med-vitamin-c",
@@ -251,7 +298,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 22,
     prescriptionRequired: false,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&w=300&q=80",
   },
   {
     id: "med-amoxicillin-500",
@@ -265,7 +313,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 172,
     prescriptionRequired: true,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=300&q=80",
   },
   {
     id: "med-cetirizine-10",
@@ -279,7 +328,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 19,
     prescriptionRequired: false,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=300&q=80",
   },
   {
     id: "med-omega-3",
@@ -293,7 +343,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 304,
     prescriptionRequired: false,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80",
   },
   {
     id: "med-baby-lotion",
@@ -307,7 +358,8 @@ export const MEDICINES: Medicine[] = [
     discountedPrice: 442,
     prescriptionRequired: false,
     inStock: true,
-    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=300&q=80",
   },
 ];
 
@@ -416,8 +468,10 @@ export const SURGERIES: SurgeryProcedure[] = [
     maxPrice: 48000,
     emiStartsFrom: 1850,
     insuranceCovered: true,
-    description: "Blade-free robotic laser cataract removal with advanced multifocal IOL lens placement.",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80",
+    description:
+      "Blade-free robotic laser cataract removal with advanced multifocal IOL lens placement.",
+    image:
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "surg-lasik",
@@ -431,7 +485,8 @@ export const SURGERIES: SurgeryProcedure[] = [
     emiStartsFrom: 2900,
     insuranceCovered: false,
     description: "Permanent specs removal using topographic laser mapping for 20/20 HD vision.",
-    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "surg-knee-replacement",
@@ -444,8 +499,10 @@ export const SURGERIES: SurgeryProcedure[] = [
     maxPrice: 220000,
     emiStartsFrom: 8500,
     insuranceCovered: true,
-    description: "Sub-millimeter robotic precision knee arthroplasty with minimal tissue damage and swift walking.",
-    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=400&q=80",
+    description:
+      "Sub-millimeter robotic precision knee arthroplasty with minimal tissue damage and swift walking.",
+    image:
+      "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "surg-hernia",
@@ -458,8 +515,10 @@ export const SURGERIES: SurgeryProcedure[] = [
     maxPrice: 78000,
     emiStartsFrom: 3200,
     insuranceCovered: true,
-    description: "Keyhole incision mesh placement for inguinal or umbilical hernia with low recurrence.",
-    image: "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=400&q=80",
+    description:
+      "Keyhole incision mesh placement for inguinal or umbilical hernia with low recurrence.",
+    image:
+      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: "surg-kidney-stone",
@@ -473,7 +532,8 @@ export const SURGERIES: SurgeryProcedure[] = [
     emiStartsFrom: 3100,
     insuranceCovered: true,
     description: "Flexible retrograde laser dusting of renal calculi without any external cuts.",
-    image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=400&q=80",
   },
 ];
 
@@ -512,7 +572,8 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
     doctorAnswer: {
       doctorName: "Dr. Rakesh Gupta",
       speciality: "Dermatologist & Trichologist",
-      avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80",
       verified: true,
       answerText:
         "Telogen effluvium or nutritional deficiencies (Vitamin D, Ferritin, Biotin) are the most common causes. Get a serum ferritin and Vitamin D blood panel done. In the interim, avoid harsh sulfate shampoos, eat protein-rich foods, and consult a dermatologist for topical peptide therapy.",
@@ -532,7 +593,8 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
     doctorAnswer: {
       doctorName: "Dr. Kavita Rao",
       speciality: "Dermatologist",
-      avatar: "https://images.unsplash.com/photo-1594824813589-3c72b22b1049?auto=format&fit=crop&w=150&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1594824813589-3c72b22b1049?auto=format&fit=crop&w=150&q=80",
       verified: true,
       answerText:
         "Start with a gentle 2% Salicylic acid face wash twice daily. Use a non-comedogenic gel moisturizer. If active cystic acne persists, a dermatologist may prescribe topical clindamycin or adapalene. Never pop active pimples.",
@@ -552,7 +614,8 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
     doctorAnswer: {
       doctorName: "Dr. Priya Mehta",
       speciality: "Obstetrician & Gynecologist",
-      avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=150&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=150&q=80",
       verified: true,
       answerText:
         "Paracetamol (500mg or 650mg) is generally considered the safest analgesic during pregnancy for fever or mild pain when taken at the lowest effective dose for the shortest duration. Avoid NSAIDs like Ibuprofen. If fever persists over 100°F, consult your OB-GYN immediately.",
@@ -562,7 +625,8 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
   {
     id: "q-knee-click",
     category: "Trending",
-    question: "My knees make clicking sound when I do squats or climb stairs. There is no pain. Should I worry?",
+    question:
+      "My knees make clicking sound when I do squats or climb stairs. There is no pain. Should I worry?",
     askedBy: "Vikram Sen",
     askedTime: "2d ago",
     viewsCount: 320,
@@ -572,7 +636,8 @@ export const COMMUNITY_QUESTIONS: CommunityQuestion[] = [
     doctorAnswer: {
       doctorName: "Dr. Amit Verma",
       speciality: "Senior Orthopedic Surgeon",
-      avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=150&q=80",
+      avatar:
+        "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=150&q=80",
       verified: true,
       answerText:
         "Painless knee crepitus is usually caused by gas bubbles bursting in the synovial fluid or tendons shifting over bony ridges. It is completely benign. However, strengthen quadriceps and hamstrings to support the patella.",
@@ -605,7 +670,8 @@ export const VIDEO_CONSULTATIONS: VideoConsultation[] = [
     doctorName: "Dr. Anjali Sharma",
     speciality: "Dentist",
     qualification: "BDS, MDS - Orthodontics (10 yrs exp.)",
-    doctorImage: "https://images.unsplash.com/photo-1594824813589-3c72b22b1049?auto=format&fit=crop&w=200&q=80",
+    doctorImage:
+      "https://images.unsplash.com/photo-1594824813589-3c72b22b1049?auto=format&fit=crop&w=200&q=80",
     appointmentDate: "Today",
     appointmentTime: "10:30 AM",
     status: "upcoming",
@@ -618,7 +684,8 @@ export const VIDEO_CONSULTATIONS: VideoConsultation[] = [
     doctorName: "Dr. Rakesh Gupta",
     speciality: "Dermatologist",
     qualification: "MBBS, MD - Dermatology (12 yrs exp.)",
-    doctorImage: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+    doctorImage:
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
     appointmentDate: "Tomorrow",
     appointmentTime: "04:00 PM",
     status: "upcoming",
@@ -631,7 +698,8 @@ export const VIDEO_CONSULTATIONS: VideoConsultation[] = [
     doctorName: "Dr. Priya Mehta",
     speciality: "Gynecologist",
     qualification: "MBBS, MS - OB/GYN (14 yrs exp.)",
-    doctorImage: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=200&q=80",
+    doctorImage:
+      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=200&q=80",
     appointmentDate: "12 May 2026",
     appointmentTime: "11:00 AM",
     status: "completed",
@@ -644,7 +712,8 @@ export const VIDEO_CONSULTATIONS: VideoConsultation[] = [
     doctorName: "Dr. Amit Verma",
     speciality: "Physiotherapist",
     qualification: "BPT, MPT (8 yrs exp.)",
-    doctorImage: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=200&q=80",
+    doctorImage:
+      "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=200&q=80",
     appointmentDate: "08 May 2026",
     appointmentTime: "03:30 PM",
     status: "completed",

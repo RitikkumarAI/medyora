@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Stethoscope, Heart, Pill, ShieldCheck, CheckCircle2, Sparkles } from "lucide-react";
+import { Stethoscope, Heart, Pill, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 interface CinematicMedicalPreloaderProps {
   onComplete?: () => void;
-  durationMs?: number; // default ~1300ms for snappy, fast loading
+  durationMs?: number; // snappy ~350ms loading
 }
 
 const STAGES = [
@@ -27,42 +27,32 @@ const STAGES = [
 
 export function CinematicMedicalPreloader({
   onComplete,
-  durationMs = 1300,
+  durationMs = 350,
 }: CinematicMedicalPreloaderProps) {
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(15);
   const [isExiting, setIsExiting] = useState(false);
 
+  const handleFinish = useCallback(() => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onComplete?.();
+    }, 120);
+  }, [onComplete]);
+
   useEffect(() => {
-    const startTime = performance.now();
-    let animationFrameId: number;
+    // 3 staged updates to avoid main-thread frame saturation on mobile
+    const t1 = setTimeout(() => setProgress(55), Math.floor(durationMs * 0.35));
+    const t2 = setTimeout(() => setProgress(100), Math.floor(durationMs * 0.85));
+    const t3 = setTimeout(() => handleFinish(), durationMs);
 
-    const updateProgress = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const rawProgress = Math.min(100, (elapsed / durationMs) * 100);
-      const currentPercent = Math.min(100, Math.floor(rawProgress));
-
-      setProgress(currentPercent);
-
-      if (elapsed < durationMs) {
-        animationFrameId = requestAnimationFrame(updateProgress);
-      } else {
-        setProgress(100);
-        setTimeout(() => {
-          setIsExiting(true);
-          setTimeout(() => {
-            onComplete?.();
-          }, 250);
-        }, 100);
-      }
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
     };
+  }, [durationMs, handleFinish]);
 
-    animationFrameId = requestAnimationFrame(updateProgress);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [durationMs, onComplete]);
-
-  const currentStage =
-    STAGES.find((s) => progress <= s.threshold) || STAGES[STAGES.length - 1];
+  const currentStage = STAGES.find((s) => progress <= s.threshold) ?? STAGES[STAGES.length - 1]!;
 
   return (
     <AnimatePresence>
@@ -99,11 +89,7 @@ export function CinematicMedicalPreloader({
                 className="absolute -inset-3 rounded-3xl bg-blue-500/20 dark:bg-blue-500/30 blur-md pointer-events-none"
               />
               <div className="relative h-18 w-18 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-center p-2.5">
-                <img
-                  src="/Logo.webp"
-                  alt="Medyora Logo"
-                  className="h-full w-full object-contain"
-                />
+                <img src="/Logo.webp" alt="Medyora Logo" className="h-full w-full object-contain" />
                 <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
                   <CheckCircle2 className="h-3.5 w-3.5 stroke-[2.5]" />
                 </div>
@@ -162,15 +148,21 @@ export function CinematicMedicalPreloader({
             <div className="grid grid-cols-3 gap-2 w-full mb-5">
               <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100/60 dark:border-blue-900/30">
                 <Stethoscope className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Doctors</span>
+                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                  Doctors
+                </span>
               </div>
               <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-100/60 dark:border-emerald-900/30">
                 <Pill className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Medicines</span>
+                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                  Medicines
+                </span>
               </div>
               <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-purple-50/70 dark:bg-purple-950/40 border border-purple-100/60 dark:border-purple-900/30">
                 <ShieldCheck className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Verified</span>
+                <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                  Verified
+                </span>
               </div>
             </div>
 
@@ -189,19 +181,27 @@ export function CinematicMedicalPreloader({
               <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-blue-600 via-blue-500 to-emerald-500 rounded-full"
-                  style={{ width: `${progress}%` }}
-                  transition={{ ease: "easeOut" }}
+                  style={{ width: `${progress}%`, transition: "width 280ms ease-out" }}
                 />
               </div>
             </div>
 
-            {/* Binarize Technologies Product Credit Badge */}
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 w-full flex items-center justify-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-400">
-              <span>A Product of</span>
-              <span className="text-blue-600 dark:text-blue-400 font-extrabold tracking-tight">
-                Binarize Technologies
-              </span>
-              <span className="text-amber-500 text-xs">⭐</span>
+            {/* Binarize Technologies Product Credit Badge & Skip */}
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 w-full flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <span>A Product of</span>
+                <span className="text-blue-600 dark:text-blue-400 font-extrabold tracking-tight">
+                  Binarize Technologies
+                </span>
+                <span className="text-amber-500 text-xs">⭐</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleFinish}
+                className="text-[10px] text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer font-medium"
+              >
+                Skip ➔
+              </button>
             </div>
           </motion.div>
         </motion.div>

@@ -1,23 +1,55 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { 
-  Sparkles, Bot, Send, Mic, MicOff, X, User, Stethoscope, 
-  AlertTriangle, ArrowRight, RefreshCw, Volume2, VolumeX, ShieldCheck, 
-  HeartPulse, FileText, Image as ImageIcon, Upload, Activity, 
-  Pill, AlertCircle, CheckCircle2, ChevronRight, Phone, MapPin, 
-  Maximize2, Minimize2, History, Search, Trash2, Calendar, 
-  Flame, Plus, ExternalLink, Dumbbell, Apple, Clock, Layers
+import {
+  Sparkles,
+  Bot,
+  Send,
+  Mic,
+  MicOff,
+  X,
+  User,
+  Stethoscope,
+  AlertTriangle,
+  ArrowRight,
+  RefreshCw,
+  Volume2,
+  VolumeX,
+  ShieldCheck,
+  HeartPulse,
+  FileText,
+  Image as ImageIcon,
+  Upload,
+  Activity,
+  Pill,
+  AlertCircle,
+  CheckCircle2,
+  ChevronRight,
+  Phone,
+  MapPin,
+  Maximize2,
+  Minimize2,
+  History,
+  Search,
+  Trash2,
+  Calendar,
+  Flame,
+  Plus,
+  ExternalLink,
+  Dumbbell,
+  Apple,
+  Clock,
+  Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { 
-  analyzeSymptoms, 
-  analyzeMedicalImage, 
-  analyzeLabReport, 
-  analyzePrescription, 
-  analyzeMedicineSafety, 
+import {
+  analyzeSymptoms,
+  analyzeMedicalImage,
+  analyzeLabReport,
+  analyzePrescription,
+  analyzeMedicineSafety,
   calculateHealthScore,
   loadSavedSessions,
   saveSessions,
@@ -28,12 +60,38 @@ import {
   type ParsedPrescription,
   type MedicineAnalysisResult,
   type HealthScoreAssessment,
-  AI_FOLLOW_UP_TEMPLATES
+  AI_FOLLOW_UP_TEMPLATES,
 } from "../services/care-ai-engine";
 import { DOCTORS } from "@/shared/data/mock";
 import { useAuth } from "@/shared/auth/useAuth";
 
-type ActiveViewMode = "chat" | "symptom_checker" | "image_analyzer" | "lab_analyzer" | "prescription_reader" | "health_score" | "emergency_sos";
+type ActiveViewMode =
+  | "chat"
+  | "symptom_checker"
+  | "image_analyzer"
+  | "lab_analyzer"
+  | "prescription_reader"
+  | "health_score"
+  | "emergency_sos";
+
+interface SpeechResult {
+  transcript: string;
+}
+
+interface SpeechRecognitionEvent {
+  results: { [index: number]: { [index: number]: SpeechResult } };
+}
+
+interface SpeechRecognitionInstance {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
 
 export function GlobalAICopilot() {
   const navigate = useNavigate();
@@ -45,12 +103,12 @@ export function GlobalAICopilot() {
   const [activeTab, setActiveTab] = useState<ActiveViewMode>("chat");
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [historySearch, setHistorySearch] = useState("");
-  
+
   // Audio Speech Synthesis / Recognition State
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
 
   // Chat State
   const [inputText, setInputText] = useState("");
@@ -58,14 +116,16 @@ export function GlobalAICopilot() {
   const [sessions, setSessions] = useState<ConversationSession[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  
+
   // Specialized Tool Forms State
   const [symptomInput, setSymptomInput] = useState("");
   const [selectedCity, setSelectedCity] = useState("Bangalore");
   const [imageCategory, setImageCategory] = useState<ImageAnalysisResult["imageType"]>("xray");
-  const [labReportType, setLabReportType] = useState<"cbc" | "lipid" | "thyroid" | "diabetes" | "lft">("lipid");
+  const [labReportType, setLabReportType] = useState<
+    "cbc" | "lipid" | "thyroid" | "diabetes" | "lft"
+  >("lipid");
   const [medicineSearchInput, setMedicineSearchInput] = useState("Augmentin 625");
-  
+
   // Health Score Inputs
   const [healthInputs, setHealthInputs] = useState({
     age: 28,
@@ -87,22 +147,41 @@ export function GlobalAICopilot() {
   // Initialize Speech & Sessions
   useEffect(() => {
     // Check Speech Recognition support
-    if (typeof window !== "undefined" && ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+    if (
+      typeof window !== "undefined" &&
+      ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)
+    ) {
       setSpeechSupported(true);
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      const recog = new SpeechRecognition();
-      recog.continuous = false;
-      recog.interimResults = false;
-      recog.lang = "en-IN";
-      recog.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setInputText(transcript);
-        setIsListening(false);
-        handleSendMessage(transcript);
-      };
-      recog.onerror = () => setIsListening(false);
-      recog.onend = () => setIsListening(false);
-      recognitionRef.current = recog;
+      const SpeechRecognitionCtor =
+        (
+          window as unknown as {
+            SpeechRecognition?: new () => SpeechRecognitionInstance;
+            webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
+          }
+        ).SpeechRecognition ||
+        (
+          window as unknown as {
+            webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
+          }
+        ).webkitSpeechRecognition;
+
+      if (SpeechRecognitionCtor) {
+        const recog = new SpeechRecognitionCtor();
+        recog.continuous = false;
+        recog.interimResults = false;
+        recog.lang = "en-IN";
+        recog.onresult = (event: SpeechRecognitionEvent) => {
+          const transcript = event.results[0]?.[0]?.transcript;
+          if (transcript) {
+            setInputText(transcript);
+            setIsListening(false);
+            handleSendMessage(transcript);
+          }
+        };
+        recog.onerror = () => setIsListening(false);
+        recog.onend = () => setIsListening(false);
+        recognitionRef.current = recog;
+      }
     }
 
     // Load saved sessions from storage
@@ -117,11 +196,12 @@ export function GlobalAICopilot() {
     }
 
     // Listen to global open event
-    const handleGlobalOpen = (e: any) => {
+    const handleGlobalOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<{ mode?: ActiveViewMode; query?: string }>;
       setIsOpen(true);
-      if (e.detail?.mode) setActiveTab(e.detail.mode);
-      if (e.detail?.query) {
-        setTimeout(() => handleSendMessage(e.detail.query), 300);
+      if (customEvent.detail?.mode) setActiveTab(customEvent.detail.mode);
+      if (customEvent.detail?.query) {
+        setTimeout(() => handleSendMessage(customEvent.detail.query), 300);
       }
     };
     window.addEventListener("open-care-ai", handleGlobalOpen);
@@ -250,7 +330,7 @@ export function GlobalAICopilot() {
       setIsSpeaking(false);
       return;
     }
-    const cleanText = text.replace(/[#*⚠️🚨📸💊📑🩺]/g, "");
+    const cleanText = text.replace(/[\p{Extended_Pictographic}#*]/gu, "");
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
@@ -307,7 +387,7 @@ export function GlobalAICopilot() {
             return { ...s, title: query.slice(0, 28) };
           }
           return s;
-        })
+        }),
       );
     }, 900);
   };
@@ -331,7 +411,11 @@ export function GlobalAICopilot() {
         suggestedTests: result.suggestedTests,
         recommendedDoctors: result.recommendedDoctors,
         actionLinks: [
-          { label: `Book Top ${result.recommendedSpecialty}`, to: `/doctors?q=${result.recommendedSpecialty}`, variant: "default" },
+          {
+            label: `Book Top ${result.recommendedSpecialty}`,
+            to: `/doctors?q=${result.recommendedSpecialty}`,
+            variant: "default",
+          },
           { label: "Book Confirmatory Test", to: "/patient/lab-tests", variant: "outline" },
         ],
       };
@@ -357,7 +441,11 @@ export function GlobalAICopilot() {
         suggestedTests: result.recommendedNextTests,
         recommendedDoctors: result.recommendedDoctors,
         actionLinks: [
-          { label: `Consult ${result.recommendedSpecialist}`, to: `/doctors?q=${result.recommendedSpecialist}`, variant: "default" },
+          {
+            label: `Consult ${result.recommendedSpecialist}`,
+            to: `/doctors?q=${result.recommendedSpecialist}`,
+            variant: "default",
+          },
           { label: "Book Recommended Tests", to: "/patient/lab-tests", variant: "outline" },
         ],
       };
@@ -518,7 +606,11 @@ export function GlobalAICopilot() {
                     className="h-8 w-8 text-white hover:bg-white/20 rounded-xl hidden sm:flex"
                     title={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
                   >
-                    {isFullScreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                    {isFullScreen ? (
+                      <Minimize2 className="h-4 w-4" />
+                    ) : (
+                      <Maximize2 className="h-4 w-4" />
+                    )}
                   </Button>
 
                   <Button
@@ -541,7 +633,12 @@ export function GlobalAICopilot() {
                   { id: "lab_analyzer", label: "Lab Report OCR", icon: FileText },
                   { id: "prescription_reader", label: "Prescription & Meds", icon: Pill },
                   { id: "health_score", label: "Health Score & Risk", icon: Flame },
-                  { id: "emergency_sos", label: "Emergency SOS", icon: AlertTriangle, danger: true },
+                  {
+                    id: "emergency_sos",
+                    label: "Emergency SOS",
+                    icon: AlertTriangle,
+                    danger: true,
+                  },
                 ].map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
@@ -555,8 +652,8 @@ export function GlobalAICopilot() {
                             ? "bg-rose-600 text-white shadow-xs"
                             : "bg-blue-600 text-white shadow-xs"
                           : tab.danger
-                          ? "text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
-                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800"
+                            ? "text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+                            : "text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800"
                       }`}
                     >
                       <Icon className="h-3.5 w-3.5" />
@@ -568,7 +665,6 @@ export function GlobalAICopilot() {
 
               {/* Body Content Area */}
               <div className="relative flex-1 overflow-hidden flex">
-                
                 {/* Conversation History Drawer */}
                 <AnimatePresence>
                   {isHistoryOpen && (
@@ -604,7 +700,9 @@ export function GlobalAICopilot() {
 
                       <div className="flex-1 overflow-y-auto mt-3 space-y-1.5 pr-1">
                         {sessions
-                          .filter((s) => s.title.toLowerCase().includes(historySearch.toLowerCase()))
+                          .filter((s) =>
+                            s.title.toLowerCase().includes(historySearch.toLowerCase()),
+                          )
                           .map((s) => (
                             <div
                               key={s.id}
@@ -616,9 +714,14 @@ export function GlobalAICopilot() {
                               }`}
                             >
                               <div className="min-w-0 flex-1">
-                                <p className="text-xs font-semibold truncate leading-tight">{s.title}</p>
+                                <p className="text-xs font-semibold truncate leading-tight">
+                                  {s.title}
+                                </p>
                                 <p className="text-[10px] text-slate-400 mt-0.5">
-                                  {new Date(s.updatedAt).toLocaleDateString([], { month: "short", day: "numeric" })}
+                                  {new Date(s.updatedAt).toLocaleDateString([], {
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
                                 </p>
                               </div>
                               <button
@@ -643,7 +746,6 @@ export function GlobalAICopilot() {
 
                 {/* Active Tab View Rendering */}
                 <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-50/50 dark:bg-slate-900/50">
-                  
                   {/* TAB 1: MAIN ASSISTANT CHAT */}
                   {activeTab === "chat" && (
                     <>
@@ -671,8 +773,11 @@ export function GlobalAICopilot() {
                                 <div className="p-3 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 rounded-xl flex items-start gap-2.5 text-rose-700 dark:text-rose-300">
                                   <AlertTriangle className="h-5 w-5 shrink-0 text-rose-600" />
                                   <div className="text-xs">
-                                    <strong className="block font-bold">EMERGENCY MEDICAL WARNING</strong>
-                                    Symptoms indicate acute urgent care required. Do not delay emergency consultation.
+                                    <strong className="block font-bold">
+                                      EMERGENCY MEDICAL WARNING
+                                    </strong>
+                                    Symptoms indicate acute urgent care required. Do not delay
+                                    emergency consultation.
                                   </div>
                                 </div>
                               )}
@@ -690,7 +795,10 @@ export function GlobalAICopilot() {
                                   </span>
                                   <div className="space-y-1.5">
                                     {msg.possibleConditions.map((cond, idx) => (
-                                      <div key={idx} className="p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl text-xs">
+                                      <div
+                                        key={idx}
+                                        className="p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl text-xs"
+                                      >
                                         <div className="flex items-center justify-between">
                                           <span className="font-bold text-slate-800 dark:text-slate-200">
                                             {cond.condition}
@@ -705,8 +813,8 @@ export function GlobalAICopilot() {
                                               cond.probability > 70
                                                 ? "bg-blue-600"
                                                 : cond.probability > 50
-                                                ? "bg-amber-500"
-                                                : "bg-slate-400"
+                                                  ? "bg-amber-500"
+                                                  : "bg-slate-400"
                                             }`}
                                             style={{ width: `${cond.probability}%` }}
                                           />
@@ -746,7 +854,11 @@ export function GlobalAICopilot() {
                                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                                       Top Verified Specialists in {selectedCity}
                                     </span>
-                                    <Link to="/doctors" search={{ city: selectedCity }} className="text-[10px] font-bold text-blue-600 hover:underline">
+                                    <Link
+                                      to="/doctors"
+                                      search={{ city: selectedCity }}
+                                      className="text-[10px] font-bold text-blue-600 hover:underline"
+                                    >
                                       View All &gt;
                                     </Link>
                                   </div>
@@ -779,7 +891,10 @@ export function GlobalAICopilot() {
                                           asChild
                                           className="h-7 px-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold shrink-0"
                                         >
-                                          <Link to="/patient/doctor/$doctorId" params={{ doctorId: doc.id }}>
+                                          <Link
+                                            to="/patient/doctor/$doctorId"
+                                            params={{ doctorId: doc.id }}
+                                          >
                                             Book
                                           </Link>
                                         </Button>
@@ -819,7 +934,8 @@ export function GlobalAICopilot() {
                                       variant={link.variant || "default"}
                                       asChild={link.to.startsWith("/")}
                                       onClick={() => {
-                                        if (link.to.startsWith("tel:")) window.location.href = link.to;
+                                        if (link.to.startsWith("tel:"))
+                                          window.location.href = link.to;
                                       }}
                                       className="h-7 px-3 text-xs font-bold rounded-xl"
                                     >
@@ -916,7 +1032,9 @@ export function GlobalAICopilot() {
                               accept="image/*,application/pdf"
                               onChange={(e) => {
                                 if (e.target.files?.[0]) {
-                                  toast.success(`Attached ${e.target.files[0].name}. Analyzing image...`);
+                                  toast.success(
+                                    `Attached ${e.target.files[0].name}. Analyzing image...`,
+                                  );
                                   runImageAnalyzer("xray");
                                 }
                               }}
@@ -947,7 +1065,11 @@ export function GlobalAICopilot() {
                             }`}
                             title={isListening ? "Listening..." : "Voice Input (Speech to Text)"}
                           >
-                            {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                            {isListening ? (
+                              <MicOff className="h-4 w-4" />
+                            ) : (
+                              <Mic className="h-4 w-4" />
+                            )}
                           </Button>
 
                           {/* Send Button */}
@@ -963,7 +1085,8 @@ export function GlobalAICopilot() {
 
                         {/* Medical Disclaimer Note */}
                         <p className="text-[10px] text-center text-slate-400 font-medium leading-tight">
-                          🔒 Medyora Care AI provides informational medical triage. Not a confirmed diagnosis. Always consult a doctor.
+                          🔒 Medyora Care AI provides informational medical triage. Not a confirmed
+                          diagnosis. Always consult a doctor.
                         </p>
                       </div>
                     </>
@@ -980,7 +1103,8 @@ export function GlobalAICopilot() {
                           </h3>
                         </div>
                         <p className="text-xs text-slate-600 dark:text-slate-300">
-                          Describe your symptoms to receive condition estimates, urgency ratings, and top doctor recommendations in {selectedCity}.
+                          Describe your symptoms to receive condition estimates, urgency ratings,
+                          and top doctor recommendations in {selectedCity}.
                         </p>
                       </div>
 
@@ -997,7 +1121,9 @@ export function GlobalAICopilot() {
                         />
 
                         <div className="flex items-center justify-between pt-2">
-                          <span className="text-xs text-slate-400">Location: 📍 {selectedCity}</span>
+                          <span className="text-xs text-slate-400">
+                            Location: 📍 {selectedCity}
+                          </span>
                           <Button
                             disabled={!symptomInput.trim()}
                             onClick={() => {
@@ -1053,7 +1179,8 @@ export function GlobalAICopilot() {
                           AI Medical Image & Radiology Analyzer
                         </h3>
                         <p className="text-xs text-slate-600 dark:text-slate-300">
-                          Upload or select a clinical scan (X-Ray, MRI, Skin Photo, ECG) for instant AI pattern recognition and specialist recommendations.
+                          Upload or select a clinical scan (X-Ray, MRI, Skin Photo, ECG) for instant
+                          AI pattern recognition and specialist recommendations.
                         </p>
                       </div>
 
@@ -1064,14 +1191,36 @@ export function GlobalAICopilot() {
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                           {[
-                            { id: "xray", name: "Chest X-Ray", icon: "🫁", desc: "Lungs & Bronchial Haziness" },
-                            { id: "mri", name: "Brain MRI Scan", icon: "🧠", desc: "Neuro & White Matter" },
-                            { id: "skin", name: "Skin / Acne Photo", icon: "✨", desc: "Dermatological Lesions" },
-                            { id: "ecg", name: "12-Lead ECG Tracing", icon: "❤️", desc: "Cardiac Rhythm & ST-T" },
+                            {
+                              id: "xray",
+                              name: "Chest X-Ray",
+                              icon: "🫁",
+                              desc: "Lungs & Bronchial Haziness",
+                            },
+                            {
+                              id: "mri",
+                              name: "Brain MRI Scan",
+                              icon: "🧠",
+                              desc: "Neuro & White Matter",
+                            },
+                            {
+                              id: "skin",
+                              name: "Skin / Acne Photo",
+                              icon: "✨",
+                              desc: "Dermatological Lesions",
+                            },
+                            {
+                              id: "ecg",
+                              name: "12-Lead ECG Tracing",
+                              icon: "❤️",
+                              desc: "Cardiac Rhythm & ST-T",
+                            },
                           ].map((item) => (
                             <button
                               key={item.id}
-                              onClick={() => setImageCategory(item.id as any)}
+                              onClick={() =>
+                                setImageCategory(item.id as ImageAnalysisResult["imageType"])
+                              }
                               className={`p-3 rounded-2xl border text-left transition-all ${
                                 imageCategory === item.id
                                   ? "bg-blue-600 text-white border-blue-600 shadow-md font-bold"
@@ -1080,7 +1229,9 @@ export function GlobalAICopilot() {
                             >
                               <span className="text-xl">{item.icon}</span>
                               <p className="text-xs font-bold mt-1.5">{item.name}</p>
-                              <p className={`text-[10px] mt-0.5 ${imageCategory === item.id ? "text-blue-100" : "text-slate-400"}`}>
+                              <p
+                                className={`text-[10px] mt-0.5 ${imageCategory === item.id ? "text-blue-100" : "text-slate-400"}`}
+                              >
                                 {item.desc}
                               </p>
                             </button>
@@ -1108,7 +1259,8 @@ export function GlobalAICopilot() {
                         onClick={() => runImageAnalyzer(imageCategory)}
                         className="w-full h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-600/20"
                       >
-                        Run AI Analysis on {imageCategory.toUpperCase()} Scan <ArrowRight className="h-4 w-4 ml-1.5" />
+                        Run AI Analysis on {imageCategory.toUpperCase()} Scan{" "}
+                        <ArrowRight className="h-4 w-4 ml-1.5" />
                       </Button>
                     </div>
                   )}
@@ -1122,7 +1274,8 @@ export function GlobalAICopilot() {
                           AI Blood & Pathology Report Reader
                         </h3>
                         <p className="text-xs text-slate-600 dark:text-slate-300">
-                          Extract and translate complex medical values (CBC, Lipid, Thyroid, Sugar, LFT) into clear explanations with abnormal parameter highlights.
+                          Extract and translate complex medical values (CBC, Lipid, Thyroid, Sugar,
+                          LFT) into clear explanations with abnormal parameter highlights.
                         </p>
                       </div>
 
@@ -1133,15 +1286,39 @@ export function GlobalAICopilot() {
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                           {[
-                            { id: "lipid", name: "Lipid Profile", desc: "Cholesterol, LDL, HDL, Triglycerides" },
-                            { id: "diabetes", name: "Diabetes & HbA1c", desc: "Glycated Hemoglobin & Fasting Sugar" },
-                            { id: "cbc", name: "Complete Blood Count", desc: "Hemoglobin, Platelets, WBC Count" },
-                            { id: "thyroid", name: "Thyroid Profile (TSH)", desc: "TSH, Total T3 & T4 Hormones" },
-                            { id: "lft", name: "Liver Function Test", desc: "SGPT, SGOT, Bilirubin Enzymes" },
+                            {
+                              id: "lipid",
+                              name: "Lipid Profile",
+                              desc: "Cholesterol, LDL, HDL, Triglycerides",
+                            },
+                            {
+                              id: "diabetes",
+                              name: "Diabetes & HbA1c",
+                              desc: "Glycated Hemoglobin & Fasting Sugar",
+                            },
+                            {
+                              id: "cbc",
+                              name: "Complete Blood Count",
+                              desc: "Hemoglobin, Platelets, WBC Count",
+                            },
+                            {
+                              id: "thyroid",
+                              name: "Thyroid Profile (TSH)",
+                              desc: "TSH, Total T3 & T4 Hormones",
+                            },
+                            {
+                              id: "lft",
+                              name: "Liver Function Test",
+                              desc: "SGPT, SGOT, Bilirubin Enzymes",
+                            },
                           ].map((item) => (
                             <button
                               key={item.id}
-                              onClick={() => setLabReportType(item.id as any)}
+                              onClick={() =>
+                                setLabReportType(
+                                  item.id as "cbc" | "lipid" | "thyroid" | "diabetes" | "lft",
+                                )
+                              }
                               className={`p-3 rounded-2xl border text-left transition-all ${
                                 labReportType === item.id
                                   ? "bg-blue-600 text-white border-blue-600 shadow-md font-bold"
@@ -1149,7 +1326,9 @@ export function GlobalAICopilot() {
                               }`}
                             >
                               <p className="text-xs font-bold">{item.name}</p>
-                              <p className={`text-[10px] mt-0.5 ${labReportType === item.id ? "text-blue-100" : "text-slate-400"}`}>
+                              <p
+                                className={`text-[10px] mt-0.5 ${labReportType === item.id ? "text-blue-100" : "text-slate-400"}`}
+                              >
                                 {item.desc}
                               </p>
                             </button>
@@ -1161,7 +1340,8 @@ export function GlobalAICopilot() {
                         onClick={() => runLabAnalyzer(labReportType)}
                         className="w-full h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-600/20"
                       >
-                        Interpret {labReportType.toUpperCase()} Report Values <ArrowRight className="h-4 w-4 ml-1.5" />
+                        Interpret {labReportType.toUpperCase()} Report Values{" "}
+                        <ArrowRight className="h-4 w-4 ml-1.5" />
                       </Button>
                     </div>
                   )}
@@ -1175,7 +1355,9 @@ export function GlobalAICopilot() {
                           AI Prescription Reader & Drug Safety Scanner
                         </h3>
                         <p className="text-xs text-slate-600 dark:text-slate-300">
-                          Parse handwriting prescriptions, verify dosage schedules (Morning/Noon/Night), check drug interactions, and find affordable generic substitutes.
+                          Parse handwriting prescriptions, verify dosage schedules
+                          (Morning/Noon/Night), check drug interactions, and find affordable generic
+                          substitutes.
                         </p>
                       </div>
 
@@ -1224,7 +1406,8 @@ export function GlobalAICopilot() {
                           Medyora AI Health Score & Disease Risk Engine
                         </h3>
                         <p className="text-xs text-slate-600 dark:text-slate-300">
-                          Calculate your dynamic 0-100 Health Score and predictive risk radars for Diabetes, Cardiac Health, Hypertension, and Fatty Liver.
+                          Calculate your dynamic 0-100 Health Score and predictive risk radars for
+                          Diabetes, Cardiac Health, Hypertension, and Fatty Liver.
                         </p>
                       </div>
 
@@ -1234,34 +1417,51 @@ export function GlobalAICopilot() {
                           <Input
                             type="number"
                             value={healthInputs.age}
-                            onChange={(e) => setHealthInputs({ ...healthInputs, age: Number(e.target.value) })}
+                            onChange={(e) =>
+                              setHealthInputs({ ...healthInputs, age: Number(e.target.value) })
+                            }
                             className="text-xs rounded-xl mt-1"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold text-slate-500">Weight (kg)</label>
+                          <label className="text-[11px] font-bold text-slate-500">
+                            Weight (kg)
+                          </label>
                           <Input
                             type="number"
                             value={healthInputs.weightKg}
-                            onChange={(e) => setHealthInputs({ ...healthInputs, weightKg: Number(e.target.value) })}
+                            onChange={(e) =>
+                              setHealthInputs({ ...healthInputs, weightKg: Number(e.target.value) })
+                            }
                             className="text-xs rounded-xl mt-1"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold text-slate-500">Height (cm)</label>
+                          <label className="text-[11px] font-bold text-slate-500">
+                            Height (cm)
+                          </label>
                           <Input
                             type="number"
                             value={healthInputs.heightCm}
-                            onChange={(e) => setHealthInputs({ ...healthInputs, heightCm: Number(e.target.value) })}
+                            onChange={(e) =>
+                              setHealthInputs({ ...healthInputs, heightCm: Number(e.target.value) })
+                            }
                             className="text-xs rounded-xl mt-1"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold text-slate-500">Fasting Sugar (mg/dL)</label>
+                          <label className="text-[11px] font-bold text-slate-500">
+                            Fasting Sugar (mg/dL)
+                          </label>
                           <Input
                             type="number"
                             value={healthInputs.fastingSugar}
-                            onChange={(e) => setHealthInputs({ ...healthInputs, fastingSugar: Number(e.target.value) })}
+                            onChange={(e) =>
+                              setHealthInputs({
+                                ...healthInputs,
+                                fastingSugar: Number(e.target.value),
+                              })
+                            }
                             className="text-xs rounded-xl mt-1"
                           />
                         </div>
@@ -1293,7 +1493,9 @@ export function GlobalAICopilot() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <span className="text-[10px] font-bold text-slate-400 uppercase">BMI</span>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase">
+                                BMI
+                              </span>
                               <p className="text-base font-black text-slate-900 dark:text-white">
                                 {healthScoreResult.bmi} ({healthScoreResult.bmiCategory})
                               </p>
@@ -1303,15 +1505,21 @@ export function GlobalAICopilot() {
                           {/* Risk Radars */}
                           <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                              <span className="text-[10px] font-bold text-slate-400 block">Cardiovascular Risk</span>
+                              <span className="text-[10px] font-bold text-slate-400 block">
+                                Cardiovascular Risk
+                              </span>
                               <span className="text-xs font-extrabold text-blue-600">
-                                {healthScoreResult.metrics.cardiovascularRisk.level} ({healthScoreResult.metrics.cardiovascularRisk.score}%)
+                                {healthScoreResult.metrics.cardiovascularRisk.level} (
+                                {healthScoreResult.metrics.cardiovascularRisk.score}%)
                               </span>
                             </div>
                             <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
-                              <span className="text-[10px] font-bold text-slate-400 block">Diabetes Risk</span>
+                              <span className="text-[10px] font-bold text-slate-400 block">
+                                Diabetes Risk
+                              </span>
                               <span className="text-xs font-extrabold text-amber-600">
-                                {healthScoreResult.metrics.diabetesRisk.level} ({healthScoreResult.metrics.diabetesRisk.score}%)
+                                {healthScoreResult.metrics.diabetesRisk.level} (
+                                {healthScoreResult.metrics.diabetesRisk.score}%)
                               </span>
                             </div>
                           </div>
@@ -1322,7 +1530,8 @@ export function GlobalAICopilot() {
                               <Apple className="h-4 w-4" /> AI Custom Nutrition Target
                             </strong>
                             <p className="text-emerald-700 dark:text-emerald-400">
-                              Target: {healthScoreResult.customDietPlan.caloriesTarget} kcal • Hydration: {healthScoreResult.customDietPlan.hydrationTarget}
+                              Target: {healthScoreResult.customDietPlan.caloriesTarget} kcal •
+                              Hydration: {healthScoreResult.customDietPlan.hydrationTarget}
                             </p>
                           </div>
                         </div>
@@ -1375,18 +1584,39 @@ export function GlobalAICopilot() {
                           Nearest 24/7 Emergency Rooms & Trauma Centers
                         </h4>
                         {[
-                          { name: "Manipal Hospital Emergency", area: "Old Airport Road", dist: "1.4 km", time: "5 mins", phone: "+91 80 2502 4444" },
-                          { name: "Apollo Hospital ER & ICU", area: "Indiranagar 100ft Road", dist: "2.1 km", time: "8 mins", phone: "+91 80 4030 4050" },
-                          { name: "Fortis Hospital Emergency", area: "Cunningham Road", dist: "4.5 km", time: "14 mins", phone: "+91 80 6621 4444" },
+                          {
+                            name: "Manipal Hospital Emergency",
+                            area: "Old Airport Road",
+                            dist: "1.4 km",
+                            time: "5 mins",
+                            phone: "+91 80 2502 4444",
+                          },
+                          {
+                            name: "Apollo Hospital ER & ICU",
+                            area: "Indiranagar 100ft Road",
+                            dist: "2.1 km",
+                            time: "8 mins",
+                            phone: "+91 80 4030 4050",
+                          },
+                          {
+                            name: "Fortis Hospital Emergency",
+                            area: "Cunningham Road",
+                            dist: "4.5 km",
+                            time: "14 mins",
+                            phone: "+91 80 6621 4444",
+                          },
                         ].map((hosp, i) => (
                           <div
                             key={i}
                             className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-xs"
                           >
                             <div>
-                              <p className="font-bold text-xs text-slate-900 dark:text-white">{hosp.name}</p>
+                              <p className="font-bold text-xs text-slate-900 dark:text-white">
+                                {hosp.name}
+                              </p>
                               <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                                <MapPin className="h-3 w-3 text-rose-500" /> {hosp.area} • {hosp.dist} ({hosp.time})
+                                <MapPin className="h-3 w-3 text-rose-500" /> {hosp.area} •{" "}
+                                {hosp.dist} ({hosp.time})
                               </p>
                             </div>
                             <Button
@@ -1401,7 +1631,6 @@ export function GlobalAICopilot() {
                       </div>
                     </div>
                   )}
-
                 </div>
               </div>
             </motion.div>

@@ -154,11 +154,46 @@ export const MEDICAL_RECORDS = [
 ];
 
 export const PAYMENTS = [
-  { id: "#TXN001", patient: "Rahul Sharma", amount: 750, method: "UPI", status: "Success", date: "15 May 2025" },
-  { id: "#TXN002", patient: "Priya Patel", amount: 600, method: "Card", status: "Success", date: "15 May 2025" },
-  { id: "#TXN003", patient: "Amit Joshi", amount: 500, method: "Net Banking", status: "Success", date: "14 May 2025" },
-  { id: "#TXN004", patient: "Neha Singh", amount: 800, method: "Wallet", status: "Pending", date: "14 May 2025" },
-  { id: "#TXN005", patient: "Ankit Verma", amount: 750, method: "UPI", status: "Failed", date: "13 May 2025" },
+  {
+    id: "#TXN001",
+    patient: "Rahul Sharma",
+    amount: 750,
+    method: "UPI",
+    status: "Success",
+    date: "15 May 2025",
+  },
+  {
+    id: "#TXN002",
+    patient: "Priya Patel",
+    amount: 600,
+    method: "Card",
+    status: "Success",
+    date: "15 May 2025",
+  },
+  {
+    id: "#TXN003",
+    patient: "Amit Joshi",
+    amount: 500,
+    method: "Net Banking",
+    status: "Success",
+    date: "14 May 2025",
+  },
+  {
+    id: "#TXN004",
+    patient: "Neha Singh",
+    amount: 800,
+    method: "Wallet",
+    status: "Pending",
+    date: "14 May 2025",
+  },
+  {
+    id: "#TXN005",
+    patient: "Ankit Verma",
+    amount: 750,
+    method: "UPI",
+    status: "Failed",
+    date: "13 May 2025",
+  },
 ];
 
 export const FAMILY_MEMBERS = [
@@ -169,10 +204,34 @@ export const FAMILY_MEMBERS = [
 ];
 
 export const NOTIFICATIONS = [
-  { id: "N1", title: "Appointment confirmed", message: "Your appointment with Dr. Rajesh Sharma is confirmed.", time: "10m ago", type: "success" as const },
-  { id: "N2", title: "Payment successful", message: "Your payment of ₹850 was successful.", time: "16m ago", type: "info" as const },
-  { id: "N3", title: "Queue update", message: "Your token #12 is near. Please be ready.", time: "35m ago", type: "warning" as const },
-  { id: "N4", title: "New prescription", message: "Dr. Rajesh Sharma uploaded a new prescription.", time: "3h ago", type: "info" as const },
+  {
+    id: "N1",
+    title: "Appointment confirmed",
+    message: "Your appointment with Dr. Rajesh Sharma is confirmed.",
+    time: "10m ago",
+    type: "success" as const,
+  },
+  {
+    id: "N2",
+    title: "Payment successful",
+    message: "Your payment of ₹850 was successful.",
+    time: "16m ago",
+    type: "info" as const,
+  },
+  {
+    id: "N3",
+    title: "Queue update",
+    message: "Your token #12 is near. Please be ready.",
+    time: "35m ago",
+    type: "warning" as const,
+  },
+  {
+    id: "N4",
+    title: "New prescription",
+    message: "Dr. Rajesh Sharma uploaded a new prescription.",
+    time: "3h ago",
+    type: "info" as const,
+  },
 ];
 
 export const DOCTOR_SCHEDULE = [
@@ -203,11 +262,41 @@ export const APPOINTMENTS_SERIES = [
 ];
 
 export const ADMIN_DOCTORS = [
-  { id: "D1", name: "Dr. Rajesh Sharma", speciality: "Cardiologist", experience: "12+ Years", status: "Approved" as const },
-  { id: "D2", name: "Dr. Neha Verma", speciality: "Gynecologist", experience: "10+ Years", status: "Approved" as const },
-  { id: "D3", name: "Dr. Amit Patel", speciality: "Dermatologist", experience: "8+ Years", status: "Pending" as const },
-  { id: "D4", name: "Dr. Anjali Mehta", speciality: "Dentist", experience: "9+ Years", status: "Approved" as const },
-  { id: "D5", name: "Dr. Vikram Mehta", speciality: "Neurologist", experience: "15+ Years", status: "Rejected" as const },
+  {
+    id: "D1",
+    name: "Dr. Rajesh Sharma",
+    speciality: "Cardiologist",
+    experience: "12+ Years",
+    status: "Approved" as const,
+  },
+  {
+    id: "D2",
+    name: "Dr. Neha Verma",
+    speciality: "Gynecologist",
+    experience: "10+ Years",
+    status: "Approved" as const,
+  },
+  {
+    id: "D3",
+    name: "Dr. Amit Patel",
+    speciality: "Dermatologist",
+    experience: "8+ Years",
+    status: "Pending" as const,
+  },
+  {
+    id: "D4",
+    name: "Dr. Anjali Mehta",
+    speciality: "Dentist",
+    experience: "9+ Years",
+    status: "Approved" as const,
+  },
+  {
+    id: "D5",
+    name: "Dr. Vikram Mehta",
+    speciality: "Neurologist",
+    experience: "15+ Years",
+    status: "Rejected" as const,
+  },
 ];
 
 export const ADMIN_PATIENTS = [

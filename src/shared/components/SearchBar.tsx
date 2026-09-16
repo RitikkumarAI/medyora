@@ -60,9 +60,7 @@ export function SearchBar() {
           <div className="flex items-center gap-3 truncate">
             <MapPin className="size-5 shrink-0 text-blue-600" />
             <div className="truncate text-left">
-              <span className="block text-xs font-medium text-muted-foreground">
-                Location
-              </span>
+              <span className="block text-xs font-medium text-muted-foreground">Location</span>
               <span className="block text-sm font-bold text-foreground truncate">
                 {displayLocation}
               </span>
@@ -74,7 +72,9 @@ export function SearchBar() {
         <label className="flex items-center gap-3 rounded-xl px-3 py-2">
           <CalendarDays className="size-5 shrink-0 text-muted-foreground" />
           <span className="w-full">
-            <span className="block text-xs font-medium text-muted-foreground">Appointment date</span>
+            <span className="block text-xs font-medium text-muted-foreground">
+              Appointment date
+            </span>
             <input
               type="date"
               className="w-full bg-transparent text-sm outline-none"

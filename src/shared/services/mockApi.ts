@@ -3,7 +3,7 @@ import { DOCTORS } from "../data/mock";
 
 // Mock API for Doctors
 export const DoctorService = {
-  getDoctors: async (params?: any) => {
+  getDoctors: async (_params?: Record<string, unknown>) => {
     // Simulate network delay
     await new Promise((resolve) => setTimeout(resolve, 500));
     return {

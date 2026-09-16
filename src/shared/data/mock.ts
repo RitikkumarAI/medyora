@@ -183,8 +183,8 @@ export const ADVANCED_CARE_SPECIALITIES = [
 ];
 
 export const SPECIALIZATIONS: Specialization[] = [
-  ...GENERAL_CARE_SPECIALITIES.map(s => ({ ...s, category: "General Care" as const })),
-  ...ADVANCED_CARE_SPECIALITIES.map(s => ({ ...s, category: "Advanced Care" as const })),
+  ...GENERAL_CARE_SPECIALITIES.map((s) => ({ ...s, category: "General Care" as const })),
+  ...ADVANCED_CARE_SPECIALITIES.map((s) => ({ ...s, category: "Advanced Care" as const })),
 ];
 
 export const CITIES = [
@@ -199,12 +199,27 @@ export const CITIES = [
 ];
 
 export const POPULAR_LOCATIONS = [
-  { city: "Bengaluru", areas: ["Indiranagar", "Koramangala", "Whitefield", "HSR Layout", "Jayanagar", "MG Road"] },
-  { city: "Delhi", areas: ["Connaught Place", "Saket", "Dwarka", "Rohini", "South Extension", "Karol Bagh"] },
+  {
+    city: "Bengaluru",
+    areas: ["Indiranagar", "Koramangala", "Whitefield", "HSR Layout", "Jayanagar", "MG Road"],
+  },
+  {
+    city: "Delhi",
+    areas: ["Connaught Place", "Saket", "Dwarka", "Rohini", "South Extension", "Karol Bagh"],
+  },
   { city: "Mumbai", areas: ["Andheri", "Bandra", "Juhu", "Colaba", "Powai", "Borivali"] },
-  { city: "Pune", areas: ["Baner", "Kothrud", "Viman Nagar", "Hinjewadi", "Kalyani Nagar", "Aundh"] },
-  { city: "Hyderabad", areas: ["Banjara Hills", "Jubilee Hills", "Gachibowli", "Hitec City", "Madhapur", "Kondapur"] },
-  { city: "Chennai", areas: ["Anna Nagar", "T Nagar", "Adyar", "Velachery", "Mylapore", "Nungambakkam"] },
+  {
+    city: "Pune",
+    areas: ["Baner", "Kothrud", "Viman Nagar", "Hinjewadi", "Kalyani Nagar", "Aundh"],
+  },
+  {
+    city: "Hyderabad",
+    areas: ["Banjara Hills", "Jubilee Hills", "Gachibowli", "Hitec City", "Madhapur", "Kondapur"],
+  },
+  {
+    city: "Chennai",
+    areas: ["Anna Nagar", "T Nagar", "Adyar", "Velachery", "Mylapore", "Nungambakkam"],
+  },
 ];
 
 export const LANGUAGES = ["English", "हिन्दी", "मराठी", "ગુજરાતી", "বাংলা", "தமிழ்"];
@@ -245,12 +260,18 @@ export const DOCTORS: Doctor[] = [
     gallery: [
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
       "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70",
-      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Fri: 09:00 AM - 05:00 PM", "Sat: 09:00 AM - 01:00 PM"],
     faqs: [
-      { question: "Do you accept new patients?", answer: "Yes, I am currently accepting new patients." },
-      { question: "What should I bring to my first visit?", answer: "Please bring your ID, insurance card, and any previous medical records." }
+      {
+        question: "Do you accept new patients?",
+        answer: "Yes, I am currently accepting new patients.",
+      },
+      {
+        question: "What should I bring to my first visit?",
+        answer: "Please bring your ID, insurance card, and any previous medical records.",
+      },
     ],
     phone: "+91 98765 43210",
     image:
@@ -291,11 +312,11 @@ export const DOCTORS: Doctor[] = [
     isFavorite: false,
     gallery: [
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 10:00 AM - 06:00 PM"],
     faqs: [
-      { question: "Do you offer telehealth?", answer: "Yes, online consultations are available." }
+      { question: "Do you offer telehealth?", answer: "Yes, online consultations are available." },
     ],
     phone: "+91 98765 43211",
     image:
@@ -335,11 +356,14 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Fri: 08:00 AM - 04:00 PM"],
     faqs: [
-      { question: "Do you treat acne scars?", answer: "Yes, we offer laser treatments for acne scars." }
+      {
+        question: "Do you treat acne scars?",
+        answer: "Yes, we offer laser treatments for acne scars.",
+      },
     ],
     phone: "+91 98765 43212",
     image:
@@ -352,8 +376,7 @@ export const DOCTORS: Doctor[] = [
     speciality: "Dentist",
     qualification: "BDS, MDS",
     experience: 9,
-    about:
-      "Cosmetic and restorative dentistry, root canal treatment, and paediatric dental care.",
+    about: "Cosmetic and restorative dentistry, root canal treatment, and paediatric dental care.",
     fee: 450,
     rating: 4.9,
     totalReviews: 310,
@@ -380,11 +403,14 @@ export const DOCTORS: Doctor[] = [
     isFavorite: true,
     gallery: [
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
-      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sun: 09:00 AM - 08:00 PM"],
     faqs: [
-      { question: "Do you do root canals?", answer: "Yes, painless root canal treatment is available." }
+      {
+        question: "Do you do root canals?",
+        answer: "Yes, painless root canal treatment is available.",
+      },
     ],
     phone: "+91 98765 43213",
     image:
@@ -424,11 +450,14 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: false,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Tue-Sun: 11:00 AM - 07:00 PM"],
     faqs: [
-      { question: "Do you treat sleep apnea?", answer: "Yes, comprehensive sleep studies and treatments." }
+      {
+        question: "Do you treat sleep apnea?",
+        answer: "Yes, comprehensive sleep studies and treatments.",
+      },
     ],
     phone: "+91 98765 43214",
     image:
@@ -441,8 +470,7 @@ export const DOCTORS: Doctor[] = [
     speciality: "Pediatrician",
     qualification: "MBBS, MD (Paediatrics)",
     experience: 11,
-    about:
-      "Child health, immunisation schedules, growth monitoring and new-born care specialist.",
+    about: "Child health, immunisation schedules, growth monitoring and new-born care specialist.",
     fee: 550,
     rating: 4.7,
     totalReviews: 198,
@@ -468,11 +496,14 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 09:00 AM - 02:00 PM"],
     faqs: [
-      { question: "Do you administer vaccinations?", answer: "Yes, all standard childhood vaccinations." }
+      {
+        question: "Do you administer vaccinations?",
+        answer: "Yes, all standard childhood vaccinations.",
+      },
     ],
     phone: "+91 98765 43215",
     image:
@@ -515,15 +546,22 @@ export const DOCTORS: Doctor[] = [
     isFavorite: true,
     gallery: [
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 09:00 AM - 07:00 PM"],
     faqs: [
-      { question: "Do you offer emergency heart consultations?", answer: "Yes, priority same-day consultation is available." },
-      { question: "Are telemedicine options available?", answer: "Yes, video consultations can be booked anytime." }
+      {
+        question: "Do you offer emergency heart consultations?",
+        answer: "Yes, priority same-day consultation is available.",
+      },
+      {
+        question: "Are telemedicine options available?",
+        answer: "Yes, video consultations can be booked anytime.",
+      },
     ],
     phone: "+91 98765 43220",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=70",
     nextSlot: "10:30 AM",
   },
   {
@@ -561,14 +599,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sun: 08:30 AM - 08:30 PM"],
     faqs: [
-      { question: "Can I get blood tests done here?", answer: "Yes, sample collection is available on-site." }
+      {
+        question: "Can I get blood tests done here?",
+        answer: "Yes, sample collection is available on-site.",
+      },
     ],
     phone: "+91 98765 43221",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=70",
     nextSlot: "11:00 AM",
   },
   {
@@ -606,14 +648,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: true,
     gallery: [
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 09:30 AM - 06:30 PM"],
     faqs: [
-      { question: "Do you have play areas for kids?", answer: "Yes, our clinic is completely kid-friendly." }
+      {
+        question: "Do you have play areas for kids?",
+        answer: "Yes, our clinic is completely kid-friendly.",
+      },
     ],
     phone: "+91 98765 43222",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=70",
     nextSlot: "02:30 PM",
   },
   {
@@ -623,7 +669,8 @@ export const DOCTORS: Doctor[] = [
     speciality: "Gynecologist",
     qualification: "MBBS, MS (OBG), FICOG",
     experience: 16,
-    about: "Senior Consultant Obstetrician and Gynecologist in Delhi with extensive expertise in high-risk pregnancy, PCOS, and laproscopic surgery.",
+    about:
+      "Senior Consultant Obstetrician and Gynecologist in Delhi with extensive expertise in high-risk pregnancy, PCOS, and laproscopic surgery.",
     fee: 900,
     rating: 4.9,
     totalReviews: 290,
@@ -650,14 +697,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: true,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 10:00 AM - 05:00 PM"],
     faqs: [
-      { question: "Do you handle high-risk pregnancies?", answer: "Yes, dedicated high-risk obstetric monitoring is provided." }
+      {
+        question: "Do you handle high-risk pregnancies?",
+        answer: "Yes, dedicated high-risk obstetric monitoring is provided.",
+      },
     ],
     phone: "+91 98765 43230",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=70",
     nextSlot: "11:00 AM",
   },
   {
@@ -667,7 +718,8 @@ export const DOCTORS: Doctor[] = [
     speciality: "Dermatologist",
     qualification: "MBBS, MD (Dermatology)",
     experience: 12,
-    about: "Gold medalist clinical dermatologist and trichologist in Delhi specializing in acne therapy, laser treatments, and hair regrowth.",
+    about:
+      "Gold medalist clinical dermatologist and trichologist in Delhi specializing in acne therapy, laser treatments, and hair regrowth.",
     fee: 750,
     rating: 4.8,
     totalReviews: 245,
@@ -694,14 +746,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 09:00 AM - 06:00 PM"],
     faqs: [
-      { question: "Do you offer PRP therapy for hair fall?", answer: "Yes, advanced PRP and GFC treatments are available." }
+      {
+        question: "Do you offer PRP therapy for hair fall?",
+        answer: "Yes, advanced PRP and GFC treatments are available.",
+      },
     ],
     phone: "+91 98765 43231",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=70",
     nextSlot: "01:15 PM",
   },
   {
@@ -711,7 +767,8 @@ export const DOCTORS: Doctor[] = [
     speciality: "Dentist",
     qualification: "BDS, MDS (Orthodontics)",
     experience: 11,
-    about: "Expert orthodontist and cosmetic dentist in Delhi offering invisible aligners, smile design, and painless dental implants.",
+    about:
+      "Expert orthodontist and cosmetic dentist in Delhi offering invisible aligners, smile design, and painless dental implants.",
     fee: 500,
     rating: 4.9,
     totalReviews: 310,
@@ -738,14 +795,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sun: 09:30 AM - 08:00 PM"],
     faqs: [
-      { question: "Are clear aligners available?", answer: "Yes, custom 3D mapped aligners are available." }
+      {
+        question: "Are clear aligners available?",
+        answer: "Yes, custom 3D mapped aligners are available.",
+      },
     ],
     phone: "+91 98765 43232",
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=70",
     nextSlot: "03:45 PM",
   },
   {
@@ -755,7 +816,8 @@ export const DOCTORS: Doctor[] = [
     speciality: "Cardiologist",
     qualification: "MBBS, MD, DM (Cardiology)",
     experience: 18,
-    about: "Leading interventional cardiologist in Mumbai with 18+ years of clinical excellence in angiography, heart surgery recovery, and preventive cardiology.",
+    about:
+      "Leading interventional cardiologist in Mumbai with 18+ years of clinical excellence in angiography, heart surgery recovery, and preventive cardiology.",
     fee: 1000,
     rating: 4.9,
     totalReviews: 380,
@@ -782,14 +844,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: true,
     gallery: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 10:00 AM - 06:00 PM"],
     faqs: [
-      { question: "Do you accept international medical insurance?", answer: "Yes, we accept major cashless insurance networks." }
+      {
+        question: "Do you accept international medical insurance?",
+        answer: "Yes, we accept major cashless insurance networks.",
+      },
     ],
     phone: "+91 98765 43240",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=70",
     nextSlot: "11:30 AM",
   },
   {
@@ -799,7 +865,8 @@ export const DOCTORS: Doctor[] = [
     speciality: "Dentist",
     qualification: "BDS, MDS (Prosthodontics)",
     experience: 10,
-    about: "Celebrated aesthetic and restorative dentist in Mumbai known for precision veneers, crown restorations, and gentle painless treatments.",
+    about:
+      "Celebrated aesthetic and restorative dentist in Mumbai known for precision veneers, crown restorations, and gentle painless treatments.",
     fee: 600,
     rating: 4.8,
     totalReviews: 210,
@@ -826,14 +893,18 @@ export const DOCTORS: Doctor[] = [
     insuranceAccepted: true,
     isFavorite: false,
     gallery: [
-      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70"
+      "https://images.unsplash.com/photo-1551076805-e18690c5e531?auto=format&fit=crop&w=600&q=70",
     ],
     timings: ["Mon-Sat: 09:00 AM - 07:00 PM"],
     faqs: [
-      { question: "How long does teeth whitening take?", answer: "In-clinic whitening takes just 45 minutes." }
+      {
+        question: "How long does teeth whitening take?",
+        answer: "In-clinic whitening takes just 45 minutes.",
+      },
     ],
     phone: "+91 98765 43241",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=70",
+    image:
+      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=70",
     nextSlot: "02:00 PM",
   },
 ];
@@ -876,21 +947,24 @@ export const HEALTH_ARTICLES = [
     title: "10 Superfoods for a Healthy Heart",
     category: "Nutrition",
     readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=70",
+    image:
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=70",
   },
   {
     id: "a2",
     title: "How to Manage Stress at Work",
     category: "Mental Health",
     readTime: "8 min",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=70",
+    image:
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=70",
   },
   {
     id: "a3",
     title: "The Importance of 8 Hours of Sleep",
     category: "Wellness",
     readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1511295742362-92c96b12add7?auto=format&fit=crop&w=600&q=70",
+    image:
+      "https://images.unsplash.com/photo-1511295742362-92c96b12add7?auto=format&fit=crop&w=600&q=70",
   },
 ];
 

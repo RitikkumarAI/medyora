@@ -79,7 +79,10 @@ export function ThemeToggle({
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="rounded-2xl p-1.5 shadow-xl border-slate-100 dark:border-slate-800">
+      <DropdownMenuContent
+        align="end"
+        className="rounded-2xl p-1.5 shadow-xl border-slate-100 dark:border-slate-800"
+      >
         <DropdownMenuItem
           onClick={() => setTheme("light")}
           className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold cursor-pointer ${

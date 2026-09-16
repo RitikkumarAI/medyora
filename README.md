@@ -21,25 +21,31 @@ Medyora is a modern healthcare web platform and doctor consultation ecosystem bu
 ## Getting Started
 
 ### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Environment Configuration
+
 Copy `.env.example` to `.env` and fill in your Supabase project credentials when ready:
+
 ```bash
 cp .env.example .env
 ```
 
 ### 3. Start Development Server
+
 ```bash
 npm run dev
 ```
 
 ### 4. Production Build
+
 ```bash
 npm run build
 ```
 
 ## License
+
 Private / Proprietary.

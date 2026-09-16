@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { SiteHeader } from '@/shared/components/SiteHeader'
+import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader } from "@/shared/components/SiteHeader";
 
-export const Route = createFileRoute('/doctor/analytics')({
+export const Route = createFileRoute("/doctor/analytics")({
   component: DoctorAnalytics,
-})
+});
 
 function DoctorAnalytics() {
   return (
@@ -14,5 +14,5 @@ function DoctorAnalytics() {
         <p className="text-muted-foreground">Analytics dashboard coming soon.</p>
       </div>
     </div>
-  )
+  );
 }

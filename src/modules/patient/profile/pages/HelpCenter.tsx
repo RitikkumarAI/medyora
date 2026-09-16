@@ -1,11 +1,31 @@
 import { useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, HelpCircle, PhoneCall, Share2, Crown, 
-  BookOpen, Stethoscope, FlaskConical, Gift, Bell, 
-  ShieldCheck, ChevronRight, MessageCircle, Mail,
-  Search, Clock, ChevronDown, CheckCircle2, Headphones, AlertTriangle,
-  FileQuestion, Ticket, Send, Sparkles, X
+import {
+  ArrowLeft,
+  HelpCircle,
+  PhoneCall,
+  Share2,
+  Crown,
+  BookOpen,
+  Stethoscope,
+  FlaskConical,
+  Gift,
+  Bell,
+  ShieldCheck,
+  ChevronRight,
+  MessageCircle,
+  Mail,
+  Search,
+  Clock,
+  ChevronDown,
+  CheckCircle2,
+  Headphones,
+  AlertTriangle,
+  FileQuestion,
+  Ticket,
+  Send,
+  Sparkles,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,17 +42,17 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: "How does the Digital Token & Live Queue system work?",
-        a: "When you book an appointment on Medyora, you receive a digital token number (e.g. #14). You can track live queue status in real-time on your phone, see the current token being examined, and estimate exact wait times so you only leave home when your turn is near."
+        a: "When you book an appointment on Medyora, you receive a digital token number (e.g. #14). You can track live queue status in real-time on your phone, see the current token being examined, and estimate exact wait times so you only leave home when your turn is near.",
       },
       {
         q: "Can I reschedule my appointment on the same day if I am running late?",
-        a: "Yes! Go to 'My Appointments' and tap 'Reschedule Today'. You can select any available evening slot for the same doctor with zero cancellation fee."
+        a: "Yes! Go to 'My Appointments' and tap 'Reschedule Today'. You can select any available evening slot for the same doctor with zero cancellation fee.",
       },
       {
         q: "What is the cancellation and refund policy?",
-        a: "Prepaid online consultations can be cancelled up to 1 hour before slot time for an instant 100% refund credited back to your Medyora Wallet or original payment method."
-      }
-    ]
+        a: "Prepaid online consultations can be cancelled up to 1 hour before slot time for an instant 100% refund credited back to your Medyora Wallet or original payment method.",
+      },
+    ],
   },
   {
     id: "video-consult",
@@ -41,13 +61,13 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: "Are video consultation prescriptions legally valid at pharmacies?",
-        a: "Yes. All Medyora video prescriptions are digitally signed by registered MCI/NMC verified doctors with registration numbers, valid at all pharmacies across India under the Telemedicine Practice Guidelines."
+        a: "Yes. All Medyora video prescriptions are digitally signed by registered MCI/NMC verified doctors with registration numbers, valid at all pharmacies across India under the Telemedicine Practice Guidelines.",
       },
       {
         q: "Is there a free follow-up consultation included?",
-        a: "Yes. Every consultation includes 7 days of free follow-up chat or call review with the same doctor for routine query resolutions."
-      }
-    ]
+        a: "Yes. Every consultation includes 7 days of free follow-up chat or call review with the same doctor for routine query resolutions.",
+      },
+    ],
   },
   {
     id: "medicines-labs",
@@ -56,13 +76,13 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: "How is sample collection done for Home Lab Tests?",
-        a: "A certified DMLT phlebotomist visits your home at your scheduled morning slot with sterile vacuum tubes and a cold-chain kit. Digital reports are delivered directly to your Medyora Health Locker within 6-12 hours."
+        a: "A certified DMLT phlebotomist visits your home at your scheduled morning slot with sterile vacuum tubes and a cold-chain kit. Digital reports are delivered directly to your Medyora Health Locker within 6-12 hours.",
       },
       {
         q: "How quickly are medicines delivered to my doorstep?",
-        a: "In metro cities (Bangalore, Delhi NCR, Mumbai, Pune, Hyderabad), express medicine orders are delivered in 2 to 4 hours with up to 20% discount."
-      }
-    ]
+        a: "In metro cities (Bangalore, Delhi NCR, Mumbai, Pune, Hyderabad), express medicine orders are delivered in 2 to 4 hours with up to 20% discount.",
+      },
+    ],
   },
   {
     id: "surgeries-insurance",
@@ -71,14 +91,14 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: "Does Medyora support 100% Cashless Insurance claims?",
-        a: "Yes. Our insurance team handles pre-authorization, TPA documentation, and cashless claims for all major health insurers (Star Health, Care, HDFC Ergo, ICICI Lombard, Max Bupa, etc.)."
+        a: "Yes. Our insurance team handles pre-authorization, TPA documentation, and cashless claims for all major health insurers (Star Health, Care, HDFC Ergo, ICICI Lombard, Max Bupa, etc.).",
       },
       {
         q: "Is 0% No-Cost EMI available for elective surgeries?",
-        a: "Yes. We offer 0% interest EMI options with flexible repayment tenures from 3 to 18 months."
-      }
-    ]
-  }
+        a: "Yes. We offer 0% interest EMI options with flexible repayment tenures from 3 to 18 months.",
+      },
+    ],
+  },
 ];
 
 export function HelpCenter() {
@@ -103,7 +123,9 @@ export function HelpCenter() {
       toast.error("Please fill in both subject and description.");
       return;
     }
-    toast.success("Support ticket #MY-89421 created! Our Care Manager will contact you in 15 mins.");
+    toast.success(
+      "Support ticket #MY-89421 created! Our Care Manager will contact you in 15 mins.",
+    );
     setIsTicketModalOpen(false);
     setTicketSubject("");
     setTicketDescription("");
@@ -111,7 +133,6 @@ export function HelpCenter() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 font-sans transition-colors">
-      
       {/* ================= HERO SECTION ================= */}
       <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 text-center space-y-5">
@@ -125,7 +146,8 @@ export function HelpCenter() {
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
-            Find quick answers to common questions about doctor bookings, token queue, test reports, and insurance claims.
+            Find quick answers to common questions about doctor bookings, token queue, test reports,
+            and insurance claims.
           </p>
 
           {/* Search Input Box */}
@@ -143,7 +165,6 @@ export function HelpCenter() {
 
       {/* ================= MAIN CONTAINER ================= */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        
         {/* ================= 4 QUICK ACTION CARDS ================= */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
@@ -152,7 +173,9 @@ export function HelpCenter() {
             </div>
             <div>
               <h3 className="font-bold text-sm text-slate-900 dark:text-white">WhatsApp Support</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Chat with our 24/7 virtual assistant & live care agent</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Chat with our 24/7 virtual assistant & live care agent
+              </p>
             </div>
             <Button
               onClick={() => toast.success("Opening Medyora WhatsApp Support Desk...")}
@@ -168,10 +191,19 @@ export function HelpCenter() {
               <PhoneCall className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Toll-Free Helpline</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Available 24 hours a day for immediate booking support</p>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                Toll-Free Helpline
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Available 24 hours a day for immediate booking support
+              </p>
             </div>
-            <Button asChild size="sm" variant="outline" className="w-full rounded-xl border-blue-200 text-blue-700 font-bold text-xs">
+            <Button
+              asChild
+              size="sm"
+              variant="outline"
+              className="w-full rounded-xl border-blue-200 text-blue-700 font-bold text-xs"
+            >
               <a href="tel:18002008899">Call 1800-200-8899</a>
             </Button>
           </div>
@@ -182,7 +214,9 @@ export function HelpCenter() {
             </div>
             <div>
               <h3 className="font-bold text-sm text-slate-900 dark:text-white">Raise a Ticket</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Submit billing, refund, or clinic feedback request</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Submit billing, refund, or clinic feedback request
+              </p>
             </div>
             <Button
               onClick={() => setIsTicketModalOpen(true)}
@@ -199,9 +233,15 @@ export function HelpCenter() {
             </div>
             <div>
               <h3 className="font-bold text-sm text-slate-900 dark:text-white">Emergency SOS</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Immediate 112/108 ambulance dispatch and 24/7 ERs</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Immediate 112/108 ambulance dispatch and 24/7 ERs
+              </p>
             </div>
-            <Button asChild size="sm" className="w-full rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs">
+            <Button
+              asChild
+              size="sm"
+              className="w-full rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs"
+            >
               <Link to="/patient/care-ai">Emergency Care AI →</Link>
             </Button>
           </div>
@@ -266,7 +306,6 @@ export function HelpCenter() {
             ))}
           </div>
         </section>
-
       </main>
 
       {/* ================= RAISE SUPPORT TICKET MODAL ================= */}
@@ -285,18 +324,27 @@ export function HelpCenter() {
                     <Ticket className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-slate-900 dark:text-white">Raise a Support Ticket</h3>
-                    <p className="text-xs text-slate-400">Our Care Team responds in under 15 minutes</p>
+                    <h3 className="font-bold text-base text-slate-900 dark:text-white">
+                      Raise a Support Ticket
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      Our Care Team responds in under 15 minutes
+                    </p>
                   </div>
                 </div>
-                <button onClick={() => setIsTicketModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <button
+                  onClick={() => setIsTicketModalOpen(false)}
+                  className="text-slate-400 hover:text-slate-600"
+                >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
               <form onSubmit={handleRaiseTicket} className="space-y-3 text-xs">
                 <div className="space-y-1">
-                  <label className="text-slate-600 dark:text-slate-300 font-bold block">Issue Subject</label>
+                  <label className="text-slate-600 dark:text-slate-300 font-bold block">
+                    Issue Subject
+                  </label>
                   <Input
                     value={ticketSubject}
                     onChange={(e) => setTicketSubject(e.target.value)}
@@ -307,7 +355,9 @@ export function HelpCenter() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-slate-600 dark:text-slate-300 font-bold block">Detailed Description</label>
+                  <label className="text-slate-600 dark:text-slate-300 font-bold block">
+                    Detailed Description
+                  </label>
                   <Textarea
                     value={ticketDescription}
                     onChange={(e) => setTicketDescription(e.target.value)}
@@ -339,7 +389,6 @@ export function HelpCenter() {
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

@@ -1,20 +1,40 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, MessageSquarePlus, Heart, Share2, CheckCircle2, 
-  MessageSquare, Sparkles, X, Filter, Send, ThumbsUp, Eye, User,
-  BookOpen, Bookmark, Clock, PenTool, Stethoscope, ChevronRight,
-  ShieldCheck, Search, Plus, Check, Award
+import {
+  ArrowLeft,
+  MessageSquarePlus,
+  Heart,
+  Share2,
+  CheckCircle2,
+  MessageSquare,
+  Sparkles,
+  X,
+  Filter,
+  Send,
+  ThumbsUp,
+  Eye,
+  User,
+  BookOpen,
+  Bookmark,
+  Clock,
+  PenTool,
+  Stethoscope,
+  ChevronRight,
+  ShieldCheck,
+  Search,
+  Plus,
+  Check,
+  Award,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { COMMUNITY_QUESTIONS, type CommunityQuestion } from "@/shared/data/superapp-mock";
-import { 
-  getStoredArticles, 
-  publishNewArticle, 
-  type HealthArticle, 
-  type ArticleCategory 
+import {
+  getStoredArticles,
+  publishNewArticle,
+  type HealthArticle,
+  type ArticleCategory,
 } from "@/shared/data/articles-data";
 import { useAuth } from "@/shared/auth/useAuth";
 import { toast } from "sonner";
@@ -33,16 +53,24 @@ const ARTICLE_CATEGORIES: { id: string; label: string; icon: string }[] = [
   { id: "Mental Health", label: "Mental Wellness", icon: "🧠" },
 ];
 
-const QA_CATEGORIES = ["All", "Trending", "Women's Health", "Skin", "Pediatrics", "Cardiology", "Digestion"];
+const QA_CATEGORIES = [
+  "All",
+  "Trending",
+  "Women's Health",
+  "Skin",
+  "Pediatrics",
+  "Cardiology",
+  "Digestion",
+];
 
 export function CommunityFeedPage() {
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
   const isDoctor = isLoggedIn && user?.role === "doctor";
-  
+
   // Tab Mode: "articles" (Doctor Articles & Blogs) vs "qa" (Community Q&A)
   const [activeTab, setActiveTab] = useState<"articles" | "qa">("articles");
-  
+
   // Article State
   const [articles, setArticles] = useState<HealthArticle[]>([]);
   const [selectedArticleCategory, setSelectedArticleCategory] = useState<string>("All");
@@ -50,7 +78,7 @@ export function CommunityFeedPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [bookmarkedArticles, setBookmarkedArticles] = useState<string[]>([]);
   const [likedArticles, setLikedArticles] = useState<string[]>([]);
-  
+
   // Doctor Publish Article Modal State
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishForm, setPublishForm] = useState({
@@ -59,7 +87,8 @@ export function CommunityFeedPage() {
     readTime: "5 min",
     doctorName: "Dr. Rajesh Sharma",
     doctorRole: "Senior Cardiologist",
-    doctorAvatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+    doctorAvatar:
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
     image: "/specialities/heart_specialist.webp",
     summary: "",
     keyTakeaway1: "",
@@ -84,14 +113,10 @@ export function CommunityFeedPage() {
   const handleLikeArticle = (id: string) => {
     if (likedArticles.includes(id)) {
       setLikedArticles((prev) => prev.filter((i) => i !== id));
-      setArticles((prev) =>
-        prev.map((a) => (a.id === id ? { ...a, likes: a.likes - 1 } : a))
-      );
+      setArticles((prev) => prev.map((a) => (a.id === id ? { ...a, likes: a.likes - 1 } : a)));
     } else {
       setLikedArticles((prev) => [...prev, id]);
-      setArticles((prev) =>
-        prev.map((a) => (a.id === id ? { ...a, likes: a.likes + 1 } : a))
-      );
+      setArticles((prev) => prev.map((a) => (a.id === id ? { ...a, likes: a.likes + 1 } : a)));
       toast.success("Article liked!");
     }
   };
@@ -112,12 +137,12 @@ export function CommunityFeedPage() {
     if (likedQuestions.includes(id)) {
       setLikedQuestions((prev) => prev.filter((item) => item !== id));
       setQuestions((prev) =>
-        prev.map((q) => (q.id === id ? { ...q, likesCount: q.likesCount - 1 } : q))
+        prev.map((q) => (q.id === id ? { ...q, likesCount: q.likesCount - 1 } : q)),
       );
     } else {
       setLikedQuestions((prev) => [...prev, id]);
       setQuestions((prev) =>
-        prev.map((q) => (q.id === id ? { ...q, likesCount: q.likesCount + 1 } : q))
+        prev.map((q) => (q.id === id ? { ...q, likesCount: q.likesCount + 1 } : q)),
       );
       toast.success("Helpful vote recorded!");
     }
@@ -144,8 +169,10 @@ export function CommunityFeedPage() {
         verified: true,
       },
       keyTakeaways: [
-        publishForm.keyTakeaway1 || "Evidence-based medical advice from verified healthcare specialist.",
-        publishForm.keyTakeaway2 || "Consult your physician before starting any significant dietary change.",
+        publishForm.keyTakeaway1 ||
+          "Evidence-based medical advice from verified healthcare specialist.",
+        publishForm.keyTakeaway2 ||
+          "Consult your physician before starting any significant dietary change.",
       ].filter(Boolean),
       sections: [
         {
@@ -165,7 +192,8 @@ export function CommunityFeedPage() {
       readTime: "5 min",
       doctorName: "Dr. Rajesh Sharma",
       doctorRole: "Senior Cardiologist",
-      doctorAvatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+      doctorAvatar:
+        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
       image: "/specialities/heart_specialist.webp",
       summary: "",
       keyTakeaway1: "",
@@ -192,7 +220,8 @@ export function CommunityFeedPage() {
       doctorAnswer: {
         doctorName: "Dr. Rajesh Sharma",
         speciality: "Senior Medical Consultant",
-        avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80",
+        avatar:
+          "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80",
         verified: true,
         answerText:
           "Thank you for your question. Based on the symptoms described, maintain optimal hydration and consult a certified specialist if symptoms persist.",
@@ -230,7 +259,7 @@ export function CommunityFeedPage() {
 
   // Unique list of authors for doctor filter
   const uniqueAuthors = useMemo(() => {
-    const map = new Map<string, typeof articles[0]["author"]>();
+    const map = new Map<string, (typeof articles)[0]["author"]>();
     articles.forEach((a) => {
       if (!map.has(a.author.name)) {
         map.set(a.author.name, a.author);
@@ -243,12 +272,13 @@ export function CommunityFeedPage() {
   const filteredQuestions = useMemo(() => {
     return selectedQACategory === "All"
       ? questions
-      : questions.filter((q) => q.category.toLowerCase().includes(selectedQACategory.toLowerCase()));
+      : questions.filter((q) =>
+          q.category.toLowerCase().includes(selectedQACategory.toLowerCase()),
+        );
   }, [questions, selectedQACategory]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-24 font-sans transition-colors">
-      
       {/* ================= STICKY HEADER ================= */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
         <div className="flex items-center justify-between">
@@ -392,11 +422,9 @@ export function CommunityFeedPage() {
 
       {/* ================= MAIN FEED CONTENT ================= */}
       <main className="p-4 space-y-5 max-w-2xl mx-auto w-full">
-        
         {/* VIEW 1: HEALTH ARTICLES (DOCTOR AUTHORED) */}
         {activeTab === "articles" && (
           <div className="space-y-4">
-            
             {/* Filter by Doctor Carousel */}
             <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-2">
               <div className="flex items-center justify-between">
@@ -558,7 +586,10 @@ export function CommunityFeedPage() {
                         </span>
                         <ul className="space-y-1">
                           {article.keyTakeaways.slice(0, 2).map((takeaway, idx) => (
-                            <li key={idx} className="text-[11px] text-slate-600 dark:text-slate-300 flex items-start gap-1.5">
+                            <li
+                              key={idx}
+                              className="text-[11px] text-slate-600 dark:text-slate-300 flex items-start gap-1.5"
+                            >
                               <span className="text-blue-600 font-bold">•</span>
                               <span className="line-clamp-1">{takeaway}</span>
                             </li>
@@ -575,7 +606,10 @@ export function CommunityFeedPage() {
                           asChild
                           className="h-8 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs"
                         >
-                          <Link to="/patient/articles/$articleId" params={{ articleId: article.id }}>
+                          <Link
+                            to="/patient/articles/$articleId"
+                            params={{ articleId: article.id }}
+                          >
                             Read Full Article <ChevronRight className="h-3.5 w-3.5 ml-1" />
                           </Link>
                         </Button>
@@ -606,7 +640,9 @@ export function CommunityFeedPage() {
                           }`}
                           title="Like Article"
                         >
-                          <Heart className={`h-4 w-4 ${isLiked ? "fill-rose-600 text-rose-600" : ""}`} />
+                          <Heart
+                            className={`h-4 w-4 ${isLiked ? "fill-rose-600 text-rose-600" : ""}`}
+                          />
                           <span>{article.likes}</span>
                         </button>
 
@@ -619,7 +655,9 @@ export function CommunityFeedPage() {
                           }`}
                           title="Bookmark"
                         >
-                          <Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-blue-600 text-blue-600" : ""}`} />
+                          <Bookmark
+                            className={`h-4 w-4 ${isBookmarked ? "fill-blue-600 text-blue-600" : ""}`}
+                          />
                         </button>
 
                         <button
@@ -723,7 +761,9 @@ export function CommunityFeedPage() {
                           isLiked ? "text-rose-600" : "text-slate-500 hover:text-slate-700"
                         }`}
                       >
-                        <Heart className={`h-4 w-4 ${isLiked ? "fill-rose-600 text-rose-600" : ""}`} />
+                        <Heart
+                          className={`h-4 w-4 ${isLiked ? "fill-rose-600 text-rose-600" : ""}`}
+                        />
                         <span>{q.likesCount}</span>
                       </button>
 
@@ -774,7 +814,8 @@ export function CommunityFeedPage() {
               <form onSubmit={handlePublishArticleSubmit} className="space-y-4">
                 <div>
                   <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                    Article Title (e.g., 10 Superfoods for Better Heart, 10 Essential Micronutrients)
+                    Article Title (e.g., 10 Superfoods for Better Heart, 10 Essential
+                    Micronutrients)
                   </label>
                   <Input
                     value={publishForm.title}
@@ -792,7 +833,12 @@ export function CommunityFeedPage() {
                     </label>
                     <select
                       value={publishForm.category}
-                      onChange={(e) => setPublishForm({ ...publishForm, category: e.target.value as any })}
+                      onChange={(e) =>
+                        setPublishForm({
+                          ...publishForm,
+                          category: e.target.value as ArticleCategory,
+                        })
+                      }
                       className="w-full h-10 px-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-slate-200"
                     >
                       <option value="Nutrition">10 Foods & Nutrition</option>
@@ -840,13 +886,17 @@ export function CommunityFeedPage() {
                   </label>
                   <Input
                     value={publishForm.keyTakeaway1}
-                    onChange={(e) => setPublishForm({ ...publishForm, keyTakeaway1: e.target.value })}
+                    onChange={(e) =>
+                      setPublishForm({ ...publishForm, keyTakeaway1: e.target.value })
+                    }
                     placeholder="Takeaway 1: Focus on soluble fiber and anti-inflammatory spices..."
                     className="rounded-2xl bg-slate-50 dark:bg-slate-800 text-xs"
                   />
                   <Input
                     value={publishForm.keyTakeaway2}
-                    onChange={(e) => setPublishForm({ ...publishForm, keyTakeaway2: e.target.value })}
+                    onChange={(e) =>
+                      setPublishForm({ ...publishForm, keyTakeaway2: e.target.value })
+                    }
                     placeholder="Takeaway 2: Maintain 30 minutes of moderate aerobic activity daily..."
                     className="rounded-2xl bg-slate-50 dark:bg-slate-800 text-xs"
                   />
@@ -939,7 +989,6 @@ export function CommunityFeedPage() {
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

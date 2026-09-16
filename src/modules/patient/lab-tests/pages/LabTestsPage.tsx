@@ -1,12 +1,27 @@
 import { useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { 
-  ArrowLeft, Search, ShoppingCart, MessageCircle, Plus, 
-  Check, ShieldCheck, Clock, MapPin, Sparkles, X, ChevronRight 
+import {
+  ArrowLeft,
+  Search,
+  ShoppingCart,
+  MessageCircle,
+  Plus,
+  Check,
+  ShieldCheck,
+  Clock,
+  MapPin,
+  Sparkles,
+  X,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LAB_TESTS, HEALTH_PACKAGES, type LabTest, type HealthPackage } from "@/shared/data/superapp-mock";
+import {
+  LAB_TESTS,
+  HEALTH_PACKAGES,
+  type LabTest,
+  type HealthPackage,
+} from "@/shared/data/superapp-mock";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -27,13 +42,14 @@ export function LabTestsPage() {
     }
   };
 
-  const filteredTests = LAB_TESTS.filter((t) =>
-    t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    t.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTests = LAB_TESTS.filter(
+    (t) =>
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.category.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const filteredPackages = HEALTH_PACKAGES.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    p.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Cart total calculations
@@ -45,7 +61,6 @@ export function LabTestsPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-28 font-sans transition-colors">
-      
       {/* ================= HEADER (SCREEN 6) ================= */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100 dark:border-slate-800 shadow-xs space-y-3">
         <div className="flex items-center justify-between">
@@ -90,12 +105,13 @@ export function LabTestsPage() {
       </header>
 
       <main className="p-4 space-y-6">
-        
         {/* ================= HERO PROMO BANNER (SCREEN 6) ================= */}
         <div className="rounded-3xl p-5 bg-gradient-to-r from-blue-700 via-indigo-800 to-slate-900 text-white relative overflow-hidden shadow-lg">
           <div className="max-w-[65%] space-y-2">
             <h2 className="font-extrabold text-lg leading-tight">
-              Save upto 50%<br />On Health Packages
+              Save upto 50%
+              <br />
+              On Health Packages
             </h2>
             <Button
               size="sm"
@@ -140,7 +156,9 @@ export function LabTestsPage() {
                     <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-2 leading-tight">
                       {pkg.name}
                     </h4>
-                    <p className="text-[10px] text-slate-400 mt-1">{pkg.testsCount} tests included</p>
+                    <p className="text-[10px] text-slate-400 mt-1">
+                      {pkg.testsCount} tests included
+                    </p>
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -231,7 +249,6 @@ export function LabTestsPage() {
             })}
           </div>
         </section>
-
       </main>
 
       {/* ================= FLOATING CHAT TO BOOK TESTS BAR (SCREEN 6) ================= */}
@@ -254,7 +271,9 @@ export function LabTestsPage() {
               <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
                 20+ Experts Online
               </p>
-              <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">Free consultation</p>
+              <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                Free consultation
+              </p>
             </div>
           </div>
 
@@ -283,7 +302,10 @@ export function LabTestsPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-white">
                   Diagnostics Cart ({cart.length})
                 </h3>
-                <button onClick={() => setIsCartOpen(false)} className="p-1 rounded-full text-slate-400">
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="p-1 rounded-full text-slate-400"
+                >
                   <X className="h-5 w-5" />
                 </button>
               </div>
@@ -294,23 +316,43 @@ export function LabTestsPage() {
                 ) : (
                   <>
                     {cartTests.map((t) => (
-                      <div key={t.id} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800">
+                      <div
+                        key={t.id}
+                        className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800"
+                      >
                         <div>
                           <p className="font-bold text-xs">{t.name}</p>
-                          <p className="text-[11px] text-blue-600 font-semibold">₹{t.discountedPrice}</p>
+                          <p className="text-[11px] text-blue-600 font-semibold">
+                            ₹{t.discountedPrice}
+                          </p>
                         </div>
-                        <Button size="sm" variant="ghost" onClick={() => toggleAddToCart(t.id, t.name)} className="text-red-500 h-8 text-xs">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => toggleAddToCart(t.id, t.name)}
+                          className="text-red-500 h-8 text-xs"
+                        >
                           Remove
                         </Button>
                       </div>
                     ))}
                     {cartPackages.map((p) => (
-                      <div key={p.id} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800">
+                      <div
+                        key={p.id}
+                        className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800"
+                      >
                         <div>
                           <p className="font-bold text-xs">{p.name}</p>
-                          <p className="text-[11px] text-blue-600 font-semibold">₹{p.discountedPrice}</p>
+                          <p className="text-[11px] text-blue-600 font-semibold">
+                            ₹{p.discountedPrice}
+                          </p>
                         </div>
-                        <Button size="sm" variant="ghost" onClick={() => toggleAddToCart(p.id, p.name)} className="text-red-500 h-8 text-xs">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => toggleAddToCart(p.id, p.name)}
+                          className="text-red-500 h-8 text-xs"
+                        >
                           Remove
                         </Button>
                       </div>
@@ -341,7 +383,6 @@ export function LabTestsPage() {
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

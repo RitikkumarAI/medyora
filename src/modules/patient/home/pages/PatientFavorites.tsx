@@ -13,8 +13,8 @@ export function PatientFavorites() {
         <h1 className="text-2xl font-bold text-slate-900 mb-4">Saved Doctors</h1>
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-          <Input 
-            placeholder="Search favorites..." 
+          <Input
+            placeholder="Search favorites..."
             className="pl-11 rounded-2xl bg-white border-slate-200 shadow-sm h-14 text-sm focus-visible:ring-blue-600"
           />
         </div>
@@ -29,8 +29,17 @@ export function PatientFavorites() {
           </div>
         ) : (
           favorites.map((doc) => (
-            <Link key={doc.id} to={`/doctors/$doctorId`} params={{ doctorId: doc.id }} className="flex gap-4 rounded-3xl bg-white p-3 shadow-sm border border-slate-100">
-              <img src={doc.image} alt={doc.fullName} className="h-[88px] w-[88px] rounded-2xl object-cover" />
+            <Link
+              key={doc.id}
+              to={`/doctors/$doctorId`}
+              params={{ doctorId: doc.id }}
+              className="flex gap-4 rounded-3xl bg-white p-3 shadow-sm border border-slate-100"
+            >
+              <img
+                src={doc.image}
+                alt={doc.fullName}
+                className="h-[88px] w-[88px] rounded-2xl object-cover"
+              />
               <div className="flex flex-1 flex-col py-1 justify-center relative">
                 <button className="absolute top-0 right-0 p-1 text-red-500 transition-colors">
                   <Heart className="h-4 w-4 fill-current" />
@@ -43,7 +52,7 @@ export function PatientFavorites() {
                 </div>
                 <div className="flex items-center gap-1.5 mt-2.5 text-xs font-medium text-slate-500">
                   <div className="flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5" /> 
+                    <Clock className="h-3.5 w-3.5" />
                     {doc.experience} yrs
                   </div>
                   <span className="w-1 h-1 rounded-full bg-slate-300 mx-1" />

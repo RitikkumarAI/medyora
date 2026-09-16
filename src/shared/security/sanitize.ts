@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 /**
  * Client-Side Input Sanitization & XSS Prevention Utility
  */
