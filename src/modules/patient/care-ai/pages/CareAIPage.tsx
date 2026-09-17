@@ -17,8 +17,7 @@ import { CareAIChatWorkspace } from "../components/CareAIChatWorkspace";
 import { OrganSystemDeepDiveModal } from "../components/OrganSystemDeepDiveModal";
 import { ReportAnalysisModal } from "../components/ReportAnalysisModal";
 import { AddVitalsModal } from "../components/AddVitalsModal";
-import { OrganSystemGridView } from "../components/OrganSystemGridView";
-import { ORGAN_SYSTEMS, type OrganSystemItem } from "../data/organ-systems-data";
+import { ORGAN_SYSTEMS } from "../data/organ-systems-data";
 import { toast } from "sonner";
 
 export function CareAIPage() {
@@ -171,23 +170,11 @@ export function CareAIPage() {
             />
           </div>
         </div>
-
-        {/* ================= BOTTOM SECTION: 15 ORGAN SYSTEM VIEWS GRID ================= */}
-        <OrganSystemGridView
-          onSelectSystem={(id) => {
-            setSelectedOrganId(id);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          onOpenDeepDive={(id) => {
-            setSelectedOrganId(id);
-            setIsDeepDiveOpen(true);
-          }}
-        />
       </main>
 
       {/* ================= INTERACTIVE MODALS ================= */}
 
-      {/* Organ System Deep-Dive Viewer */}
+      {/* Organ System Deep-Dive Viewer (Shows anatomical visualization on specific disease/organ click) */}
       <OrganSystemDeepDiveModal
         isOpen={isDeepDiveOpen}
         onClose={() => setIsDeepDiveOpen(false)}
