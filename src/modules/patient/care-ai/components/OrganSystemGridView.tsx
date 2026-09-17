@@ -1,10 +1,29 @@
-import { ChevronRight, Heart, Wind, Brain, Bone, Flame, Shield, ShieldCheck, Sparkles, Eye, Stethoscope, Activity, Flower2, Smile } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { ORGAN_SYSTEMS, type OrganSystemItem } from "../data/organ-systems-data";
 
 interface OrganSystemGridViewProps {
   onSelectSystem: (id: string) => void;
   onOpenDeepDive: (id: string) => void;
 }
+
+// Exact 15 titles matching the reference image
+const SYSTEM_CARD_TITLES = [
+  "1. Heart / Circulatory",
+  "2. Lungs / Respiratory",
+  "3. Brain / Nervous",
+  "4. Bones & Joints",
+  "5. Stomach / Digestive",
+  "6. Liver / Hepatobiliary",
+  "7. Kidney / Urinary",
+  "8. Skin / Integumentary",
+  "9. Eye / Vision",
+  "10. ENT (Ear, Nose, Throat)",
+  "11. Endocrine",
+  "12. Reproductive (Male)",
+  "13. Reproductive (Female)",
+  "14. Women's Health",
+  "15. Men's Health",
+];
 
 // Coordinate mapping for holographic anatomical hotspot nodes
 const ORGAN_HOTSPOTS: Record<
@@ -22,8 +41,8 @@ const ORGAN_HOTSPOTS: Record<
   eye: { top: "14%", left: "49%", color: "bg-cyan-400", ringColor: "bg-cyan-300", label: "Optic Nerve" },
   ent: { top: "18%", left: "49%", color: "bg-teal-400", ringColor: "bg-teal-300", label: "ENT Canal" },
   endocrine: { top: "24%", left: "49%", color: "bg-yellow-400", ringColor: "bg-yellow-300", label: "Endocrine" },
-  womens_health: { top: "54%", left: "49%", color: "bg-rose-400", ringColor: "bg-rose-300", label: "Pelvic" },
-  mens_health: { top: "55%", left: "49%", color: "bg-blue-500", ringColor: "bg-blue-400", label: "Metabolic" },
+  womens_health: { top: "54%", left: "49%", color: "bg-rose-400", ringColor: "bg-rose-300", label: "Female Pelvic" },
+  mens_health: { top: "55%", left: "49%", color: "bg-blue-500", ringColor: "bg-blue-400", label: "Male Anatomy" },
   child_health: { top: "28%", left: "49%", color: "bg-emerald-400", ringColor: "bg-emerald-300", label: "Pediatric" },
   mental_health: { top: "11%", left: "49%", color: "bg-indigo-400", ringColor: "bg-indigo-300", label: "Neuro-Axis" },
 };
@@ -45,7 +64,7 @@ export function OrganSystemGridView({
         </p>
       </div>
 
-      {/* Grid of 15 Organ System Cards (All using consistent 3D Holographic Anatomy) */}
+      {/* Grid of 15 Organ System Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5">
         {ORGAN_SYSTEMS.slice(0, 15).map((sys: OrganSystemItem, idx: number) => {
           const hotspot = ORGAN_HOTSPOTS[sys.id] || {
@@ -56,11 +75,13 @@ export function OrganSystemGridView({
             label: sys.shortName,
           };
 
+          const cardTitle = SYSTEM_CARD_TITLES[idx] || `${idx + 1}. ${sys.shortName}`;
+
           return (
             <div key={sys.id} className="space-y-1.5">
-              {/* Numbered Header Label (e.g. 1. Heart / Circulatory) */}
+              {/* Numbered Header Label (e.g. 1. Heart / Circulatory, 6. Liver / Hepatobiliary) */}
               <div className="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate">
-                {idx + 1}. {sys.name.split("/")[0]?.trim()} / {sys.systemName.replace(" System", "")}
+                {cardTitle}
               </div>
 
               {/* Card Body with Dark Navy Holographic Theme */}
@@ -109,7 +130,7 @@ export function OrganSystemGridView({
                     </div>
                   </div>
 
-                  {/* Right: Consistent 3D Holographic Body Anatomy (ZERO stock photos!) */}
+                  {/* Right: Consistent 3D Holographic Body Anatomy */}
                   <div className="col-span-6 relative h-26 rounded-xl overflow-hidden bg-[#020614] border border-blue-900/50 flex items-center justify-center group-hover:border-cyan-500/50 transition-colors">
                     {/* Consistent 3D Holographic Body Model for All 15 Systems */}
                     <img
