@@ -19,9 +19,16 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { ORGAN_SYSTEMS, type OrganSystemItem } from "../data/organ-systems-data";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
+import {
+  analyzeQueryWithClinicalAI,
+  formatClinicalConsultationMarkdown,
+  type ClinicalConsultationResult,
+} from "../services/clinical-knowledge-engine";
 
 export interface AnatomicalVisualData {
   organName: string;
@@ -43,6 +50,7 @@ export interface ChatWorkspaceMessage {
   isOrganFeaturedCard?: boolean;
   systemId?: string;
   anatomicalVisual?: AnatomicalVisualData;
+  consultationResult?: ClinicalConsultationResult;
 }
 
 interface CareAIChatWorkspaceProps {
@@ -54,178 +62,6 @@ interface CareAIChatWorkspaceProps {
   chatInitiateTrigger?: number;
 }
 
-// Comprehensive Clinical NLP Disease Knowledge Base
-function analyzeQueryWithClinicalNLP(
-  query: string,
-  currentOrgan: OrganSystemItem
-): { replyText: string; visual: AnatomicalVisualData } {
-  const lower = query.toLowerCase();
-
-  // 1. CARDIOLOGY / CHEST / HEART
-  if (
-    lower.includes("chest") ||
-    lower.includes("heart") ||
-    lower.includes("bp") ||
-    lower.includes("blood pressure") ||
-    lower.includes("palpitation") ||
-    lower.includes("angina") ||
-    lower.includes("cholesterol") ||
-    lower.includes("ecg")
-  ) {
-    const isEmergency = lower.includes("severe") || lower.includes("crushing") || lower.includes("sweating");
-    return {
-      replyText: `### 🫀 Clinical Assessment: Cardiovascular Health\n\n` +
-        `**Overview & Mechanism:**\n` +
-        `The symptoms you described relate to the coronary circulation and myocardial contractility. When heart vessels encounter elevated arterial pressure or lipid plaque buildup, oxygen delivery to the heart muscle decreases, causing tightness, flutter, or fatigue.\n\n` +
-        `**⚠️ Key Warning Signs:**\n` +
-        `${isEmergency ? "🚨 **Urgent Alert:** Sudden crushing chest pain radiating to the left arm or jaw with diaphoresis requires immediate emergency care (Dial 112/108).\n\n" : "• Persistent pressure under physical exertion\n• Shortness of breath when lying flat\n• Irregular or skipped heartbeats\n\n"}` +
-        `**🔬 Recommended Diagnostic Workup:**\n` +
-        `• 12-Lead Electrocardiogram (ECG)\n• High-Sensitivity Troponin-I & Lipid Profile\n• 2D Echocardiography & Exercise Stress Test (TMT)\n\n` +
-        `**🌿 Lifestyle & Dietary Care:**\n` +
-        `• Limit dietary sodium intake to under 2,000 mg/day (DASH diet)\n• Incorporate omega-3 fatty acids, garlic, and leafy greens\n• Engage in 30 minutes of moderate aerobic walking daily`,
-      visual: {
-        organName: "Heart",
-        systemName: "Circulatory System",
-        image: "/glowing_heart.jpg",
-        focusArea: "Coronary Arteries & Left Ventricle",
-        keyMetric: "BP: 120/80 mmHg | HR: 72 bpm",
-        status: "Clinical Scan Active",
-        recommendedSpecialist: "Cardiologist",
-        suggestedTests: ["ECG", "Lipid Profile", "2D Echo"],
-        lifestylePrecautions: ["Low Sodium Diet", "Daily Cardio", "Stress Reduction"],
-      },
-    };
-  }
-
-  // 2. PULMONOLOGY / LUNGS / RESPIRATORY
-  if (
-    lower.includes("lung") ||
-    lower.includes("breath") ||
-    lower.includes("cough") ||
-    lower.includes("asthma") ||
-    lower.includes("wheezing") ||
-    lower.includes("phlegm") ||
-    lower.includes("oxygen")
-  ) {
-    return {
-      replyText: `### 🫁 Clinical Assessment: Respiratory & Pulmonary System\n\n` +
-        `**Overview & Mechanism:**\n` +
-        `Your query indicates involvement of the bronchial airways or alveoli. Respiratory distress often stems from airway hyper-reactivity, allergen exposure, or inflammation in the bronchial lining leading to impaired gas exchange and reduced blood oxygen saturation (SpO₂).\n\n` +
-        `**⚠️ Key Warning Signs:**\n` +
-        `• Stridor or audible wheezing on exhalation\n• Inability to complete full sentences in a single breath\n• Bluish discoloration of lips or fingernails (cyanosis)\n\n` +
-        `**🔬 Recommended Diagnostic Workup:**\n` +
-        `• Digital Chest X-Ray (PA view)\n• Spirometry & Pulmonary Function Test (PFT)\n• Pulse Oximetry (Target SpO₂ ≥ 95%)\n\n` +
-        `**🌿 Lifestyle & Respiratory Precautions:**\n` +
-        `• Avoid indoor allergens, aerosol sprays, and active/passive tobacco smoke\n• Practice diaphragmatic breathing (pranayama) and steam inhalation\n• Maintain indoor humidity between 40% and 50%`,
-      visual: {
-        organName: "Lungs",
-        systemName: "Respiratory System",
-        image: "/holographic_body.jpg",
-        focusArea: "Bronchial Tree & Alveolar Sacs",
-        keyMetric: "SpO₂: 98% | Resp Rate: 16/min",
-        status: "Airway Scan Active",
-        recommendedSpecialist: "Pulmonologist",
-        suggestedTests: ["Chest X-Ray", "Spirometry", "SpO₂ Monitor"],
-        lifestylePrecautions: ["Air Purifier", "Avoid Smoke", "Steam Inhalation"],
-      },
-    };
-  }
-
-  // 3. GASTROENTEROLOGY / STOMACH / DIGESTION
-  if (
-    lower.includes("stomach") ||
-    lower.includes("acid") ||
-    lower.includes("gerd") ||
-    lower.includes("reflux") ||
-    lower.includes("gut") ||
-    lower.includes("digestion") ||
-    lower.includes("constipation") ||
-    lower.includes("bloating") ||
-    lower.includes("ulcer")
-  ) {
-    return {
-      replyText: `### 🍽️ Clinical Assessment: Digestive System & Gut Health\n\n` +
-        `**Overview & Mechanism:**\n` +
-        `Symptoms such as acid regurgitation, burning sensations, or bloating are caused by gastric hyperacidity and incompetence of the lower esophageal sphincter (LES). Prolonged acid exposure irritates the gastric mucosa, triggering inflammation or ulceration.\n\n` +
-        `**⚠️ Key Warning Signs:**\n` +
-        `• Difficulty or pain swallowing solid food (dysphagia)\n• Unexplained weight loss or dark tarry stools (melena)\n• Persistent severe abdominal cramping unrelieved by antacids\n\n` +
-        `**🔬 Recommended Diagnostic Workup:**\n` +
-        `• Upper Gastrointestinal Endoscopy\n• H. Pylori Stool Antigen / Breath Test\n• Abdominal Ultrasound (USG)\n\n` +
-        `**🌿 Dietary Guidelines & Precautions:**\n` +
-        `• Consume small, frequent meals; avoid lying down within 2 hours of eating\n• Strictly avoid carbonated beverages, excess caffeine, and deep-fried foods\n• Add probiotic curd/buttermilk and ginger tea to soothe digestive lining`,
-      visual: {
-        organName: "Stomach",
-        systemName: "Digestive System",
-        image: "/holographic_body.jpg",
-        focusArea: "Gastric Mucosa & Lower Esophagus",
-        keyMetric: "Gastric Motility: Normal",
-        status: "GI Tract Scan Active",
-        recommendedSpecialist: "Gastroenterologist",
-        suggestedTests: ["Endoscopy", "H. Pylori Test", "Abdominal USG"],
-        lifestylePrecautions: ["Elevate Head on Bed", "Low Acid Diet", "Small Meals"],
-      },
-    };
-  }
-
-  // 4. NEUROLOGY / BRAIN / HEADACHE
-  if (
-    lower.includes("brain") ||
-    lower.includes("headache") ||
-    lower.includes("migraine") ||
-    lower.includes("dizzy") ||
-    lower.includes("dizziness") ||
-    lower.includes("numbness") ||
-    lower.includes("memory")
-  ) {
-    return {
-      replyText: `### 🧠 Clinical Assessment: Central Nervous System\n\n` +
-        `**Overview & Mechanism:**\n` +
-        `Headaches and dizziness frequently involve neuro-vascular fluctuations or trigeminal nerve sensitization. Migraines often have environmental triggers (bright lights, disrupted circadian rhythm, dehydration), while tension headaches arise from sustained cervical muscle contraction.\n\n` +
-        `**⚠️ Key Warning Signs:**\n` +
-        `• "Thunderclap" headache reaching maximum intensity in seconds\n• Sudden focal neurological deficits (facial drooping, arm weakness, slurred speech)\n• Headache accompanied by high fever and neck stiffness\n\n` +
-        `**🔬 Recommended Diagnostic Workup:**\n` +
-        `• Non-contrast Brain MRI / CT Scan\n• Comprehensive Neurological Examination\n• Cervical Spine Evaluation\n\n` +
-        `**🌿 Neuro-Wellness Precautions:**\n` +
-        `• Maintain regular 7–8 hour sleep-wake cycles\n• Stay well-hydrated (2.5–3 liters water daily)\n• Take structured screen breaks every 45 minutes to ease ocular strain`,
-      visual: {
-        organName: "Brain",
-        systemName: "Nervous System",
-        image: "/holographic_body.jpg",
-        focusArea: "Cerebral Cortex & Neuro-Vascular Axis",
-        keyMetric: "Reflexes: Intact | Cognitive: Alert",
-        status: "Neural Scan Active",
-        recommendedSpecialist: "Neurologist",
-        suggestedTests: ["Brain MRI", "EEG", "Neuro Examination"],
-        lifestylePrecautions: ["Regular Sleep", "Hydration", "Screen Breaks"],
-      },
-    };
-  }
-
-  // 5. DEFAULT ORGAN CONTEXT ENGINE
-  const sys = currentOrgan;
-  return {
-    replyText: `### 🧬 Clinical Assessment: ${sys.name}\n\n` +
-      `**Overview & Physiological Function:**\n` +
-      `${sys.overview}\n\n` +
-      `**⚠️ Primary Symptoms to Monitor:**\n` +
-      `${sys.symptoms.slice(0, 3).map((s) => `• ${s}`).join("\n")}\n\n` +
-      `**🔬 Clinical Diagnostics:**\n` +
-      `${sys.testsAndReports.slice(0, 3).map((t) => `• ${t}`).join("\n")}\n\n` +
-      `**🌿 Targeted Lifestyle Guidance:**\n` +
-      `• ${sys.lifestyleTips[0]}\n• ${sys.lifestyleTips[1]}`,
-    visual: {
-      organName: sys.shortName,
-      systemName: sys.systemName,
-      image: sys.id === "heart" ? "/glowing_heart.jpg" : "/holographic_body.jpg",
-      focusArea: sys.subtitle,
-      keyMetric: sys.quickStats[0] ? `${sys.quickStats[0].label}: ${sys.quickStats[0].value}` : "Optimal Status",
-      status: "Anatomical Target Visualized",
-      recommendedSpecialist: sys.doctorSpecialistName,
-      suggestedTests: sys.testsAndReports.slice(0, 3),
-      lifestylePrecautions: sys.lifestyleTips.slice(0, 3),
-    },
-  };
-}
 
 export function CareAIChatWorkspace({
   selectedOrgan,
@@ -348,16 +184,18 @@ export function CareAIChatWorkspace({
     setInputText("");
     setIsTyping(true);
 
-    // AI Medical Intelligence Response with Natural Language Processing & Embedded Anatomical Visual
+    // AI Medical Intelligence Response with World-Class Clinical Engine & Embedded Anatomical Visual
     setTimeout(() => {
-      const { replyText, visual } = analyzeQueryWithClinicalNLP(raw, selectedOrgan);
+      const result = analyzeQueryWithClinicalAI(raw, selectedOrgan.id);
+      const replyText = formatClinicalConsultationMarkdown(result);
 
       const aiReply: ChatWorkspaceMessage = {
         id: `ai-${Date.now()}`,
         sender: "ai",
         text: replyText,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        anatomicalVisual: visual,
+        anatomicalVisual: result.anatomicalVisual,
+        consultationResult: result,
       };
 
       setConversation((prev) => [...prev, aiReply]);
@@ -436,6 +274,46 @@ export function CareAIChatWorkspace({
                 </div>
 
                 <div className="space-y-3 max-w-2xl w-full">
+                  {/* Clinical Triage & Guideline Badges Header */}
+                  {msg.consultationResult && (
+                    <div className="flex flex-wrap items-center gap-2">
+                      {msg.consultationResult.severity === "emergency" && (
+                        <span className="px-2.5 py-1 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 font-black text-[10px] flex items-center gap-1 animate-pulse">
+                          <AlertCircle className="h-3 w-3 text-rose-400" />
+                          <span>🚨 Critical Emergency Triage</span>
+                        </span>
+                      )}
+                      {msg.consultationResult.severity === "urgent" && (
+                        <span className="px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black text-[10px] flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3 text-amber-400" />
+                          <span>⚠️ Urgent Clinical Review</span>
+                        </span>
+                      )}
+                      {msg.consultationResult.severity === "moderate" && (
+                        <span className="px-2.5 py-1 rounded-xl bg-blue-500/20 border border-blue-500/40 text-cyan-300 font-black text-[10px] flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-cyan-400" />
+                          <span>Clinical Diagnostic Assessment</span>
+                        </span>
+                      )}
+                      {msg.consultationResult.severity === "routine" && (
+                        <span className="px-2.5 py-1 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-black text-[10px] flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                          <span>Evidence-Based Clinical Protocol</span>
+                        </span>
+                      )}
+
+                      {/* Clinical Guideline Tags */}
+                      {msg.consultationResult.guidelineCitations.slice(0, 2).map((guide, gIdx) => (
+                        <span
+                          key={gIdx}
+                          className="px-2 py-0.5 rounded-md bg-slate-800/80 border border-slate-700 text-slate-300 text-[9px] font-bold"
+                        >
+                          {guide.split(":")[0].split(" ")[0]} Verified
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   {/* Bubble Text with Markdown/Clinical Formatting */}
                   {msg.text && (
                     <div className="p-4 sm:p-5 rounded-2xl rounded-tl-none bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-750 text-slate-800 dark:text-slate-200 text-xs font-medium leading-relaxed whitespace-pre-line shadow-xs">
@@ -443,7 +321,105 @@ export function CareAIChatWorkspace({
                     </div>
                   )}
 
-                  {/* AI Provided Anatomical Visual for Specific Disease (Requested Feature!) */}
+                  {/* Differential Diagnosis Probabilities Visualizer */}
+                  {msg.consultationResult && msg.consultationResult.differentialDiagnoses.length > 0 && (
+                    <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-750 shadow-xs space-y-2.5">
+                      <div className="flex items-center justify-between text-xs font-black text-slate-900 dark:text-white">
+                        <span className="flex items-center gap-1.5">
+                          <Activity className="h-3.5 w-3.5 text-blue-500" />
+                          <span>Differential Diagnosis Probabilities (Clinical Triage)</span>
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-medium">Confidence Weighted</span>
+                      </div>
+                      <div className="space-y-2">
+                        {msg.consultationResult.differentialDiagnoses.map((diff, dIdx) => (
+                          <div key={dIdx} className="space-y-1">
+                            <div className="flex items-center justify-between text-[11px]">
+                              <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1">
+                                <span>{diff.condition}</span>
+                                {diff.isUrgent && (
+                                  <span className="text-rose-500 text-[8px] font-black px-1 py-0.2 rounded bg-rose-100 dark:bg-rose-950 border border-rose-300 dark:border-rose-800">
+                                    URGENT
+                                  </span>
+                                )}
+                              </span>
+                              <span className="font-black text-blue-600 dark:text-blue-400 text-[11px]">
+                                {diff.probability}%
+                              </span>
+                            </div>
+                            <Progress value={diff.probability} className="h-1.5 bg-slate-100 dark:bg-slate-800" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Interactive Clinical Follow-Up Questions (Tap to Continue Consultation) */}
+                  {msg.consultationResult && msg.consultationResult.followUpTriageQuestions.length > 0 && (
+                    <div className="space-y-2 pt-1">
+                      <div className="text-[11px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                        <Sparkles className="h-3 w-3 text-blue-500" />
+                        <span>Clinical Triage: Tap a follow-up to refine the diagnosis:</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {msg.consultationResult.followUpTriageQuestions.map((q, qIdx) => (
+                          <button
+                            key={qIdx}
+                            onClick={() => handleSendMessage(q)}
+                            className="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900 border border-blue-200 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 text-xs font-semibold shadow-2xs transition-all hover:scale-102 active:scale-98 text-left flex items-center gap-1"
+                          >
+                            <span className="text-blue-500 font-black">?</span>
+                            <span>{q}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Matched Medyora Super-Specialists Direct Booking Cards */}
+                  {msg.consultationResult && msg.consultationResult.matchedDoctors.length > 0 && (
+                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-850/80 border border-slate-200/80 dark:border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+                          <Stethoscope className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                          <span>Recommended {msg.consultationResult.recommendedSpecialist}s</span>
+                        </span>
+                        <Link to="/doctors" className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                          View All
+                        </Link>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {msg.consultationResult.matchedDoctors.slice(0, 2).map((doc) => (
+                          <div
+                            key={doc.id}
+                            className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-750 flex items-center justify-between gap-2 shadow-2xs"
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <img
+                                src={doc.image}
+                                alt={doc.name}
+                                className="h-8 w-8 rounded-full object-cover shrink-0 border border-blue-200 dark:border-blue-800"
+                              />
+                              <div className="min-w-0">
+                                <div className="text-xs font-black text-slate-900 dark:text-white truncate">{doc.name}</div>
+                                <div className="text-[10px] text-slate-500 truncate">
+                                  {doc.hospital} • {doc.experience}y exp
+                                </div>
+                              </div>
+                            </div>
+                            <Link
+                              to="/doctors"
+                              className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-black text-[10px] shrink-0 shadow-xs transition-all hover:scale-102"
+                            >
+                              Consult
+                            </Link>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* AI Provided Anatomical Visual for Specific Disease */}
                   {msg.anatomicalVisual && (
                     <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-[#03112c] via-[#071a3d] to-[#041229] border border-blue-900/60 p-4 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
                       {/* Left: Disease / Organ Context Details */}
@@ -508,6 +484,7 @@ export function CareAIChatWorkspace({
                       </div>
                     </div>
                   )}
+
 
                   {/* Prompt Pills (Shown below the initial greeting) */}
                   {index === 0 && (
