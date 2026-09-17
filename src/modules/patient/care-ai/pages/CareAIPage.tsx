@@ -17,6 +17,7 @@ import { CareAIChatWorkspace } from "../components/CareAIChatWorkspace";
 import { OrganSystemDeepDiveModal } from "../components/OrganSystemDeepDiveModal";
 import { ReportAnalysisModal } from "../components/ReportAnalysisModal";
 import { AddVitalsModal } from "../components/AddVitalsModal";
+import { DeviceSyncModal } from "../components/DeviceSyncModal";
 import { ORGAN_SYSTEMS } from "../data/organ-systems-data";
 import { toast } from "sonner";
 
@@ -55,6 +56,7 @@ export function CareAIPage() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedReportTitle, setSelectedReportTitle] = useState<string | undefined>(undefined);
   const [isAddVitalsOpen, setIsAddVitalsOpen] = useState(false);
+  const [isDeviceSyncOpen, setIsDeviceSyncOpen] = useState(false);
 
   // Chat Trigger from Hero Actions
   const [chatInitiateTrigger, setChatInitiateTrigger] = useState(0);
@@ -136,13 +138,14 @@ export function CareAIPage() {
 
           {/* COLUMN 3: RIGHT INFORMATION PANEL (3 cols) */}
           <div className="col-span-12 lg:col-span-4 xl:col-span-3 space-y-4 sticky top-24">
-            {/* 1. Your Health Overview (2x2 Grid + View Details) */}
+            {/* 1. Your Health Overview (2x2 Grid + Sync Device Smartwatch QR + View Details) */}
             <HealthOverviewCard
               vitals={vitals}
               onSyncDevices={() => setIsAddVitalsOpen(true)}
+              onOpenDeviceSync={() => setIsDeviceSyncOpen(true)}
             />
 
-            {/* 2. Body Explorer (Systems list + 3D Hologram + Tooltip) */}
+            {/* 2. Body Explorer (Systems list + 3D Hologram with Dynamic Highlighting) */}
             <BodyExplorer
               selectedOrganId={selectedOrganId}
               onSelectOrgan={(id) => {
@@ -174,7 +177,15 @@ export function CareAIPage() {
 
       {/* ================= INTERACTIVE MODALS ================= */}
 
-      {/* Organ System Deep-Dive Viewer (Shows anatomical visualization on specific disease/organ click) */}
+      {/* Universal Smartwatch & BLE Device Sync Modal (QR Code & Protocols) */}
+      <DeviceSyncModal
+        isOpen={isDeviceSyncOpen}
+        onClose={() => setIsDeviceSyncOpen(false)}
+        currentVitals={vitals}
+        onSyncVitals={(updated) => setVitals(updated)}
+      />
+
+      {/* Organ System Deep-Dive Viewer */}
       <OrganSystemDeepDiveModal
         isOpen={isDeepDiveOpen}
         onClose={() => setIsDeepDiveOpen(false)}
@@ -189,7 +200,7 @@ export function CareAIPage() {
         initialReportTitle={selectedReportTitle}
       />
 
-      {/* Sync Devices / Add Vitals Modal */}
+      {/* Sync Devices / Add Vitals Manual Modal */}
       <AddVitalsModal
         isOpen={isAddVitalsOpen}
         onClose={() => setIsAddVitalsOpen(false)}

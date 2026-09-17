@@ -1,4 +1,4 @@
-import { Heart, Activity, Droplets, Thermometer, ChevronRight } from "lucide-react";
+import { Heart, Activity, Droplets, Thermometer, ChevronRight, Watch } from "lucide-react";
 
 export interface HealthVitalsData {
   heartRate: number;
@@ -12,24 +12,41 @@ export interface HealthVitalsData {
 interface HealthOverviewCardProps {
   vitals: HealthVitalsData;
   onSyncDevices: () => void;
+  onOpenDeviceSync?: () => void;
 }
 
-export function HealthOverviewCard({ vitals, onSyncDevices }: HealthOverviewCardProps) {
+export function HealthOverviewCard({
+  vitals,
+  onSyncDevices,
+  onOpenDeviceSync,
+}: HealthOverviewCardProps) {
   return (
     <div className="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm font-sans space-y-3">
-      {/* Header */}
+      {/* Header with Title + Sync Device (Smartwatch) + View Details */}
       <div className="flex items-center justify-between">
         <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">
           Your Health Overview
         </h2>
 
-        <button
-          onClick={onSyncDevices}
-          className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 hover:text-blue-500 flex items-center gap-0.5 transition-colors"
-        >
-          <span>View Details</span>
-          <ChevronRight className="h-3 w-3" />
-        </button>
+        <div className="flex items-center gap-1.5">
+          {/* Sync Smartwatch Device Action Button */}
+          <button
+            onClick={onOpenDeviceSync || onSyncDevices}
+            className="text-[10px] font-black px-2 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900 border border-blue-200/70 dark:border-blue-800/80 flex items-center gap-1 transition-all hover:scale-102 active:scale-98 shadow-2xs"
+          >
+            <Watch className="h-3 w-3" />
+            <span>Sync Device</span>
+          </button>
+
+          {/* View Details Link */}
+          <button
+            onClick={onSyncDevices}
+            className="text-[11px] font-extrabold text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 flex items-center gap-0.5 transition-colors pl-1"
+          >
+            <span>View Details</span>
+            <ChevronRight className="h-3 w-3" />
+          </button>
+        </div>
       </div>
 
       {/* 2x2 Grid of Vital Cards */}
