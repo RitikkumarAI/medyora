@@ -40,27 +40,19 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
   ];
 
   return (
-    <aside className="w-full flex flex-col gap-4 font-sans select-none">
-      {/* 1. Care AI Hero Identity Card */}
-      <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/15 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+    <aside className="w-full flex flex-col gap-3.5 font-sans select-none">
+      {/* 1. Active Care AI Hero Nav Card */}
+      <div className="p-3.5 rounded-3xl bg-[#091b3d] dark:bg-slate-900 border border-blue-500/40 text-white shadow-md relative overflow-hidden">
         <div className="flex items-center gap-3 relative z-10">
-          <div className="h-10 w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-inner overflow-hidden shrink-0">
-            <img
-              src="/ai_doctor_robot.jpg"
-              alt="Medyora AI Robot Doctor"
-              className="w-full h-full object-cover object-[50%_25%]"
-            />
+          <div className="h-10 w-10 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-md shrink-0">
+            <Sparkles className="h-5 w-5 text-cyan-300" />
           </div>
           <div>
             <h2 className="text-sm font-black tracking-tight text-white flex items-center gap-1.5">
               Care AI
-              <span className="text-[10px] uppercase font-black bg-white/25 px-1.5 py-0.5 rounded-md text-white tracking-wider">
-                Pro
-              </span>
             </h2>
-            <p className="text-[11px] text-blue-100 font-medium leading-snug">
-              Your Personal Health Assistant
+            <p className="text-[10px] text-slate-300 font-medium leading-snug">
+              Your 24×7 Health Assistant
             </p>
           </div>
         </div>
@@ -70,14 +62,14 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
       <div className="p-2 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col gap-0.5">
         {NAV_ITEMS.map((item, idx) => {
           const Icon = item.icon;
-          const isActive = location.pathname.startsWith(item.to) && item.to !== "#wellness";
+          const isActive = location.pathname.startsWith(item.to) && item.to !== "#wellness" && item.to !== "/patient/care-ai";
 
           return (
             <Link
               key={idx}
               to={item.to}
               onClick={() => onSelectNav?.(item.label)}
-              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all group ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-2xl text-xs font-bold transition-all group ${
                 isActive
                   ? "bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-extrabold shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60"
@@ -97,9 +89,7 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
       </div>
 
       {/* 3. Medyora Premium Promotion Card */}
-      <div className="p-4 rounded-3xl bg-gradient-to-b from-slate-900 via-blue-950 to-slate-950 text-white border border-blue-800/40 shadow-xl relative overflow-hidden space-y-3">
-        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none" />
-
+      <div className="p-4 rounded-3xl bg-gradient-to-b from-[#0a1835] via-[#071328] to-[#040c1d] text-white border border-blue-900/40 shadow-xl relative overflow-hidden space-y-2.5">
         <div className="flex items-center gap-2">
           <div className="h-6 w-6 rounded-lg bg-amber-400/20 text-amber-400 flex items-center justify-center">
             <Crown className="h-3.5 w-3.5" />
@@ -107,24 +97,24 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
           <span className="text-xs font-black text-white tracking-tight">Medyora Premium</span>
         </div>
 
-        <p className="text-[11px] text-slate-300 font-medium leading-relaxed">
+        <p className="text-[10px] text-slate-300 font-medium leading-relaxed">
           Smarter care for you & your family
         </p>
 
-        <ul className="space-y-1.5 text-[11px] font-medium text-slate-200">
-          <li className="flex items-center gap-2">
+        <ul className="space-y-1.5 text-[10px] font-medium text-slate-200">
+          <li className="flex items-center gap-1.5">
             <div className="h-3.5 w-3.5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
               <Check className="h-2.5 w-2.5" />
             </div>
             <span>AI Report Analysis</span>
           </li>
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-1.5">
             <div className="h-3.5 w-3.5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
               <Check className="h-2.5 w-2.5" />
             </div>
             <span>Priority Doctor Booking</span>
           </li>
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-1.5">
             <div className="h-3.5 w-3.5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
               <Check className="h-2.5 w-2.5" />
             </div>
@@ -134,10 +124,10 @@ export function CareAISidebar({ onSelectNav }: CareAISidebarProps) {
 
         <Button
           onClick={() => onSelectNav?.("Upgrade Premium")}
-          className="w-full h-9 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/30 flex items-center justify-center gap-1.5 mt-1 transition-all"
+          className="w-full h-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-[11px] shadow-md shadow-blue-600/30 flex items-center justify-center gap-1.5 mt-1 transition-all"
         >
           <span>Upgrade Now</span>
-          <ArrowRight className="h-3.5 w-3.5" />
+          <ArrowRight className="h-3 w-3" />
         </Button>
       </div>
     </aside>

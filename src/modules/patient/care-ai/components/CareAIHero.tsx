@@ -1,128 +1,126 @@
-import { Sparkles, MessageSquare, Upload, Activity, LineChart, Mic } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MessageSquare, Upload, Stethoscope, Sparkles, Plus } from "lucide-react";
 
 interface CareAIHeroProps {
-  onActionClick: (action: "chat" | "upload" | "symptoms" | "insights" | "voice") => void;
+  onActionClick: (action: "chat" | "upload" | "symptoms" | "recommendations") => void;
 }
 
 export function CareAIHero({ onActionClick }: CareAIHeroProps) {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-[#07132b] to-[#0a1e3f] text-white p-6 sm:p-8 lg:p-10 border border-blue-900/40 shadow-2xl">
-      {/* Background Decorative Neural & ECG Glow Lines */}
-      <div className="absolute top-0 right-1/3 w-80 h-80 bg-blue-600/15 rounded-full blur-[90px] pointer-events-none" />
-      <div className="absolute bottom-0 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#03091e] via-[#07132b] to-[#0a1e3f] text-white p-6 sm:p-7 lg:p-8 border border-blue-900/40 shadow-2xl font-sans">
+      {/* Background Decorative Neural Glows */}
+      <div className="absolute top-0 right-1/4 w-72 h-72 bg-blue-600/15 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute bottom-0 right-10 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Subtle ECG Wave SVG Line in Background */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 opacity-10 pointer-events-none overflow-hidden">
-        <svg
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="w-full h-full stroke-cyan-400 fill-none"
-          strokeWidth="2"
-        >
-          <path d="M0,60 L200,60 L230,20 L250,100 L270,10 L290,90 L310,60 L600,60 L630,20 L650,100 L670,10 L690,90 L710,60 L1200,60" />
-        </svg>
-      </div>
-
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-        {/* Left Text & Actions */}
-        <div className="space-y-5 max-w-2xl text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-black backdrop-blur-md shadow-inner">
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-            <span>Medyora Care AI</span>
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+        {/* Left Text & 4 Structured Action Buttons */}
+        <div className="space-y-4 max-w-xl text-center lg:text-left">
+          {/* Greeting Tag */}
+          <div className="text-xs sm:text-sm font-bold text-slate-300 flex items-center justify-center lg:justify-start gap-1.5">
+            <span>Good Morning, Ritik</span>
+            <span>👋</span>
           </div>
 
-          <div className="space-y-2.5">
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.12]">
-              Your 24×7 AI Health Companion
+          {/* Main Title */}
+          <div className="space-y-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+              Your 24×7 AI Doctor
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-xl">
-              Understand your symptoms, analyze reports, track your health, and get personalized
-              guidance — all in one place.
+            <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+              Get instant answers, analyze your reports, understand your symptoms, and receive
+              personalized health guidance — powered by advanced AI.
             </p>
           </div>
 
-          {/* Action Chips */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
-            <Button
+          {/* 4 Action Cards Matching Exact Reference UI */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+            {/* Button 1: Chat with AI */}
+            <button
               onClick={() => onActionClick("chat")}
-              size="sm"
-              className="h-10 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-102 active:scale-98 text-left group"
             >
-              <MessageSquare className="h-3.5 w-3.5" />
-              <span>Chat</span>
-            </Button>
+              <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <MessageSquare className="h-4 w-4 text-white" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Chat with AI</div>
+                <div className="text-[9px] text-blue-100 font-medium truncate">Instant answers</div>
+              </div>
+            </button>
 
-            <Button
+            {/* Button 2: Upload Report */}
+            <button
               onClick={() => onActionClick("upload")}
-              size="sm"
-              variant="outline"
-              className="h-10 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold text-xs backdrop-blur-md flex items-center gap-2 shadow-xs transition-all hover:scale-105 active:scale-95"
+              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
             >
-              <Upload className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Upload Report</span>
-            </Button>
+              <div className="h-8 w-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0">
+                <Upload className="h-4 w-4 text-cyan-400" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Upload Report</div>
+                <div className="text-[9px] text-slate-400 font-medium truncate">AI analysis</div>
+              </div>
+            </button>
 
-            <Button
+            {/* Button 3: Symptom Check */}
+            <button
               onClick={() => onActionClick("symptoms")}
-              size="sm"
-              variant="outline"
-              className="h-10 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold text-xs backdrop-blur-md flex items-center gap-2 shadow-xs transition-all hover:scale-105 active:scale-95"
+              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
             >
-              <Activity className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Symptom Check</span>
-            </Button>
+              <div className="h-8 w-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                <Stethoscope className="h-4 w-4 text-emerald-400" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Symptom Check</div>
+                <div className="text-[9px] text-slate-400 font-medium truncate">Find possible causes</div>
+              </div>
+            </button>
 
-            <Button
-              onClick={() => onActionClick("insights")}
-              size="sm"
-              variant="outline"
-              className="h-10 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold text-xs backdrop-blur-md flex items-center gap-2 shadow-xs transition-all hover:scale-105 active:scale-95"
+            {/* Button 4: Get Recommendations */}
+            <button
+              onClick={() => onActionClick("recommendations")}
+              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
             >
-              <LineChart className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Health Insights</span>
-            </Button>
-
-            <Button
-              onClick={() => onActionClick("voice")}
-              size="sm"
-              variant="outline"
-              className="h-10 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold text-xs backdrop-blur-md flex items-center gap-1.5 shadow-xs transition-all hover:scale-105 active:scale-95"
-            >
-              <Mic className="h-3.5 w-3.5 text-rose-400" />
-              <span>Voice</span>
-            </Button>
+              <div className="h-8 w-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+                <Sparkles className="h-4 w-4 text-amber-400" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Get Recommendations</div>
+                <div className="text-[9px] text-slate-400 font-medium truncate">Diet, lifestyle, doctors</div>
+              </div>
+            </button>
           </div>
         </div>
 
-        {/* Right Robot Mascot & Quote Badge */}
-        <div className="relative shrink-0 flex items-center justify-center">
+        {/* Right Robot Mascot & Speech Bubble Visual */}
+        <div className="relative shrink-0 flex items-center justify-center pt-3 sm:pt-0">
           {/* Speech Bubble above robot */}
-          <div className="absolute -top-4 right-12 z-20 px-3.5 py-1.5 rounded-2xl bg-white text-slate-900 font-extrabold text-[11px] shadow-xl border border-slate-100 flex items-center gap-1.5 animate-bounce-slow">
-            <span className="text-blue-600">💬</span>
+          <div className="absolute -top-3 sm:-top-5 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:-left-12 z-20 px-3.5 py-1.5 rounded-2xl bg-white text-slate-900 font-extrabold text-[11px] shadow-2xl border border-slate-100 whitespace-nowrap flex items-center gap-1.5">
             <span>Ask me anything about your health!</span>
-            {/* Bubble Tail */}
+            {/* Tail */}
             <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-white rotate-45 border-r border-b border-slate-100" />
           </div>
 
-          {/* 3D AI Doctor Robot Mascot Illustration */}
-          <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-3xl overflow-hidden border-2 border-cyan-400/30 bg-gradient-to-b from-blue-900/40 to-slate-950 shadow-2xl shadow-cyan-500/15 group">
-            <img
-              src="/ai_doctor_robot.jpg"
-              alt="Medyora AI Health Assistant Doctor Robot"
-              className="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/15 rounded-3xl pointer-events-none" />
+          {/* Script calligraphy text behind/beside the robot */}
+          <div className="absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2 pointer-events-none z-10 hidden sm:block">
+            <span
+              className="text-cyan-200/40 text-lg sm:text-xl font-normal tracking-wide select-none"
+              style={{ fontFamily: "'Brush Script MT', 'Dancing Script', cursive, sans-serif" }}
+            >
+              # Healthier You, Always
+            </span>
           </div>
 
-          {/* Medyora AI Quote on right side */}
-          <div className="hidden xl:flex flex-col justify-center pl-6 max-w-[190px] text-right space-y-1">
-            <p className="text-xs font-bold text-cyan-200 italic leading-snug">
-              “Better Understanding A Healthier You”
-            </p>
-            <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">
-              — Medyora AI
-            </span>
+          {/* Small 3D AI Doctor Robot Mascot Illustration */}
+          <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-cyan-400/40 bg-gradient-to-b from-blue-900/50 to-slate-950 shadow-2xl shadow-cyan-500/20 group">
+            <img
+              src="/ai_doctor_robot.jpg"
+              alt="Medyora AI Robot Doctor"
+              className="w-full h-full object-cover object-[50%_20%] transform transition-transform duration-500 group-hover:scale-105"
+            />
+            {/* Glowing Cross Badge */}
+            <div className="absolute bottom-2 right-2 h-7 w-7 rounded-full bg-blue-600/90 border-2 border-white text-white flex items-center justify-center shadow-lg backdrop-blur-xs">
+              <Plus className="h-4 w-4 stroke-[3]" />
+            </div>
           </div>
         </div>
       </div>
