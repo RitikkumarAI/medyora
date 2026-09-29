@@ -1,7 +1,16 @@
-import { MessageSquare, Upload, Stethoscope, Sparkles, Plus } from "lucide-react";
+import { MessageSquare, Upload, Stethoscope, Sparkles, Plus, Utensils, Watch } from "lucide-react";
 
 interface CareAIHeroProps {
-  onActionClick: (action: "chat" | "upload" | "symptoms" | "recommendations") => void;
+  onActionClick: (
+    action:
+      | "chat"
+      | "upload"
+      | "symptoms"
+      | "recommendations"
+      | "food-scan"
+      | "diet-planner"
+      | "smartwatch-sos"
+  ) => void;
 }
 
 export function CareAIHero({ onActionClick }: CareAIHeroProps) {
@@ -12,8 +21,8 @@ export function CareAIHero({ onActionClick }: CareAIHeroProps) {
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-        {/* Left Text & 4 Structured Action Buttons */}
-        <div className="space-y-4 max-w-xl text-center lg:text-left">
+        {/* Left Text & Action Buttons */}
+        <div className="space-y-4 max-w-2xl text-center lg:text-left">
           {/* Greeting Tag */}
           <div className="text-xs sm:text-sm font-bold text-slate-300 flex items-center justify-center lg:justify-start gap-1.5">
             <span>Good Morning, Ritik</span>
@@ -23,20 +32,47 @@ export function CareAIHero({ onActionClick }: CareAIHeroProps) {
           {/* Main Title */}
           <div className="space-y-2">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-              Your 24×7 AI Doctor
+              Your 24×7 AI Doctor & Nutritionist
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-              Get instant answers, analyze your reports, understand your symptoms, and receive
-              personalized health guidance — powered by advanced AI.
+              Get clinical 7-day meal plans (Veg/Non-Veg), scan Indian foods, stream real-time Noise smartwatch telemetry, and trigger autonomous 108 emergency rescues.
             </p>
           </div>
 
-          {/* 4 Action Cards Matching Exact Reference UI */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-            {/* Button 1: Chat with AI */}
+          {/* Action Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 pt-2">
+            {/* Button 1: 7-Day Diet Planner */}
+            <button
+              onClick={() => onActionClick("diet-planner")}
+              className="flex items-center gap-2 p-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 transition-all hover:scale-102 active:scale-98 text-left group border border-emerald-400/40"
+            >
+              <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Utensils className="h-4 w-4 text-white" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Diet &amp; Meals 🥗</div>
+                <div className="text-[9px] text-emerald-100 font-medium truncate">7-Day Veg/Non-Veg</div>
+              </div>
+            </button>
+
+            {/* Button 2: Noise Watch & 108 SOS */}
+            <button
+              onClick={() => onActionClick("smartwatch-sos")}
+              className="flex items-center gap-2 p-2.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-lg shadow-cyan-600/30 transition-all hover:scale-102 active:scale-98 text-left group border border-cyan-400/40"
+            >
+              <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Watch className="h-4 w-4 text-white animate-pulse" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-black truncate">Noise Watch SOS ⌚</div>
+                <div className="text-[9px] text-cyan-100 font-medium truncate">108 Auto Rescue</div>
+              </div>
+            </button>
+
+            {/* Button 3: Chat with AI */}
             <button
               onClick={() => onActionClick("chat")}
-              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-102 active:scale-98 text-left group"
+              className="flex items-center gap-2 p-2.5 rounded-2xl bg-blue-600/80 hover:bg-blue-600 text-white shadow-md transition-all hover:scale-102 active:scale-98 text-left group"
             >
               <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <MessageSquare className="h-4 w-4 text-white" />
@@ -47,45 +83,17 @@ export function CareAIHero({ onActionClick }: CareAIHeroProps) {
               </div>
             </button>
 
-            {/* Button 2: Upload Report */}
+            {/* Button 4: Food & Diet Scanner */}
             <button
-              onClick={() => onActionClick("upload")}
-              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
+              onClick={() => onActionClick("food-scan")}
+              className="flex items-center gap-2 p-2.5 rounded-2xl bg-amber-600/80 hover:bg-amber-600 text-white shadow-md transition-all hover:scale-102 active:scale-98 text-left group"
             >
-              <div className="h-8 w-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0">
-                <Upload className="h-4 w-4 text-cyan-400" />
+              <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Sparkles className="h-4 w-4 text-amber-200" />
               </div>
               <div className="min-w-0">
-                <div className="text-[11px] font-black truncate">Upload Report</div>
-                <div className="text-[9px] text-slate-400 font-medium truncate">AI analysis</div>
-              </div>
-            </button>
-
-            {/* Button 3: Symptom Check */}
-            <button
-              onClick={() => onActionClick("symptoms")}
-              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
-            >
-              <div className="h-8 w-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                <Stethoscope className="h-4 w-4 text-emerald-400" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[11px] font-black truncate">Symptom Check</div>
-                <div className="text-[9px] text-slate-400 font-medium truncate">Find possible causes</div>
-              </div>
-            </button>
-
-            {/* Button 4: Get Recommendations */}
-            <button
-              onClick={() => onActionClick("recommendations")}
-              className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-850 text-slate-200 border border-slate-750/80 shadow-sm transition-all hover:scale-102 active:scale-98 text-left group"
-            >
-              <div className="h-8 w-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
-                <Sparkles className="h-4 w-4 text-amber-400" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[11px] font-black truncate">Get Recommendations</div>
-                <div className="text-[9px] text-slate-400 font-medium truncate">Diet, lifestyle, doctors</div>
+                <div className="text-[11px] font-black truncate">Diet Scanner 🍽️</div>
+                <div className="text-[9px] text-amber-100 font-medium truncate">Indian GI &amp; GL</div>
               </div>
             </button>
           </div>

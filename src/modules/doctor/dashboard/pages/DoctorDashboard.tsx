@@ -13,10 +13,17 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  AlertTriangle,
+  CheckCircle2,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DOCTORS } from "@/shared/data/mock";
 import { useAuth } from "@/shared/auth/useAuth";
+import { useVisits } from "@/shared/data/doctor-store";
+import { announceToken } from "@/shared/utils/sound-chime";
+import { ConcurrencySimulatorModal } from "@/shared/components/ConcurrencySimulatorModal";
+import { toast } from "sonner";
 
 export function DoctorDashboard() {
   const { user, logout } = useAuth();
@@ -24,36 +31,12 @@ export function DoctorDashboard() {
   const doctorName = user?.name || fallbackDoctor.fullName;
   const doctorImage = user?.avatar || fallbackDoctor.image;
 
-  const appointments = [
-    {
-      time: "10:00 AM",
-      name: "Rahul Sharma",
-      token: "#01",
-      status: "Completed",
-      color: "bg-slate-100 text-slate-600",
-    },
-    {
-      time: "10:30 AM",
-      name: "Priya Patel",
-      token: "#02",
-      status: "In Progress",
-      color: "bg-blue-100 text-blue-700 border border-blue-200",
-    },
-    {
-      time: "11:00 AM",
-      name: "Amit Joshi",
-      token: "#03",
-      status: "Waiting",
-      color: "bg-amber-100 text-amber-700",
-    },
-    {
-      time: "11:30 AM",
-      name: "Neha Singh",
-      token: "#04",
-      status: "Waiting",
-      color: "bg-amber-100 text-amber-700",
-    },
-  ];
+  const [showSimulator, setShowSimulator] = useState(false);
+  const { visits, callNext, markNoShow, setStatus } = useVisits();
+  const consulting = visits.find((v) => v.status === "Consulting");
+  const waiting = visits.filter((v) => v.status === "Waiting");
+  const skipped = visits.filter((v) => v.status === "Skipped");
+  const completed = visits.filter((v) => v.status === "Completed");
 
   const gridItems = [
     {
@@ -153,24 +136,92 @@ export function DoctorDashboard() {
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <Users className="h-32 w-32" />
           </div>
-          <div className="relative z-10 flex flex-col h-full">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-sm font-bold text-blue-100 uppercase tracking-widest">
-                Live Queue
-              </p>
-              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-            </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-xs font-medium text-blue-100">Current Token</p>
-                <p className="text-5xl font-black mt-1">#12</p>
-                <p className="text-xs font-medium text-blue-200 mt-2">
-                  4 Patients Waiting in Lobby
-                </p>
+          <div className="relative z-10 flex flex-col h-full space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-blue-100 uppercase tracking-widest">
+                  Live Clinic Queue
+                </span>
+                <span className="text-[10px] bg-emerald-400/20 border border-emerald-400/40 text-emerald-200 px-2 py-0.5 rounded-full font-bold">
+                  Telemetry Active
+                </span>
               </div>
-              <Button className="rounded-2xl h-12 px-6 font-bold bg-white text-blue-700 hover:bg-slate-50 shadow-sm">
-                Call Next
-              </Button>
+              <div className="flex items-center gap-1.5 text-xs text-blue-100">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>{waiting.length} in Lobby</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-medium text-blue-100">Currently in Cabin</p>
+                <div className="flex items-baseline gap-3 mt-1">
+                  <p className="text-5xl font-black">{consulting?.token ?? "—"}</p>
+                  <div>
+                    <p className="text-base font-bold text-white">{consulting?.patient ?? "Cabin Idle"}</p>
+                    <p className="text-xs text-blue-200">{consulting?.reason ?? "Ready for next patient"}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {consulting && (
+                  <Button
+                    onClick={() => {
+                      markNoShow(consulting.id, "No-Show: Patient absent in lobby");
+                      toast.error(`Token ${consulting.token} marked No-Show. Slot auto-released to waitlist!`);
+                    }}
+                    variant="outline"
+                    className="rounded-2xl h-11 px-4 font-bold bg-white/10 hover:bg-rose-500/20 text-white border-white/20 text-xs"
+                  >
+                    <AlertTriangle className="h-3.5 w-3.5 mr-1 text-rose-300" />
+                    Skip No-Show
+                  </Button>
+                )}
+                <Button
+                  onClick={() => {
+                    const next = callNext();
+                    if (next) {
+                      announceToken(next.token, next.patient, "Doctor Cabin 1");
+                      toast.success(`Calling Token ${next.token} (${next.patient}) — Hospital Chime Broadcasted!`);
+                    } else {
+                      toast.info("No more waiting patients in lobby");
+                    }
+                  }}
+                  className="rounded-2xl h-11 px-5 font-bold bg-white text-blue-700 hover:bg-slate-50 shadow-sm text-xs"
+                >
+                  Call Next →
+                </Button>
+              </div>
+            </div>
+
+            {/* Quick Metrics Bar & Sandbox Trigger */}
+            <div className="pt-2 border-t border-white/15 space-y-2">
+              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                <div className="bg-white/10 rounded-xl p-2">
+                  <p className="text-[10px] text-blue-100 uppercase font-semibold">Waiting</p>
+                  <p className="font-bold text-sm text-white">{waiting.length} Patients</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-2">
+                  <p className="text-[10px] text-blue-100 uppercase font-semibold">Skipped / No-Show</p>
+                  <p className="font-bold text-sm text-rose-200">{skipped.length} Skipped</p>
+                </div>
+                <div className="bg-white/10 rounded-xl p-2">
+                  <p className="text-[10px] text-blue-100 uppercase font-semibold">Completed</p>
+                  <p className="font-bold text-sm text-emerald-200">{completed.length} Visits</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[11px] text-blue-100">Evaluator Testing Tools:</span>
+                <button
+                  type="button"
+                  onClick={() => setShowSimulator(true)}
+                  className="text-[11px] font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  ⚡ Open Concurrency & No-Show Simulator
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -199,38 +250,65 @@ export function DoctorDashboard() {
         {/* Today's Schedule Feed */}
         <section>
           <div className="flex items-center justify-between mb-4 px-1">
-            <h3 className="text-sm font-bold text-slate-900">Today's Schedule</h3>
+            <h3 className="text-sm font-bold text-slate-900">Today's OPD Queue & Schedule</h3>
             <Link
-              to="/doctor/calendar"
+              to="/doctor/queue"
               className="text-xs font-bold text-blue-600 flex items-center"
             >
-              See All <ChevronRight className="h-4 w-4" />
+              Full Queue Manager <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
 
-          <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
-            {appointments.map((appt, i) => (
-              <div
-                key={i}
-                className={`flex items-center p-4 transition-colors hover:bg-slate-50 ${i !== appointments.length - 1 ? "border-b border-slate-100" : ""}`}
-              >
-                <div className="w-16 flex flex-col items-center justify-center shrink-0 border-r border-slate-100 pr-3 py-1">
-                  <Clock className="h-4 w-4 text-slate-400 mb-1" />
-                  <p className="text-[10px] font-bold text-slate-600 text-center leading-tight">
-                    {appt.time.split(" ")[0]}
-                    <br />
-                    {appt.time.split(" ")[1]}
-                  </p>
+          <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden divide-y divide-slate-100">
+            {visits.slice(0, 6).map((appt) => {
+              const statusColor =
+                appt.status === "Consulting"
+                  ? "bg-blue-100 text-blue-700 border border-blue-200"
+                  : appt.status === "Completed"
+                    ? "bg-emerald-50 text-emerald-700"
+                    : appt.status === "Skipped"
+                      ? "bg-rose-100 text-rose-700 border border-rose-200"
+                      : "bg-amber-100 text-amber-700";
+
+              return (
+                <div
+                  key={appt.id}
+                  className="flex items-center p-4 transition-colors hover:bg-slate-50"
+                >
+                  <div className="w-16 flex flex-col items-center justify-center shrink-0 border-r border-slate-100 pr-3 py-1">
+                    <Clock className="h-4 w-4 text-slate-400 mb-1" />
+                    <p className="text-[10px] font-bold text-slate-600 text-center leading-tight">
+                      {appt.time.split(" ")[0]}
+                      <br />
+                      {appt.time.split(" ")[1]}
+                    </p>
+                  </div>
+                  <div className="flex-1 min-w-0 py-1 pl-4">
+                    <p className="font-bold text-sm text-slate-900 truncate">{appt.patient}</p>
+                    <p className="text-[11px] font-medium text-slate-500 mt-0.5 truncate">
+                      Token {appt.token} · {appt.reason}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`px-2.5 py-1 rounded-lg text-[10px] font-bold ${statusColor}`}>
+                      {appt.status === "Skipped" ? "No-Show" : appt.status}
+                    </div>
+                    {appt.status === "Waiting" && (
+                      <button
+                        onClick={() => {
+                          markNoShow(appt.id, "No-Show: Patient absent in lobby");
+                          toast.error(`Token ${appt.token} marked No-Show`);
+                        }}
+                        className="text-[10px] text-rose-500 font-bold hover:underline px-1"
+                        title="Mark No-Show"
+                      >
+                        Skip
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0 py-1 pl-4">
-                  <p className="font-bold text-sm text-slate-900 truncate">{appt.name}</p>
-                  <p className="text-[11px] font-bold text-slate-500 mt-0.5">Token {appt.token}</p>
-                </div>
-                <div className={`px-2.5 py-1.5 rounded-lg text-[10px] font-bold ${appt.color}`}>
-                  {appt.status}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -246,6 +324,11 @@ export function DoctorDashboard() {
           <LogOut className="h-5 w-5 mr-2" /> Log Out
         </Button>
       </main>
+
+      <ConcurrencySimulatorModal
+        isOpen={showSimulator}
+        onClose={() => setShowSimulator(false)}
+      />
     </div>
   );
 }

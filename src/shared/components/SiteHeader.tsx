@@ -29,8 +29,11 @@ export function SiteHeader() {
 
   const navItems = [
     { to: "/doctors", label: t("nav.find_doctors") },
+    { to: "/patient/beds", label: "ICU Beds 🏥" },
+    { to: "/patient/blood", label: "Blood & Donate 🩸" },
     { to: "/specialities", label: t("nav.specialities") },
     { to: "/patient/care-ai", label: "Care AI ✨" },
+    { to: "/patient/diet-planner", label: "Diet & 108 SOS 🥗" },
     { to: "/patient/feed", label: "Health Feed" },
     { to: "/patient/family", label: t("nav.health_records") },
   ];

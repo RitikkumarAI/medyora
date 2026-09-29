@@ -12,9 +12,13 @@ import {
   Repeat,
   X,
   Sparkles,
+  Navigation,
+  Volume2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DOCTORS } from "@/shared/data/mock";
+import { useDoctorDelay } from "@/shared/data/doctor-store";
+import { announceToken, playHospitalChime } from "@/shared/utils/sound-chime";
 import { toast } from "sonner";
 
 // Simulate 15 min per patient
@@ -24,6 +28,7 @@ const TODAY_LATER_SLOTS = ["02:30 PM", "03:30 PM", "04:30 PM", "05:30 PM", "06:3
 
 export function LiveQueue() {
   const router = useRouter();
+  const { delay } = useDoctorDelay();
 
   // Simulated Queue State
   const [myToken, setMyToken] = useState(14);
@@ -32,12 +37,13 @@ export function LiveQueue() {
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
   const [selectedRescheduleSlot, setSelectedRescheduleSlot] = useState("04:30 PM");
 
-  // Derived State
+  // Derived State with Doctor Delay Recalibration
   const patientsAhead = myToken - currentToken;
-  const estWaitTime = patientsAhead > 0 ? patientsAhead * MINS_PER_PATIENT : 0;
+  const baseWaitTime = patientsAhead > 0 ? patientsAhead * MINS_PER_PATIENT : 0;
+  const estWaitTime = baseWaitTime + (delay.isDelayed ? delay.delayMinutes : 0);
   const progressPercent = Math.min(100, Math.max(0, (currentToken / myToken) * 100));
 
-  // Simulating Queue Progression
+  // Simulating Queue Progression with Voice Announcements
   useEffect(() => {
     if (currentToken >= myToken) return;
 
@@ -46,14 +52,21 @@ export function LiveQueue() {
       setCurrentToken((prev) => {
         const next = prev + 1;
 
-        // Trigger Toast Notification
-        setNotification(`Token #${next} has been called in.`);
-        setTimeout(() => setNotification(null), 3000); // Hide toast after 3s
-
+        // Trigger Audio Chime & Speech Notification
         if (next === myToken) {
-          setNotification(`It's your turn! Please proceed to the cabin.`);
+          announceToken(String(myToken), "Rahul Kumar", "Doctor Cabin 1");
+          setNotification(`It's your turn! Token #${myToken}, please enter the cabin.`);
+          toast.success(`Ding-Dong! It is your turn! Please enter Doctor Cabin 1.`);
           clearInterval(timer);
+        } else if (next === myToken - 1) {
+          playHospitalChime();
+          setNotification(`You're next! Token #${next} called. Please proceed to clinic door.`);
+          toast.info(`Token #${next} called. You are next!`);
+        } else {
+          setNotification(`Token #${next} has been called in.`);
         }
+
+        setTimeout(() => setNotification(null), 3500); // Hide toast after 3.5s
         return next;
       });
     }, 8000);
@@ -159,6 +172,49 @@ export function LiveQueue() {
               </Button>
             </div>
 
+            {/* ================= LIVE DOCTOR DELAY ALERT BANNER ================= */}
+            {delay.isDelayed && (
+              <div className="bg-amber-50 dark:bg-amber-950/70 border-2 border-amber-300 dark:border-amber-700/80 rounded-3xl p-5 shadow-md animate-in fade-in slide-in-from-top-4 duration-300 space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-700 dark:text-amber-300 shrink-0">
+                    <AlertCircle className="h-6 w-6 animate-pulse" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-black uppercase tracking-wider text-amber-800 dark:text-amber-300 bg-amber-200/60 dark:bg-amber-900/60 px-2 py-0.5 rounded-full">
+                        Doctor Schedule Update
+                      </span>
+                      <span className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                        Updated {delay.updatedAt || "Just now"}
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-bold text-amber-950 dark:text-amber-100 mt-1">
+                      {doctor.fullName} is running ~{delay.delayMinutes} mins late
+                    </h4>
+                    <p className="text-xs text-amber-800/90 dark:text-amber-300/90 mt-0.5 leading-relaxed">
+                      Reason: <strong className="font-semibold">{delay.reason}</strong>. Your estimated arrival time has been automatically shifted to prevent waiting room crowding.
+                    </p>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-amber-200/60 dark:border-amber-800/60 flex items-center justify-between text-xs text-amber-900 dark:text-amber-200">
+                  <span className="flex items-center gap-1 font-medium">
+                    ☕ <span>Take your time from home or visit a nearby café</span>
+                  </span>
+                  <button type="button" className="font-bold underline hover:opacity-80" onClick={() => setShowRescheduleModal(true)}>
+                    Reschedule slot →
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Smart Queue Acceleration Notice (Demonstrating No-Show Auto-Advance) */}
+            <div className="bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-3 flex items-center gap-2.5 text-xs">
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <p className="text-emerald-900 dark:text-emerald-200">
+                <strong>Queue Auto-Pacing Active:</strong> If a prior patient is absent, the system bypasses their token within 5 mins, accelerating wait times so you are seen without delay.
+              </p>
+            </div>
+
             {/* Big Status Card (Screen 07) */}
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-[32px] p-6 shadow-xl shadow-blue-600/20 relative overflow-hidden text-center">
               <div className="absolute top-0 right-0 p-4 opacity-10">
@@ -205,6 +261,36 @@ export function LiveQueue() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* SMART GEO-ETA & DEPARTURE ALARM (Why Medyora beats a phone call) */}
+            <div className="bg-indigo-50/80 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 rounded-3xl p-4 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Navigation className="h-4 w-4 text-indigo-600" />
+                  <h4 className="text-xs font-bold text-indigo-950 dark:text-indigo-200">
+                    Smart Travel & Clinic Arrival GPS Sync
+                  </h4>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-200/60 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-300">
+                  GPS Live
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white dark:bg-slate-900 p-2.5 rounded-2xl border border-indigo-100 dark:border-indigo-900/40">
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Your Distance</p>
+                  <p className="font-black text-slate-900 dark:text-white mt-0.5">5.2 km (~18 mins)</p>
+                </div>
+                <div className="bg-white dark:bg-slate-900 p-2.5 rounded-2xl border border-indigo-100 dark:border-indigo-900/40">
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Leave Home By</p>
+                  <p className="font-black text-indigo-600 dark:text-indigo-400 mt-0.5">10:42 AM (in 14 mins)</p>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-indigo-800/80 dark:text-indigo-300/80">
+                🔔 Medyora will ring an audio departure chime 10 mins before you need to leave.
+              </p>
             </div>
 
             {/* Late Arrival / Reschedule Callout */}

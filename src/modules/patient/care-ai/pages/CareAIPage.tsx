@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearch } from "@tanstack/react-router";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 import {
   type SpecialtyCategoryId,
 } from "../services/specialty-xai-engine";
@@ -18,8 +18,14 @@ import { OrganSystemDeepDiveModal } from "../components/OrganSystemDeepDiveModal
 import { ReportAnalysisModal } from "../components/ReportAnalysisModal";
 import { AddVitalsModal } from "../components/AddVitalsModal";
 import { DeviceSyncModal } from "../components/DeviceSyncModal";
+import { AmbientSmartwatchSOSModal } from "../components/AmbientSmartwatchSOSModal";
+import { SmartAmbulanceCorridorModal } from "../components/SmartAmbulanceCorridorModal";
+import { AshaRuralHealthModal } from "../components/AshaRuralHealthModal";
+import { PrescriptionDDIModal } from "@/modules/patient/prescriptions/components/PrescriptionDDIModal";
+import { ScanMedVerifierModal } from "@/modules/patient/medicines/components/ScanMedVerifierModal";
 import { ORGAN_SYSTEMS } from "../data/organ-systems-data";
 import { toast } from "sonner";
+import { Ambulance, WifiOff, ShieldAlert, Scan, Droplets } from "lucide-react";
 
 export function CareAIPage() {
   const search = useSearch({ strict: false }) as Record<string, string | undefined>;
@@ -51,20 +57,42 @@ export function CareAIPage() {
   // Recent Reports State
   const [reports, setReports] = useState<RecentReportItem[]>(DEFAULT_RECENT_REPORTS);
 
+  const navigate = useNavigate();
+
   // Modals state
   const [isDeepDiveOpen, setIsDeepDiveOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedReportTitle, setSelectedReportTitle] = useState<string | undefined>(undefined);
   const [isAddVitalsOpen, setIsAddVitalsOpen] = useState(false);
   const [isDeviceSyncOpen, setIsDeviceSyncOpen] = useState(false);
+  const [isAmbientSOSOpen, setIsAmbientSOSOpen] = useState(false);
+  const [isAmbulanceModalOpen, setIsAmbulanceModalOpen] = useState(false);
+  const [isAshaModalOpen, setIsAshaModalOpen] = useState(false);
+  const [isDDIOpen, setIsDDIOpen] = useState(false);
+  const [isScanMedOpen, setIsScanMedOpen] = useState(false);
 
   // Chat Trigger from Hero Actions
   const [chatInitiateTrigger, setChatInitiateTrigger] = useState(0);
 
-  const handleHeroAction = (action: "chat" | "upload" | "symptoms" | "recommendations") => {
-    if (action === "chat") {
+  const handleHeroAction = (
+    action:
+      | "chat"
+      | "upload"
+      | "symptoms"
+      | "recommendations"
+      | "food-scan"
+      | "diet-planner"
+      | "smartwatch-sos"
+  ) => {
+    if (action === "diet-planner") {
+      navigate({ to: "/patient/diet-planner" });
+    } else if (action === "smartwatch-sos") {
+      setIsAmbientSOSOpen(true);
+    } else if (action === "chat") {
       setChatInitiateTrigger((prev) => prev + 1);
       toast.info("Starting AI consultation...");
+    } else if (action === "food-scan") {
+      navigate({ to: "/patient/diet-planner" });
     } else if (action === "upload") {
       setSelectedReportTitle(undefined);
       setIsReportModalOpen(true);
@@ -112,6 +140,49 @@ export function CareAIPage() {
           <div className="col-span-12 lg:col-span-8 xl:col-span-7 space-y-4">
             {/* 1. Care AI Hero Banner with 4 Two-Line Buttons & Small 3D Robot */}
             <CareAIHero onActionClick={handleHeroAction} />
+
+            {/* 1.5 Clinical Innovation & Telemetry Quick Actions Bar */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+              <button
+                onClick={() => navigate({ to: "/patient/blood" })}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600/10 hover:bg-rose-600/20 text-rose-500 dark:text-rose-400 border border-rose-500/20 font-bold whitespace-nowrap transition-all shadow-xs"
+              >
+                <Droplets className="w-3.5 h-3.5 fill-rose-500" />
+                <span>Blood Radar &amp; Home Pickup 🩸</span>
+              </button>
+
+              <button
+                onClick={() => setIsAmbulanceModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600/10 hover:bg-red-600/20 text-red-500 dark:text-red-400 border border-red-500/20 font-bold whitespace-nowrap transition-all shadow-xs"
+              >
+                <Ambulance className="w-3.5 h-3.5" />
+                <span>Ambulance Green Corridor 🚑</span>
+              </button>
+
+              <button
+                onClick={() => setIsAshaModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20 font-bold whitespace-nowrap transition-all shadow-xs"
+              >
+                <WifiOff className="w-3.5 h-3.5" />
+                <span>ASHA Rural Offline Locker 📡</span>
+              </button>
+
+              <button
+                onClick={() => setIsScanMedOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600/10 hover:bg-amber-600/20 text-amber-500 dark:text-amber-400 border border-amber-500/20 font-bold whitespace-nowrap transition-all shadow-xs"
+              >
+                <Scan className="w-3.5 h-3.5" />
+                <span>ScanMed Drug Verifier 🔍</span>
+              </button>
+
+              <button
+                onClick={() => setIsDDIOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-500 dark:text-indigo-400 border border-indigo-500/20 font-bold whitespace-nowrap transition-all shadow-xs"
+              >
+                <ShieldAlert className="w-3.5 h-3.5" />
+                <span>Prescription DDI Shield 🛡️</span>
+              </button>
+            </div>
 
             {/* 2. Horizontal Organ System Selector Pill Row */}
             <OrganSystemSelector
@@ -206,6 +277,36 @@ export function CareAIPage() {
         onClose={() => setIsAddVitalsOpen(false)}
         currentVitals={vitals}
         onSaveVitals={(updated) => setVitals(updated)}
+      />
+
+      {/* Ambient Smartwatch & Autonomous 108 Emergency Voice Rescue Modal */}
+      <AmbientSmartwatchSOSModal
+        isOpen={isAmbientSOSOpen}
+        onClose={() => setIsAmbientSOSOpen(false)}
+      />
+
+      {/* Smart Ambulance & Traffic Green Corridor Preemption Modal */}
+      <SmartAmbulanceCorridorModal
+        isOpen={isAmbulanceModalOpen}
+        onClose={() => setIsAmbulanceModalOpen(false)}
+      />
+
+      {/* ASHA / Rural Offline-First Health Records Modal */}
+      <AshaRuralHealthModal
+        isOpen={isAshaModalOpen}
+        onClose={() => setIsAshaModalOpen(false)}
+      />
+
+      {/* Prescription Vision OCR & Fatal Drug Interaction Shield Modal */}
+      <PrescriptionDDIModal
+        isOpen={isDDIOpen}
+        onClose={() => setIsDDIOpen(false)}
+      />
+
+      {/* ScanMed Counterfeit Drug & Cold-Chain Verifier Modal */}
+      <ScanMedVerifierModal
+        isOpen={isScanMedOpen}
+        onClose={() => setIsScanMedOpen(false)}
       />
     </div>
   );

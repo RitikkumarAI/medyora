@@ -175,9 +175,31 @@ export function useVisits() {
     return next;
   }, []);
 
+  const markNoShow = useCallback((id: string, reason = "Patient not present in lobby") => {
+    const list = read(VISITS_KEY, TODAY_VISITS).map((v) =>
+      v.id === id ? { ...v, status: "Skipped" as const, noShowReason: reason } : v,
+    );
+    // If we marked the active consulting patient as skipped, promote next waiting patient
+    const hasConsulting = list.some((v) => v.status === "Consulting");
+    if (!hasConsulting) {
+      const nextWaitingIndex = list.findIndex((v) => v.status === "Waiting");
+      if (nextWaitingIndex !== -1) {
+        list[nextWaitingIndex] = { ...list[nextWaitingIndex]!, status: "Consulting" as const };
+      }
+    }
+    write(VISITS_KEY, list);
+  }, []);
+
+  const recallPatient = useCallback((id: string) => {
+    const list = read(VISITS_KEY, TODAY_VISITS).map((v) =>
+      v.id === id ? { ...v, status: "Waiting" as const } : v,
+    );
+    write(VISITS_KEY, list);
+  }, []);
+
   const reset = useCallback(() => write(VISITS_KEY, TODAY_VISITS), []);
 
-  return { visits, setStatus, callNext, reset };
+  return { visits, setStatus, callNext, markNoShow, recallPatient, reset };
 }
 
 /** Prescriptions issued by the doctor, persisted in the browser. */
@@ -199,4 +221,78 @@ export function useIssuedPrescriptions() {
   }, []);
 
   return { prescriptions, issue };
+}
+
+export interface DoctorDelayStatus {
+  isDelayed: boolean;
+  delayMinutes: number;
+  reason: string;
+  updatedAt: string;
+}
+
+export const DEFAULT_DOCTOR_DELAY: DoctorDelayStatus = {
+  isDelayed: false,
+  delayMinutes: 0,
+  reason: "",
+  updatedAt: "",
+};
+
+const DELAY_KEY = "mediconnect.doctor.delay.v1";
+
+export function useDoctorDelay() {
+  const delay = useStoreSync<DoctorDelayStatus>(DELAY_KEY, DEFAULT_DOCTOR_DELAY);
+
+  const setDelay = useCallback((delayMinutes: number, reason: string) => {
+    const updated: DoctorDelayStatus = {
+      isDelayed: delayMinutes > 0,
+      delayMinutes,
+      reason,
+      updatedAt: new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }),
+    };
+    write(DELAY_KEY, updated);
+    return updated;
+  }, []);
+
+  const clearDelay = useCallback(() => {
+    write(DELAY_KEY, DEFAULT_DOCTOR_DELAY);
+  }, []);
+
+  return { delay, setDelay, clearDelay };
+}
+
+export interface DoctorVacationStatus {
+  isOnLeave: boolean;
+  startDate: string;
+  endDate: string;
+  reason: string;
+}
+
+export const DEFAULT_DOCTOR_VACATION: DoctorVacationStatus = {
+  isOnLeave: false,
+  startDate: "",
+  endDate: "",
+  reason: "",
+};
+
+const VACATION_KEY = "mediconnect.doctor.vacation.v1";
+
+export function useDoctorVacation() {
+  const vacation = useStoreSync<DoctorVacationStatus>(VACATION_KEY, DEFAULT_DOCTOR_VACATION);
+
+  const setVacation = useCallback((startDate: string, endDate: string, reason: string) => {
+    const updated: DoctorVacationStatus = {
+      isOnLeave: true,
+      startDate,
+      endDate,
+      reason,
+    };
+    write(VACATION_KEY, updated);
+    return updated;
+  }, []);
+
+  const clearVacation = useCallback(() => {
+    write(VACATION_KEY, DEFAULT_DOCTOR_VACATION);
+  }, []);
+
+  return { vacation, setVacation, clearVacation };
 }

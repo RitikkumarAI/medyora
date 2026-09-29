@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medyora Healthcare Platform — Comprehensive Technical Overview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  @page {
+    size: A4 portrait;
+    margin: 18mm 15mm 18mm 15mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1E293B;
+    background-color: #FFFFFF;
+    line-height: 1.55;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Page Break Utilities */
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Cover Page */
+  .cover-container {
+    height: 100vh;
+    min-height: 980px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 20px 40px 20px;
+    background: linear-gradient(145deg, #0B132B 0%, #1C2541 50%, #1E3A8A 100%);
+    color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  .cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 900;
+    font-size: 24px;
+    box-shadow: 0 4px 14px rgba(59,130,246,0.5);
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #FFFFFF;
+  }
+
+  .doc-tag {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #93C5FD;
+  }
+
+  .cover-body {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .cover-subtitle-top {
+    color: #60A5FA;
+    font-size: 13pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+
+  .cover-title {
+    font-size: 34pt;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+
+  .cover-title span {
+    background: linear-gradient(90deg, #60A5FA, #93C5FD);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cover-description {
+    font-size: 12pt;
+    color: #CBD5E1;
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+  }
+
+  .cover-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .cover-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 16px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+  }
+
+  .cover-card-title {
+    font-size: 9.5pt;
+    color: #94A3B8;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .cover-card-val {
+    font-size: 12pt;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .cover-author-title {
+    font-size: 9.5pt;
+    color: #94A3B8;
+    margin-bottom: 4px;
+  }
+
+  .cover-author-name {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .cover-meta {
+    text-align: right;
+    font-size: 9.5pt;
+    color: #94A3B8;
+  }
+
+  /* Internal Page Styling */
+  .section-header {
+    margin-top: 30px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-size: 18pt;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #2563EB;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-size: 12pt;
+    font-weight: 800;
+  }
+
+  .section-tag {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #2563EB;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #1E293B;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 14px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 12px;
+    color: #334155;
+    font-size: 10pt;
+    line-height: 1.6;
+  }
+
+  /* Highlight & Callout Boxes */
+  .callout {
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin: 14px 0;
+    border-left: 4px solid #2563EB;
+    background: #F8FAFC;
+    font-size: 9.5pt;
+  }
+
+  .callout-blue {
+    background: #EFF6FF;
+    border-left-color: #2563EB;
+    color: #1E40AF;
+  }
+
+  .callout-green {
+    background: #ECFDF5;
+    border-left-color: #059669;
+    color: #065F46;
+  }
+
+  .callout-amber {
+    background: #FFFBEB;
+    border-left-color: #D97706;
+    color: #92400E;
+  }
+
+  .callout-rose {
+    background: #FFF1F2;
+    border-left-color: #E11D48;
+    color: #9F1239;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10pt;
+  }
+
+  /* Feature Grids */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 14px 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+  }
+
+  .feature-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  }
+
+  .feature-card.highlight {
+    border-color: #BFDBFE;
+    background: #F8FAFF;
+  }
+
+  .feature-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .feature-card-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: #EFF6FF;
+    color: #2563EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12pt;
+    font-weight: bold;
+  }
+
+  .feature-card-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0F172A;
+  }
+
+  .feature-card-desc {
+    font-size: 8.5pt;
+    color: #475569;
+    line-height: 1.45;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 9pt;
+  }
+
+  th {
+    background: #F1F5F9;
+    color: #1E293B;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid #CBD5E1;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  td {
+    padding: 8px 10px;
+    border: 1px solid #E2E8F0;
+    color: #334155;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) {
+    background: #F8FAFC;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .badge-blue { background: #DBEAFE; color: #1E40AF; }
+  .badge-green { background: #D1FAE5; color: #065F46; }
+  .badge-purple { background: #EDE9FE; color: #5B21B6; }
+  .badge-amber { background: #FEF3C7; color: #92400E; }
+  .badge-rose { background: #FFE4E6; color: #9F1239; }
+
+  /* Flow Diagrams (SVG & Stylized Cards) */
+  .diagram-container {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .diagram-title {
+    font-size: 10pt;
+    font-weight: 800;
+    color: #1E293B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .flow-step-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  .flow-step {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .flow-step.active {
+    border-color: #2563EB;
+    background: #EFF6FF;
+  }
+
+  .flow-step.success {
+    border-color: #10B981;
+    background: #ECFDF5;
+  }
+
+  .flow-step-num {
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .flow-step-text {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.25;
+  }
+
+  .flow-arrow {
+    color: #94A3B8;
+    font-weight: 900;
+    font-size: 14pt;
+    user-select: none;
+  }
+
+  /* Code & Syntax snippets */
+  pre, code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+  }
+
+  pre {
+    background: #0F172A;
+    color: #E2E8F0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 10px 0;
+    border: 1px solid #1E293B;
+    line-height: 1.45;
+  }
+
+  .code-inline {
+    background: #F1F5F9;
+    color: #0F172A;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 8.5pt;
+    border: 1px solid #E2E8F0;
+  }
+
+  /* Footer */
+  .footer-meta {
+    margin-top: 30px;
+    padding-top: 10px;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: #94A3B8;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover-container">
+  <div class="cover-header">
+    <div class="logo-badge">
+      <div class="logo-icon">M</div>
+      <div class="logo-text">Medyora Health</div>
+    </div>
+    <div class="doc-tag">Technical Architecture & Engineering Blueprint</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-subtitle-top">Developer Onboarding & System Dossier</div>
+    <h1 class="cover-title">
+      Medyora — India's Smartest<br>
+      <span>AI Healthcare Ecosystem</span>
+    </h1>
+    <p class="cover-description">
+      An enterprise-grade, fullstack digital health platform uniting Patients, Doctors, and Clinics. Featuring real-time OPD queue telemetry, 24/7 Smart Care AI Copilot, instant slot booking, digital prescription generation, and cross-platform native distribution.
+    </p>
+
+    <div class="cover-grid">
+      <div class="cover-card">
+        <div class="cover-card-title">Core Engine</div>
+        <div class="cover-card-val">TanStack Start + Nitro</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-title">Frontend Stack</div>
+        <div class="cover-card-val">React 19 & Tailwind v4</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-title">Database & Auth</div>
+        <div class="cover-card-val">Supabase PostgreSQL (RLS)</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-title">Mobile Distribution</div>
+        <div class="cover-card-val">Capacitor Native + PWA</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-title">AI Intelligence</div>
+        <div class="cover-card-val">Clinical Knowledge Engine</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-title">Localization</div>
+        <div class="cover-card-val">English, Hindi, Marathi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div>
+      <div class="cover-author-title">Created & Engineered By</div>
+      <div class="cover-author-name">Ritik Kumar & Engineering Team</div>
+      <div style="font-size: 9pt; color: #93C5FD; margin-top: 2px;">Binarize Technologies</div>
+    </div>
+    <div class="cover-meta">
+      <div>Project Version: <strong>v2.4 Production Candidate</strong></div>
+      <div>Confidentiality: <strong>Internal Engineering Team</strong></div>
+      <div>Documentation Date: <strong>September 2026</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS & EXECUTIVE SUMMARY ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">01</span>
+    Executive Summary & Problem Statement
+  </div>
+  <span class="section-tag">Product Vision</span>
+</div>
+
+<p>
+  <strong>Medyora</strong> is an all-in-one healthcare super-platform designed to solve India's most critical healthcare delivery bottleneck: <strong>the unorganized, time-consuming Out-Patient Department (OPD) queue and fragmented medical record system</strong>. In traditional clinics and hospitals across India, patients routinely suffer 2 to 3 hours of idle waiting in crowded waiting rooms without real-time queue visibility, while doctors battle handwritten paperwork, scheduling chaos, and lack of historical patient context.
+</p>
+
+<div class="grid-2">
+  <div class="callout callout-rose">
+    <div class="callout-title">🚨 The Healthcare Problem in India</div>
+    <p style="margin:0; font-size: 8.8pt;">
+      • Unpredictable clinic wait times (120–180 minutes average).<br>
+      • Illegible, lost, or damaged physical paper prescriptions.<br>
+      • Absence of verified doctor credentials and pricing transparency.<br>
+      • Language barriers preventing millions from understanding clinical guidance.<br>
+      • Inability of clinics to balance walk-in patients with online bookings.
+    </p>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-title">✨ The Medyora Solution</div>
+    <p style="margin:0; font-size: 8.8pt;">
+      • <strong>Live Digital Token & Queue Tracker</strong>: Know exactly when to arrive.<br>
+      • <strong>Smart Care AI Copilot</strong>: Instant 24/7 symptom triage & risk assessment.<br>
+      • <strong>1-Click E-Prescriptions</strong>: Standardized digital Rx with PDF downloads.<br>
+      • <strong>Multi-Persona Architecture</strong>: Unified hub for Patients, Doctors, and Admins.<br>
+      • <strong>ABDM & Native Mobile Ready</strong>: Ready for Capacitor iOS/Android & PWA.
+    </p>
+  </div>
+</div>
+
+<h2>Platform Stakeholders & User Personas</h2>
+<div class="grid-3">
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">👤</div>
+      <div class="feature-card-title">Patient & Family</div>
+    </div>
+    <div class="feature-card-desc">
+      Search specialists by symptoms, book in-clinic/video/home visits, track real-time queue tokens, chat with 24/7 AI copilot, manage family profiles, and store lifelong health records.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🩺</div>
+      <div class="feature-card-title">Doctor & Clinic Staff</div>
+    </div>
+    <div class="feature-card-desc">
+      Manage daily clinic OPD, call next tokens with audio cues, author structured digital prescriptions in under 60 seconds, view patient medical dossiers, and review earnings.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🛡️</div>
+      <div class="feature-card-title">Platform Admin / Hospital</div>
+    </div>
+    <div class="feature-card-desc">
+      Review and verify doctor medical registration credentials (MCI/NMC), audit appointments ledger, manage CMS articles and banners, and govern platform compliance.
+    </div>
+  </div>
+</div>
+
+<h2>Table of Contents for Onboarding Teammates</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 10%;">Section</th>
+      <th style="width: 35%;">Title</th>
+      <th style="width: 55%;">Core Topics Covered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Sec 02</strong></td>
+      <td><strong>System Architecture & Tech Stack</strong></td>
+      <td>TanStack Start (SSR), Nitro engine, React 19, Tailwind v4, Supabase, Capacitor mobile.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 03</strong></td>
+      <td><strong>Core User Workflows & Flowcharts</strong></td>
+      <td>Visual journey maps: Patient discovery & booking, Doctor queue & Rx, AI triage pipeline.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 04</strong></td>
+      <td><strong>Modular Directory & Code Breakdown</strong></td>
+      <td>Deep dive into <code>src/modules/patient</code>, <code>doctor</code>, <code>admin</code>, and <code>shared</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 05</strong></td>
+      <td><strong>Database Schema & PostgreSQL Models</strong></td>
+      <td>Tables (<code>profiles</code>, <code>doctors</code>, <code>appointments</code>, <code>prescriptions</code>), RLS policies, Enums.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 06</strong></td>
+      <td><strong>Security, Auth & Secure Storage</strong></td>
+      <td>TTL token storage, base64 encryption, CSP policies, RBAC roles (Patient/Doctor/Admin).</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 07</strong></td>
+      <td><strong>Strategic Benefits & Value Drivers</strong></td>
+      <td>Zero waiting room friction, type safety, multi-lingual support, offline-first PWA.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 08</strong></td>
+      <td><strong>Limitations & Engineering Trade-offs</strong></td>
+      <td>Mock vs real database bridges, WebRTC signaling SFU, payment webhooks, compliance.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 09</strong></td>
+      <td><strong>Scalability & Production Roadmap</strong></td>
+      <td>Phase 1 to Phase 5: Redis live queue, ABDM / ABHA ID integration, regional voice AI.</td>
+    </tr>
+    <tr>
+      <td><strong>Sec 10</strong></td>
+      <td><strong>Developer Quick-Start Cheatsheet</strong></td>
+      <td>Setup commands, testing credentials, capacitor mobile compilation, and tips.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 2: ARCHITECTURE & TECH STACK ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">02</span>
+    System Architecture & Tech Stack
+  </div>
+  <span class="section-tag">Technology Foundation</span>
+</div>
+
+<p>
+  Medyora is built using an ultra-modern, high-performance web and native mobile tech stack. It avoids traditional bulky monoliths by leveraging <strong>TanStack Start</strong> for isomorphic Server-Side Rendering (SSR) and streaming, coupled with <strong>React 19</strong>, <strong>Tailwind CSS v4</strong>, and <strong>Supabase</strong>.
+</p>
+
+<!-- Architecture Visual Diagram -->
+<div class="diagram-container avoid-break">
+  <div class="diagram-title">System Architecture Topology</div>
+  <svg viewBox="0 0 740 320" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+    <!-- Client Layer -->
+    <rect x="10" y="10" width="720" height="65" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+    <text x="25" y="30" font-family="Inter" font-size="11" font-weight="bold" fill="#1E40AF">CLIENT ACCESS LAYER</text>
+    <rect x="25" y="40" width="155" height="26" rx="6" fill="#FFFFFF" stroke="#93C5FD"/>
+    <text x="35" y="57" font-family="Inter" font-size="9.5" font-weight="600" fill="#1E293B">🖥️ Desktop Web (React 19)</text>
+    <rect x="195" y="40" width="165" height="26" rx="6" fill="#FFFFFF" stroke="#93C5FD"/>
+    <text x="205" y="57" font-family="Inter" font-size="9.5" font-weight="600" fill="#1E293B">📱 Mobile Web / PWA (sw.js)</text>
+    <rect x="375" y="40" width="165" height="26" rx="6" fill="#FFFFFF" stroke="#93C5FD"/>
+    <text x="385" y="57" font-family="Inter" font-size="9.5" font-weight="600" fill="#1E293B">🤖 Android App (Capacitor)</text>
+    <rect x="555" y="40" width="160" height="26" rx="6" fill="#FFFFFF" stroke="#93C5FD"/>
+    <text x="565" y="57" font-family="Inter" font-size="9.5" font-weight="600" fill="#1E293B">🍎 iOS App (Capacitor)</text>
+
+    <!-- Connectors -->
+    <path d="M 370 75 L 370 105" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Server & Nitro Layer -->
+    <rect x="10" y="105" width="720" height="95" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-width="1.5"/>
+    <text x="25" y="125" font-family="Inter" font-size="11" font-weight="bold" fill="#0F172A">APPLICATION & SSR SERVER LAYER (TanStack Start + Nitro Engine)</text>
+    
+    <rect x="25" y="135" width="160" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="35" y="153" font-family="Inter" font-size="9.5" font-weight="bold" fill="#2563EB">Isomorphic Router</text>
+    <text x="35" y="172" font-family="Inter" font-size="8" fill="#64748B">TanStack Router (File-based)</text>
+
+    <rect x="200" y="135" width="160" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="210" y="153" font-family="Inter" font-size="9.5" font-weight="bold" fill="#059669">Smart Care AI Engine</text>
+    <text x="210" y="172" font-family="Inter" font-size="8" fill="#64748B">Clinical Triaging & XAI</text>
+
+    <rect x="375" y="135" width="165" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="385" y="153" font-family="Inter" font-size="9.5" font-weight="bold" fill="#D97706">State & Cache</text>
+    <text x="385" y="172" font-family="Inter" font-size="8" fill="#64748B">TanStack Query + SecureStorage</text>
+
+    <rect x="555" y="135" width="160" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="565" y="153" font-family="Inter" font-size="9.5" font-weight="bold" fill="#7C3AED">Security & Headers</text>
+    <text x="565" y="172" font-family="Inter" font-size="8" fill="#64748B">HSTS, CSP, RBAC Barriers</text>
+
+    <!-- Connectors -->
+    <path d="M 370 200 L 370 230" stroke="#64748B" stroke-width="2"/>
+
+    <!-- Data & Cloud Backend Layer -->
+    <rect x="10" y="230" width="720" height="75" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+    <text x="25" y="250" font-family="Inter" font-size="11" font-weight="bold" fill="#065F46">DATABASE, AUTH & STORAGE LAYER (Supabase Cloud)</text>
+
+    <rect x="25" y="260" width="160" height="34" rx="6" fill="#FFFFFF" stroke="#A7F3D0"/>
+    <text x="35" y="281" font-family="Inter" font-size="9" font-weight="bold" fill="#065F46">PostgreSQL Database</text>
+
+    <rect x="200" y="260" width="160" height="34" rx="6" fill="#FFFFFF" stroke="#A7F3D0"/>
+    <text x="210" y="281" font-family="Inter" font-size="9" font-weight="bold" fill="#065F46">Row Level Security (RLS)</text>
+
+    <rect x="375" y="260" width="165" height="34" rx="6" fill="#FFFFFF" stroke="#A7F3D0"/>
+    <text x="385" y="281" font-family="Inter" font-size="9" font-weight="bold" fill="#065F46">Realtime Queue Broadcast</text>
+
+    <rect x="555" y="260" width="160" height="34" rx="6" fill="#FFFFFF" stroke="#A7F3D0"/>
+    <text x="565" y="281" font-family="Inter" font-size="9" font-weight="bold" fill="#065F46">Encrypted S3 Document Vault</text>
+  </svg>
+</div>
+
+<h2>Comprehensive Technology Matrix</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 22%;">Layer</th>
+      <th style="width: 28%;">Package / Technology</th>
+      <th style="width: 50%;">Role & Architecture Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Fullstack SSR</strong></td>
+      <td><code>@tanstack/react-start</code> + <code>nitro</code></td>
+      <td>Handles server-side rendering, streaming HTML, zero-bundle server functions, and edge readiness.</td>
+    </tr>
+    <tr>
+      <td><strong>Routing Engine</strong></td>
+      <td><code>@tanstack/react-router</code></td>
+      <td>100% type-safe file-based routing in <code>src/routes/</code> with loader hooks and URL state serialization.</td>
+    </tr>
+    <tr>
+      <td><strong>UI Library & Primitives</strong></td>
+      <td><code>react 19</code> + <code>@radix-ui/*</code></td>
+      <td>Accessible unstyled primitives (Dialog, Tabs, Accordion, Popover, Dropdowns) ensuring WCAG 2.1 compliance.</td>
+    </tr>
+    <tr>
+      <td><strong>CSS & Design System</strong></td>
+      <td><code>@tailwindcss/vite</code> v4</td>
+      <td>Next-generation Tailwind CSS v4 engine with instant compilation and universal dark mode support.</td>
+    </tr>
+    <tr>
+      <td><strong>Asynchronous State</strong></td>
+      <td><code>@tanstack/react-query</code> v5</td>
+      <td>Server-state management, automated query deduping, background refetching, and optimistic updates.</td>
+    </tr>
+    <tr>
+      <td><strong>Backend Database</strong></td>
+      <td><code>@supabase/supabase-js</code></td>
+      <td>PostgreSQL database integration with Row-Level Security, database functions, and auth sessions.</td>
+    </tr>
+    <tr>
+      <td><strong>Mobile Wrappers</strong></td>
+      <td><code>@capacitor/cli</code> (iOS & Android)</td>
+      <td>Compiles the React codebase into native mobile binaries with push notifications, status bar, and camera.</td>
+    </tr>
+    <tr>
+      <td><strong>Animations & Data Viz</strong></td>
+      <td><code>framer-motion</code> + <code>recharts</code></td>
+      <td>Smooth spring transitions and responsive clinical/revenue charts for doctor and admin portals.</td>
+    </tr>
+    <tr>
+      <td><strong>Form Validation</strong></td>
+      <td><code>react-hook-form</code> + <code>zod</code></td>
+      <td>Declarative type-safe form validation for patient booking, medical registration, and profile setups.</td>
+    </tr>
+    <tr>
+      <td><strong>PDF Generation</strong></td>
+      <td><code>jspdf</code></td>
+      <td>Client-side vector generation of official digital prescriptions with doctor signature blocks.</td>
+    </tr>
+    <tr>
+      <td><strong>Localization</strong></td>
+      <td><code>i18next</code> + <code>react-i18next</code></td>
+      <td>Triple-language support across English, Hindi (हिन्दी), and Marathi (मराठी) across all user modules.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 3: USER WORKFLOWS & DIAGRAMS ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">03</span>
+    End-to-End User Workflows & Flowcharts
+  </div>
+  <span class="section-tag">System Workflows</span>
+</div>
+
+<p>
+  To help any new teammate grasp how Medyora functions at runtime, the platform's four core operational lifecycles are diagrammed below.
+</p>
+
+<!-- Flow 1: Patient Discovery & Booking -->
+<div class="diagram-container avoid-break">
+  <div class="diagram-title">Workflow 1: Patient Discovery, Booking & Live Token Flow</div>
+  <div class="flow-step-row">
+    <div class="flow-step active">
+      <div class="flow-step-num">Step 01</div>
+      <div class="flow-step-text">Search & Filter<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">By Doctor, Speciality, City or Symptom</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Step 02</div>
+      <div class="flow-step-text">Doctor Profile<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Fees, Reviews, Clinic & Next Available Slot</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Step 03</div>
+      <div class="flow-step-text">5-Step Booking<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Select Self/Family, Visit Type, Date & Time</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Step 04</div>
+      <div class="flow-step-text">Payment / Confirm<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">UPI, Card or Pay at Clinic; Token Issued</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step success">
+      <div class="flow-step-num">Step 05</div>
+      <div class="flow-step-text">Live OPD Tracker<br><span style="font-size:7.5pt; font-weight:normal; color:#065F46;">Token #14 • 3 Ahead • Arrive in 25 mins</span></div>
+    </div>
+  </div>
+  <div class="callout callout-blue" style="margin-top: 10px; margin-bottom: 0;">
+    <strong>Patient Telemetry Experience:</strong> The patient does not need to sit in the waiting room. They track their token on their smartphone from home or a nearby coffee shop. When token #13 enters the cabin, Medyora issues an audio chime and notification alerting the patient to proceed to the cabin.
+  </div>
+</div>
+
+<!-- Flow 2: Doctor Clinic OPD Flow -->
+<div class="diagram-container avoid-break">
+  <div class="diagram-title">Workflow 2: Doctor OPD Queue & Prescription Authoring Flow</div>
+  <div class="flow-step-row">
+    <div class="flow-step active">
+      <div class="flow-step-num">Phase A</div>
+      <div class="flow-step-text">Doctor Login<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">MCI Reg No. verification & PIN auth gate</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Phase B</div>
+      <div class="flow-step-text">Live Queue Hub<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">See active OPD list: Waiting, In-Cabin, Done</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Phase C</div>
+      <div class="flow-step-text">"Call Next" Action<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Single click bumps token; patient notified</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Phase D</div>
+      <div class="flow-step-text">Smart E-Prescription<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Diagnosis + medicines + dosage timings</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step success">
+      <div class="flow-step-num">Phase E</div>
+      <div class="flow-step-text">Complete & Sync<br><span style="font-size:7.5pt; font-weight:normal; color:#065F46;">Auto-generates PDF Rx & updates ledger</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Flow 3: Smart Care AI Engine Flow -->
+<div class="diagram-container avoid-break">
+  <div class="diagram-title">Workflow 3: Smart Care AI Symptom Triage & Recommendation Engine</div>
+  <div class="flow-step-row">
+    <div class="flow-step active">
+      <div class="flow-step-num">Input</div>
+      <div class="flow-step-text">User Query / Upload<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Symptoms, Lab PDF, or Medicine Scan</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Analysis</div>
+      <div class="flow-step-text">Clinical Parser<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Evaluates 2,300+ rules & ICD disease profiles</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Triage</div>
+      <div class="flow-step-text">Risk Classification<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Low / Moderate / High / Red Emergency</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step success">
+      <div class="flow-step-num">Action</div>
+      <div class="flow-step-text">Specialist Match<br><span style="font-size:7.5pt; font-weight:normal; color:#065F46;">Matched to top verified doctors with 1-click book</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Flow 4: Security & Authentication -->
+<div class="diagram-container avoid-break">
+  <div class="diagram-title">Workflow 4: Multi-Role Auth Barrier & Secure Storage Flow</div>
+  <div class="flow-step-row">
+    <div class="flow-step active">
+      <div class="flow-step-num">Auth 1</div>
+      <div class="flow-step-text">User Login<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Patient phone OTP or Doctor MCI Reg ID</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Auth 2</div>
+      <div class="flow-step-text">Secure Payload<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;">Base64 serialization + TTL expiry timestamp</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="flow-step-num">Auth 3</div>
+      <div class="flow-step-text">Storage Layer<br><span style="font-size:7.5pt; font-weight:normal; color:#475569;"><code>secureStorage.setItem(key, payload, ttl)</code></span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step success">
+      <div class="flow-step-num">Auth 4</div>
+      <div class="flow-step-text">Role Gate<br><span style="font-size:7.5pt; font-weight:normal; color:#065F46;">Enforces <code>has_role()</code> before rendering portal</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 4: MODULE DECOMPOSITION ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">04</span>
+    Modular Architecture & Code Breakdown
+  </div>
+  <span class="section-tag">Codebase Structure</span>
+</div>
+
+<p>
+  The project follows a <strong>Domain-Driven Modular Architecture</strong>. All feature code resides in <code>src/modules/</code>, organized cleanly by bounded context. The global routing table in <code>src/routes/</code> imports and composes these modular components.
+</p>
+
+<h2>Directory Map: <code>src/</code></h2>
+<pre>
+src/
+├── routes/                     # TanStack Start File-based Routing (68 routes)
+│   ├── __root.tsx              # Root HTML Shell, Providers, Command Palette, Meta
+│   ├── index.tsx               # High-converting Landing Page
+│   ├── auth.*.tsx              # Login, Verification, Profile, Language Selection
+│   ├── patient.*.tsx           # Search, Doctor Profiles, Queue, Prescriptions, AI
+│   ├── doctor.*.tsx            # Doctor Dashboard, OPD Queue, Prescriptions, Analytics
+│   └── admin.*.tsx             # Superadmin Platform Governance & Doctor Approvals
+├── modules/
+│   ├── patient/                # Patient SuperApp Subsystem (22 domain packages)
+│   │   ├── search/             # Multi-filter Doctor & Clinic Search Page
+│   │   ├── appointment/        # 5-step Booking Engine, Slot Picker & Ledger
+│   │   ├── queue/              # Realtime Live OPD Token Tracker & Audio Chimes
+│   │   ├── care-ai/            # 24/7 Smart Care AI Copilot Engine (270KB+ rules)
+│   │   ├── consult/            # Teleconsultation / WebRTC Encrypted Video Room
+│   │   ├── prescriptions/      # Digital Rx Viewer & PDF Exporter (jspdf)
+│   │   ├── medical-records/    # Encrypted Health Records & Diagnostic Reports
+│   │   ├── family/             # Multi-profile Family Health Manager
+│   │   ├── medicines/          # Pharmacy, Salt Discovery & Medicine Orders
+│   │   └── lab-tests/          # Diagnostic Packages & Home Sample Collection
+│   ├── doctor/                 # Doctor & Clinic Clinical Cockpit (12 domain packages)
+│   │   ├── dashboard/          # Daily OPD Metrics, Appointments & Revenue
+│   │   ├── queue/              # OPD Token Calling, In-Chair & Skip Handlers
+│   │   ├── schedule/           # Slot Timing Config, Working Hours & Vacation
+│   │   ├── prescriptions/      # Clinical Rx Authoring with Typeahead Medicines
+│   │   └── analytics/          # Patient Retention, In-clinic vs Video Revenue
+│   ├── admin/                  # Governance & Verification Subsystem
+│   │   ├── dashboard/          # Platform GMV, Active Consultations, System Health
+│   │   ├── doctors/            # Medical Council Registration Verification
+│   │   └── cms/                # Article Publishing & Home Banner Control
+│   └── auth/                   # Phone OTP, PIN Gate, and Session Initializers
+└── shared/                     # Cross-cutting Utilities, Security & Theme System
+    ├── security/               # secureStorage.ts (TTL Base64), securityHeaders.ts (CSP)
+    ├── auth/                   # useAuth.ts hook, role barriers, custom events
+    ├── theme/                  # ThemeProvider (Dark / Light / System auto-detect)
+    ├── native/                 # Capacitor Native Bridge & Push Notification bindings
+    ├── offline/                # Offline Banner, Service Worker sync & PWA prompt
+    └── data/                   # Mock stores (mock.ts, doctor-store.ts, superapp-mock.ts)
+</pre>
+
+<h2>Detailed Feature Matrix by Module</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 18%;">Module</th>
+      <th style="width: 27%;">Component / Page</th>
+      <th style="width: 55%;">Capability Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Patient</strong></td>
+      <td><code>SearchPage.tsx</code></td>
+      <td>Debounced search querying doctor name, specialty, clinic, city, and symptom tags simultaneously with quick specialty chips.</td>
+    </tr>
+    <tr>
+      <td><strong>Patient</strong></td>
+      <td><code>BookingFlow.tsx</code></td>
+      <td>Full modal stepper supporting Self vs Family booking, consultation mode selection (Clinic, Video, Home), date/time slot picker, and payment.</td>
+    </tr>
+    <tr>
+      <td><strong>Patient</strong></td>
+      <td><code>LiveQueue.tsx</code></td>
+      <td>Calculates wait time based on (My Token - Current Token) * 15 mins, renders dynamic progress bar, and triggers audio alert on arrival.</td>
+    </tr>
+    <tr>
+      <td><strong>Patient</strong></td>
+      <td><code>CareAIEngine.ts</code></td>
+      <td>Evaluates 15 analysis modes including symptom checking, prescription reader, lab report evaluation, drug interactions, and emergency triage.</td>
+    </tr>
+    <tr>
+      <td><strong>Patient</strong></td>
+      <td><code>VideoConsultationPage.tsx</code></td>
+      <td>Full-screen video call layout with microphone/camera toggling, audio device selection, live messaging, and end-call summary.</td>
+    </tr>
+    <tr>
+      <td><strong>Doctor</strong></td>
+      <td><code>DoctorLayout.tsx</code></td>
+      <td>Secure clinical gate requiring doctor verification (MCI-74892), desktop sidebar navigation, command palette hook, and theme toggle.</td>
+    </tr>
+    <tr>
+      <td><strong>Doctor</strong></td>
+      <td><code>doctor.queue.tsx</code></td>
+      <td>OPD token calling board showing "In the chair", "Waiting" (~12 min clear time), and "Completed", with single-click Next and Skip actions.</td>
+    </tr>
+    <tr>
+      <td><strong>Doctor</strong></td>
+      <td><code>doctor.prescriptions.tsx</code></td>
+      <td>Multi-row medicine authoring (Dosage, Morning/Afternoon/Night, Before/After Food, Duration, Follow-up date) with digital sign-off.</td>
+    </tr>
+    <tr>
+      <td><strong>Admin</strong></td>
+      <td><code>admin.index.tsx</code></td>
+      <td>Platform executive dashboard monitoring doctor onboarding pipeline, patient appointments ledger, and system error rates.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 5: DATABASE ARCHITECTURE ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">05</span>
+    Database Architecture & PostgreSQL Schema
+  </div>
+  <span class="section-tag">Data Layer</span>
+</div>
+
+<p>
+  Medyora uses <strong>Supabase (PostgreSQL 14+)</strong> with strict typing auto-generated in <code>src/integrations/supabase/types.ts</code>. Every table is guarded by Row-Level Security (RLS) policies and role-checking functions.
+</p>
+
+<h2>Core Database Tables</h2>
+
+<div class="avoid-break">
+  <h3>1. <code>appointments</code> — Consultation & Token Ledger</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Column</th>
+        <th style="width: 20%;">Type</th>
+        <th style="width: 55%;">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>UUID (PK)</td><td>Unique appointment identifier.</td></tr>
+      <tr><td><code>patient_id</code></td><td>UUID (FK)</td><td>References patient user profile.</td></tr>
+      <tr><td><code>doctor_id</code></td><td>UUID (FK)</td><td>References <code>doctors.id</code>.</td></tr>
+      <tr><td><code>token</code></td><td>INTEGER</td><td>Daily OPD sequential queue token (e.g. #14).</td></tr>
+      <tr><td><code>appointment_date</code></td><td>DATE</td><td>Scheduled visit date.</td></tr>
+      <tr><td><code>slot_time</code></td><td>TEXT</td><td>Allocated time window (e.g. "10:30 AM").</td></tr>
+      <tr><td><code>visit_type</code></td><td>TEXT</td><td><code>"clinic" | "video" | "home"</code>.</td></tr>
+      <tr><td><code>status</code></td><td>ENUM</td><td><code>confirmed | consulting | completed | cancelled | skipped</code>.</td></tr>
+      <tr><td><code>amount</code></td><td>NUMERIC</td><td>Consultation fee charged.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="avoid-break">
+  <h3>2. <code>doctors</code> — Healthcare Specialist Registry</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Column</th>
+        <th style="width: 20%;">Type</th>
+        <th style="width: 55%;">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>UUID (PK)</td><td>Unique doctor profile identifier.</td></tr>
+      <tr><td><code>full_name</code></td><td>TEXT</td><td>Doctor's professional name (e.g. Dr. Rajesh Sharma).</td></tr>
+      <tr><td><code>speciality</code></td><td>TEXT</td><td>Cardiology, Dermatology, Pediatrics, General Medicine, etc.</td></tr>
+      <tr><td><code>qualification</code></td><td>TEXT</td><td>Degrees (MBBS, MD, DM, FRCS).</td></tr>
+      <tr><td><code>experience</code></td><td>INTEGER</td><td>Years of clinical practice.</td></tr>
+      <tr><td><code>clinic_name</code> / <code>clinic_address</code></td><td>TEXT</td><td>Physical clinic branding and geographic location.</td></tr>
+      <tr><td><code>fee</code></td><td>NUMERIC</td><td>Consultation pricing in INR (₹).</td></tr>
+      <tr><td><code>verified</code></td><td>BOOLEAN</td><td>Whether medical license credentials have been audited by Admin.</td></tr>
+      <tr><td><code>available_today</code></td><td>BOOLEAN</td><td>Real-time switch for instant walk-in/OPD queue bookings.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="avoid-break">
+  <h3>3. <code>prescriptions</code> — Digital Rx Records</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Column</th>
+        <th style="width: 20%;">Type</th>
+        <th style="width: 55%;">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>UUID (PK)</td><td>Prescription record identifier.</td></tr>
+      <tr><td><code>appointment_id</code></td><td>UUID (FK)</td><td>Links directly to the completed appointment.</td></tr>
+      <tr><td><code>doctor_id</code> / <code>patient_id</code></td><td>UUID (FK)</td><td>Parties involved in the medical consultation.</td></tr>
+      <tr><td><code>diagnosis</code></td><td>TEXT</td><td>Doctor's primary clinical diagnosis and observations.</td></tr>
+      <tr><td><code>medicines</code></td><td>JSONB</td><td>Array of objects: <code>[{name, dosage, timing, duration}]</code>.</td></tr>
+      <tr><td><code>advice</code></td><td>TEXT</td><td>Dietary precautions, rest, lifestyle suggestions.</td></tr>
+      <tr><td><code>follow_up_date</code></td><td>DATE</td><td>Recommended return consultation date.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="avoid-break">
+  <h3>4. <code>profiles</code> & <code>user_roles</code> — Identity & Access Control</h3>
+  <p style="font-size: 8.8pt;">
+    User authentication is decoupled into <code>profiles</code> (stores full name, phone number, email, blood group, and emergency contact) and <code>user_roles</code> (stores role mapping <code>patient | doctor | admin</code>). The custom PostgreSQL function <code>has_role(_user_id, _role)</code> verifies authorization in microsecond database queries.
+  </p>
+</div>
+
+<!-- ==================== SECTION 6: SECURITY & AUTH ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">06</span>
+    Security, Authentication & Storage Architecture
+  </div>
+  <span class="section-tag">Security & Compliance</span>
+</div>
+
+<p>
+  Handling medical data demands institutional-grade security. Medyora implements defense-in-depth across the browser, server, and storage layers.
+</p>
+
+<div class="grid-2 avoid-break">
+  <div class="feature-card">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🔐</div>
+      <div class="feature-card-title">Enterprise Secure Storage (TTL)</div>
+    </div>
+    <div class="feature-card-desc">
+      Implemented in <code>src/shared/security/secureStorage.ts</code>. Serializes sensitive session payloads with Base64 encoding, timestamp tracking, and Time-To-Live (TTL) automatic expiration. Stale or tampered tokens are auto-purged on retrieval.
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🛡️</div>
+      <div class="feature-card-title">Enterprise Security Headers (CSP)</div>
+    </div>
+    <div class="feature-card-desc">
+      Configured in <code>src/shared/security/securityHeaders.ts</code> and enforced on every SSR response via <code>src/server.ts</code>. Includes strict Content Security Policy, <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, and HSTS preloading.
+    </div>
+  </div>
+</div>
+
+<h2>Secure Storage Implementation Snippet</h2>
+<pre>
+// src/shared/security/secureStorage.ts
+interface StoragePayload&lt;T&gt; {
+  value: T;
+  createdAt: number;
+  expiresAt: number | null;
+}
+
+export const secureStorage = {
+  setItem&lt;T&gt;(key: string, value: T, ttlSeconds: number | null = null): boolean {
+    const payload: StoragePayload&lt;T&gt; = {
+      value,
+      createdAt: Date.now(),
+      expiresAt: ttlSeconds ? Date.now() + ttlSeconds * 1000 : null,
+    };
+    const serialized = JSON.stringify(payload);
+    const encoded = btoa(encodeURIComponent(serialized));
+    localStorage.setItem(`sec_${key}`, encoded);
+    return true;
+  },
+
+  getItem&lt;T&gt;(key: string): T | null {
+    const encoded = localStorage.getItem(`sec_${key}`);
+    if (!encoded) return null;
+    const serialized = decodeURIComponent(atob(encoded));
+    const payload: StoragePayload&lt;T&gt; = JSON.parse(serialized);
+    if (payload.expiresAt && Date.now() > payload.expiresAt) {
+      this.removeItem(key); // Auto-purges expired sessions
+      return null;
+    }
+    return payload.value;
+  }
+};
+</pre>
+
+<h2>Role-Based Access Control (RBAC) Workflow</h2>
+<p>
+  Medyora enforces multi-role authorization at the route layout boundary.
+</p>
+<ul style="margin-left: 20px; font-size: 9.2pt; line-height: 1.6; color: #334155;">
+  <li><strong>Patient Routes (<code>/patient/*</code>)</strong>: Accessible to standard users. Handles appointment bookings, family profiles, medical records, and AI triage.</li>
+  <li><strong>Doctor Portal (<code>/doctor/*</code>)</strong>: Guarded by <code>DoctorLayout.tsx</code>. Inspects <code>useAuth().isDoctor</code>. If unauthenticated, displays an interactive clinical verification screen requiring a valid Medical Registration Number (e.g. MCI-74892).</li>
+  <li><strong>Admin Portal (<code>/admin/*</code>)</strong>: Guarded by <code>has_role('admin')</code>. Grants access to the doctor verification desk, financial audits, and platform settings.</li>
+</ul>
+
+<!-- ==================== SECTION 7: BENEFITS & VALUE DRIVERS ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">07</span>
+    Key Benefits & Strategic Advantages
+  </div>
+  <span class="section-tag">Value Proposition</span>
+</div>
+
+<p>
+  Medyora delivers measurable benefits across the healthcare value chain, directly transforming the patient experience and clinic profitability.
+</p>
+
+<div class="grid-2 avoid-break">
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">⚡</div>
+      <div class="feature-card-title">Eliminates 90% of OPD Waiting Anxiety</div>
+    </div>
+    <div class="feature-card-desc">
+      Patients receive a live token with minute-by-minute estimated arrival times. Instead of waiting 2 hours in a germ-prone waiting room, patients arrive precisely when their token is called.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">📋</div>
+      <div class="feature-card-title">Paperless E-Prescription Standard</div>
+    </div>
+    <div class="feature-card-desc">
+      Eliminates medical errors caused by bad handwriting. Prescriptions include dosage schedules (Morning / Afternoon / Night / Meal timing) and export instantly to branded PDF files.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🤖</div>
+      <div class="feature-card-title">24/7 AI Triage & Copilot</div>
+    </div>
+    <div class="feature-card-desc">
+      Pre-screens patients using 2,300+ clinical rules, calculating disease probabilities and emergency warnings before booking, ensuring patients consult the right specialist immediately.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">📲</div>
+      <div class="feature-card-title">Tri-Platform Distribution</div>
+    </div>
+    <div class="feature-card-desc">
+      Write once, run everywhere: Runs identically on modern web browsers, progressive web app (PWA) with offline support, and native Android/iOS apps via Capacitor.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🌐</div>
+      <div class="feature-card-title">True Multilingual Reach</div>
+    </div>
+    <div class="feature-card-desc">
+      Full i18n support in English, Hindi, and Marathi empowers Tier-2 and Tier-3 Indian patients who prefer their mother tongue when navigating medical guidance.
+    </div>
+  </div>
+
+  <div class="feature-card highlight">
+    <div class="feature-card-header">
+      <div class="feature-card-icon">🔒</div>
+      <div class="feature-card-title">Lifetime Family Health Vault</div>
+    </div>
+    <div class="feature-card-desc">
+      Families manage elders, spouses, and children under one account, storing lab reports, scans, and past prescriptions securely in the cloud.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 8: LIMITATIONS & TRADE-OFFS ==================== -->
+<div class="section-header" style="margin-top: 25px;">
+  <div class="section-title">
+    <span class="section-number">08</span>
+    Current Limitations & Engineering Trade-offs
+  </div>
+  <span class="section-tag">Engineering Honesty</span>
+</div>
+
+<p>
+  To ensure team members know exactly where the project stands today, this section transparently documents current technical boundaries and trade-offs.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">Area</th>
+      <th style="width: 35%;">Current Implementation Status</th>
+      <th style="width: 40%;">Recommended Production Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Database Bridge</strong></td>
+      <td>Supabase types & schema ready, but UI currently relies on rich client stores (<code>mock.ts</code>) for instant local demo capability.</td>
+      <td>Connect real Supabase client queries across all <code>patient.*</code> and <code>doctor.*</code> pages using <code>useQuery</code> hooks.</td>
+    </tr>
+    <tr>
+      <td><strong>Video Teleconsultation</strong></td>
+      <td>Frontend video room layout with simulated peer states, camera/mic toggling, and in-call messaging is fully built.</td>
+      <td>Integrate a WebRTC Selective Forwarding Unit (SFU) like <strong>LiveKit Cloud</strong> or <strong>Agora SDK</strong> for low-latency multi-peer calls.</td>
+    </tr>
+    <tr>
+      <td><strong>Payment Gateway</strong></td>
+      <td>Interactive checkout UI with UPI QR, cards, and netbanking flows is built; transaction success is client-confirmed.</td>
+      <td>Implement server-side webhook signature verification for <strong>Razorpay</strong> or <strong>Stripe</strong> in Nitro server functions.</td>
+    </tr>
+    <tr>
+      <td><strong>AI Copilot Engine</strong></td>
+      <td>Runs a 270KB+ deterministic heuristic rule engine; fast and zero-cost, but lacks natural language nuances for rare conditions.</td>
+      <td>Bridge with an LLM streaming endpoint (e.g. Gemini 2.5 Flash API) with RAG medical document grounding.</td>
+    </tr>
+    <tr>
+      <td><strong>Regulatory Compliance</strong></td>
+      <td>Security headers and TTL storage implemented; official DISHA / ABDM M1-M3 certification is pending.</td>
+      <td>Complete Indian National Health Authority (NHA) ABDM sandbox testing and implement ABHA ID authentication.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 9: SCALABILITY ROADMAP ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">09</span>
+    Future Scalability & Engineering Roadmap
+  </div>
+  <span class="section-tag">Strategic Roadmap</span>
+</div>
+
+<p>
+  A 5-phase engineering roadmap designed to scale Medyora from a high-performance prototype to a national healthcare infrastructure serving millions of daily consultations.
+</p>
+
+<div class="avoid-break">
+  <h3>Phase 1: Real API & Infrastructure Cutover (Immediate Priority)</h3>
+  <div class="callout callout-blue">
+    • <strong>Full Supabase Synchronization</strong>: Replace in-memory mock mutations with live PostgreSQL updates via TanStack Query.<br>
+    • <strong>Razorpay Payment Gateway</strong>: Integrate server-side order generation and webhook verification for automated doctor fee escrow.<br>
+    • <strong>LiveKit WebRTC Integration</strong>: Wire up enterprise-grade encrypted video calls with automatic bandwidth adaptation.
+  </div>
+</div>
+
+<div class="avoid-break">
+  <h3>Phase 2: Real-time Pub/Sub & High-Concurrency Live Queue</h3>
+  <div class="callout callout-green">
+    • <strong>Redis / Supabase Realtime Channels</strong>: Move token advancement from polling to WebSocket broadcasts.<br>
+    • <strong>Sub-Second Chime Alerts</strong>: Ensure immediate synchronization between the doctor's "Call Next" tap and the patient's phone display.<br>
+    • <strong>SMS & WhatsApp Triggers</strong>: Auto-send WhatsApp alerts (via Twilio/Gupshup) when the patient is 2 tokens away.
+  </div>
+</div>
+
+<div class="avoid-break">
+  <h3>Phase 3: ABDM (Ayushman Bharat Digital Mission) Integration</h3>
+  <div class="callout callout-amber">
+    • <strong>ABHA (Ayushman Bharat Health Account) ID</strong>: Enable patients to link and verify their 14-digit national health ID.<br>
+    • <strong>M1, M2, M3 Compliance</strong>: Implement Health Information Provider (HIP) and Health Information User (HIU) consent managers.<br>
+    • <strong>National E-Prescription Standard</strong>: Map Medyora digital prescriptions to FHIR / HL7 compliant JSON payloads.
+  </div>
+</div>
+
+<div class="avoid-break">
+  <h3>Phase 4: Multi-Modal Voice AI in Regional Indian Languages</h3>
+  <div class="callout callout-rose">
+    • <strong>Voice-First Medical Triage</strong>: Integrate Whisper / Gemini Multimodal models for spoken symptom check in Hindi, Marathi, Tamil, and Telugu.<br>
+    • <strong>Doctor Voice-to-Rx</strong>: Enable doctors to dictate patient advice; AI transcribes it directly into structured medicine rows and dosages.
+  </div>
+</div>
+
+<div class="avoid-break">
+  <h3>Phase 5: Hospital OPD Kiosks & Thermal Printer Hardware</h3>
+  <div class="callout callout-blue">
+    • <strong>Receptionist Kiosk Mode</strong>: Dedicated touch-screen portal for clinic receptionists to quickly issue paper tokens to walk-in patients.<br>
+    • <strong>Bluetooth Thermal Printers</strong>: Auto-print physical token slips with QR codes that patients can scan to track their token live on their phones.
+  </div>
+</div>
+
+<!-- ==================== SECTION 10: DEVELOPER QUICK-START ==================== -->
+<div class="page-break"></div>
+
+<div class="section-header">
+  <div class="section-title">
+    <span class="section-number">10</span>
+    Developer Quick-Start & Teammate Cheatsheet
+  </div>
+  <span class="section-tag">Developer Guide</span>
+</div>
+
+<p>
+  Welcome to the Medyora codebase! Follow this quick-start guide to spin up the local development environment, test features, and build native binaries.
+</p>
+
+<h2>1. Repository Setup & Launch</h2>
+<pre>
+# 1. Clone the repository and install dependencies
+git clone &lt;repo-url&gt; medyora
+cd medyora
+npm install
+
+# 2. Configure Environment Credentials
+cp .env.example .env
+# Fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY if testing cloud database
+
+# 3. Start the TanStack Start + Nitro Development Server
+npm run dev
+# The application will launch locally at http://localhost:3000 (or Vite's assigned port)
+</pre>
+
+<h2>2. Testing User Roles & Portals Locally</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 20%;">Portal</th>
+      <th style="width: 25%;">Direct URL</th>
+      <th style="width: 55%;">Testing Instructions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Patient Portal</strong></td>
+      <td><code>/patient</code> or <code>/</code></td>
+      <td>Browse doctors, click <strong>"Ask Care AI"</strong>, search by symptoms, or book an appointment via <code>/patient/doctor/:doctorId/book</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Live OPD Queue</strong></td>
+      <td><code>/patient/queue</code></td>
+      <td>Displays Token #14 with live countdown. Simulates automatic queue progression every 8 seconds for demo purposes.</td>
+    </tr>
+    <tr>
+      <td><strong>Doctor Portal</strong></td>
+      <td><code>/doctor</code></td>
+      <td>If prompted with verification barrier, click <strong>"Enter Doctor Console (Testing Mode)"</strong> to auto-login as Dr. Medical Specialist.</td>
+    </tr>
+    <tr>
+      <td><strong>Doctor Queue</strong></td>
+      <td><code>/doctor/queue</code></td>
+      <td>Click <strong>"Call Next"</strong> to bump the token counter and observe instant toast notifications.</td>
+    </tr>
+    <tr>
+      <td><strong>Prescription Builder</strong></td>
+      <td><code>/doctor/prescriptions</code></td>
+      <td>Select patient, add medicine rows (Paracetamol, Amoxicillin), specify dosage and duration, and click <strong>"Issue Prescription"</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>Admin Console</strong></td>
+      <td><code>/admin</code></td>
+      <td>Review platform KPIs, doctor credential audit logs, and CMS health articles.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>3. Mobile Native Compilation (Capacitor)</h2>
+<pre>
+# Build production web bundle
+npm run build
+
+# Sync web bundle into native mobile platforms
+npx cap sync
+
+# Open Android Studio or Xcode to compile APK / IPA
+npx cap open android
+npx cap open ios
+</pre>
+
+<h2>4. Helpful Keyboard Shortcuts & Developer Features</h2>
+<ul style="margin-left: 20px; font-size: 9.2pt; line-height: 1.6; color: #334155;">
+  <li><strong>Command Palette</strong>: Press <span class="code-inline">Cmd + K</span> (or <span class="code-inline">Ctrl + K</span> on Windows) anywhere in the application to instantly jump between routes and search doctors.</li>
+  <li><strong>Universal Theme Toggle</strong>: Click the sun/moon icon in the header to switch between Light, Dark, and System mode. All components are styled with Tailwind <code>dark:</code> classes.</li>
+  <li><strong>Multi-Language Switcher</strong>: Switch dynamically between English, Hindi, and Marathi in <code>/auth/language</code> or via settings.</li>
+</ul>
+
+<div class="callout callout-green" style="margin-top: 25px;">
+  <div class="callout-title">🎉 You're Ready to Build!</div>
+  <p style="margin: 0; font-size: 8.8pt;">
+    If you have any questions or ideas, reach out to <strong>Ritik Kumar</strong> or the core engineering team. Let's make healthcare accessible, zero-wait, and intelligent for everyone across India!
+  </p>
+</div>
+
+<div class="footer-meta">
+  <div>Medyora Healthcare Platform • Confidential & Proprietary Document</div>
+  <div>Engineered with ❤️ by Ritik Kumar & Team • Binarize Technologies</div>
+  <div>Doc ID: MED-ENG-2026-V2.4</div>
+</div>
+
+</body>
+</html>

@@ -18,10 +18,12 @@ import {
   Trash2,
   ChevronRight,
   Activity,
+  Scan,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MEDICINES, MEDICINE_CATEGORIES, type Medicine } from "@/shared/data/superapp-mock";
+import { ScanMedVerifierModal } from "../components/ScanMedVerifierModal";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -30,6 +32,7 @@ export function MedicinesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [cart, setCart] = useState<{ id: string; qty: number }[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isScanMedOpen, setIsScanMedOpen] = useState(false);
   const [prescriptionFile, setPrescriptionFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -121,6 +124,35 @@ export function MedicinesPage() {
       </header>
 
       <main className="p-4 space-y-6">
+        {/* ================= SCANMED COUNTERFEIT VERIFIER BANNER ================= */}
+        <div className="rounded-3xl p-4.5 bg-gradient-to-r from-amber-500/15 via-rose-500/15 to-slate-900 border border-amber-500/40 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-500 dark:text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+              <Scan className="w-5 h-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                  ScanMed &bull; CDSCO Linked
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20">
+                  Anti-Counterfeit
+                </span>
+              </div>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+                Verify Fake Medicine, Expiry &amp; Cold-Chain Telemetry
+              </h3>
+            </div>
+          </div>
+
+          <Button
+            onClick={() => setIsScanMedOpen(true)}
+            className="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-amber-600/20 self-start sm:self-auto shrink-0"
+          >
+            Scan / Check Batch Now
+          </Button>
+        </div>
+
         {/* ================= HERO PROMO BANNER (SCREEN 7) ================= */}
         <div className="rounded-3xl p-5 bg-gradient-to-r from-teal-700 via-emerald-800 to-slate-900 text-white relative overflow-hidden shadow-lg">
           <div className="max-w-[65%] space-y-2">
@@ -386,6 +418,12 @@ export function MedicinesPage() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* ScanMed Counterfeit Drug & Cold-Chain Verifier Modal */}
+      <ScanMedVerifierModal
+        isOpen={isScanMedOpen}
+        onClose={() => setIsScanMedOpen(false)}
+      />
     </div>
   );
 }

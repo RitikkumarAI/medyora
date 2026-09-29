@@ -39,6 +39,12 @@ const CinematicMedicalPreloader = lazy(() =>
   })),
 );
 
+const EmergencySOSModal = lazy(() =>
+  import("@/shared/components/EmergencySOSModal").then((m) => ({
+    default: m.EmergencySOSModal,
+  })),
+);
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -203,6 +209,7 @@ function GlobalPreloaderGate() {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [isSosOpen, setIsSosOpen] = useState(false);
 
   useEffect(() => {
     // Service Worker Registration for PWA & Offline Support
@@ -213,6 +220,10 @@ function RootComponent() {
         });
       });
     }
+
+    const handleOpenSos = () => setIsSosOpen(true);
+    window.addEventListener("medyora:open-sos", handleOpenSos);
+    return () => window.removeEventListener("medyora:open-sos", handleOpenSos);
   }, []);
 
   return (
@@ -226,10 +237,26 @@ function RootComponent() {
           {/* Core Router Outlet */}
           <Outlet />
 
+          {/* Floating Emergency 108 SOS Trigger */}
+          <div className="fixed bottom-24 right-5 z-40 hidden sm:block">
+            <button
+              onClick={() => setIsSosOpen(true)}
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-gradient-to-r from-rose-600 to-red-600 text-white font-extrabold text-xs shadow-xl shadow-rose-600/30 hover:scale-105 active:scale-95 transition-all border border-rose-400/40 group"
+              title="Immediate 108 Ambulance Dispatch & Emergency SOS"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+              </span>
+              <span>108 SOS</span>
+            </button>
+          </div>
+
           {/* Cross-Platform Global Modals, AI Copilot & Notifications (Code Split) */}
           <Suspense fallback={null}>
             <GlobalAICopilot />
             <CommandPalette />
+            <EmergencySOSModal isOpen={isSosOpen} onClose={() => setIsSosOpen(false)} />
           </Suspense>
           <PWAInstallPrompt />
           <LiveAnnouncer />
@@ -240,3 +267,4 @@ function RootComponent() {
     </ThemeProvider>
   );
 }
+

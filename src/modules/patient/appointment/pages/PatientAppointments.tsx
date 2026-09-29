@@ -31,6 +31,8 @@ import { useAppointments } from "@/shared/data/patient-store";
 import { type Appointment } from "@/shared/data/app-mock";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { PatientReliabilityModal } from "@/shared/components/PatientReliabilityModal";
+import { ConcurrencySimulatorModal } from "@/shared/components/ConcurrencySimulatorModal";
 
 const TABS = ["Upcoming", "Completed", "Cancelled"] as const;
 
@@ -41,6 +43,9 @@ export function PatientAppointments() {
   const { appointments, rescheduleToday, cancel } = useAppointments();
   const [tab, setTab] = useState<(typeof TABS)[number]>("Upcoming");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [showReliabilityModal, setShowReliabilityModal] = useState(false);
+  const [showSimulatorModal, setShowSimulatorModal] = useState(false);
 
   // Reschedule Modal State
   const [rescheduleTarget, setRescheduleTarget] = useState<Appointment | null>(null);
@@ -126,6 +131,32 @@ export function PatientAppointments() {
               Book (₹0 Fee)
             </Link>
           </Button>
+        </div>
+
+        {/* Patient Reliability Score Banner (Addresses No-Show Policy) */}
+        <div
+          onClick={() => setShowReliabilityModal(true)}
+          className="mt-2.5 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xs flex items-center justify-between cursor-pointer hover:border-emerald-300 dark:hover:border-emerald-700 transition-all group"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black text-xs group-hover:scale-105 transition-transform">
+              98%
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <span>Patient Reliability Score</span>
+                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.2 rounded font-black">
+                  Elite (Click for breakdown)
+                </span>
+              </p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                Zero unexcused no-shows. 1-tap reschedule keeps your clinic priority intact.
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 shrink-0 group-hover:underline">
+            View Privileges →
+          </span>
         </div>
       </div>
 
@@ -645,6 +676,18 @@ export function PatientAppointments() {
           </div>
         </div>
       )}
+
+      {/* Patient Reliability Modal */}
+      <PatientReliabilityModal
+        isOpen={showReliabilityModal}
+        onClose={() => setShowReliabilityModal(false)}
+      />
+
+      {/* Concurrency Simulator Modal */}
+      <ConcurrencySimulatorModal
+        isOpen={showSimulatorModal}
+        onClose={() => setShowSimulatorModal(false)}
+      />
     </div>
   );
 }

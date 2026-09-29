@@ -26,11 +26,19 @@ import {
   LayoutDashboard,
   Heart,
   Sparkles,
+  Utensils,
+  Watch,
+  Droplets,
+  Scan,
+  ShieldAlert,
+  Camera,
+  Ambulance,
 } from "lucide-react";
 import { useTheme } from "@/shared/theme/ThemeProvider";
 import { usePWAInstall } from "@/shared/pwa/usePWAInstall";
 import { shareContent } from "@/shared/native/nativeShare";
 import { DOCTORS, SPECIALIZATIONS } from "@/shared/data/mock";
+import { playHospitalChime } from "@/shared/utils/sound-chime";
 import { toast } from "sonner";
 
 export function CommandPalette() {
@@ -68,6 +76,35 @@ export function CommandPalette() {
       <CommandInput placeholder="Type a command, doctor name, symptom, or speciality..." />
       <CommandList className="max-h-[380px] p-2">
         <CommandEmpty>No matching results found.</CommandEmpty>
+
+        {/* Viva Presentation & System Diagnostics */}
+        <CommandGroup heading="Viva Presentation & Technical Demo">
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                window.open("/medyora_presentation.html", "_blank");
+              })
+            }
+            className="rounded-xl cursor-pointer text-blue-600 dark:text-blue-400"
+          >
+            <FileText className="mr-2 h-4 w-4 text-blue-600" />
+            <span className="font-bold">Open Master Presentation Deck (16 Slides)</span>
+            <CommandShortcut>⌘ Slides</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                playHospitalChime();
+                toast.success("Medical clinic chime test broadcasted!");
+              })
+            }
+            className="rounded-xl cursor-pointer"
+          >
+            <Sparkles className="mr-2 h-4 w-4 text-amber-500" />
+            <span>Test Medical Clinic Audio Chime</span>
+          </CommandItem>
+        </CommandGroup>
 
         {/* AI Healthcare Copilot Group */}
         <CommandGroup heading="Medyora Care AI (24/7 Clinical Assistant)">
@@ -129,6 +166,97 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() =>
               runCommand(() => {
+                navigate({ to: "/patient/diet-planner" });
+              })
+            }
+            className="rounded-xl cursor-pointer"
+          >
+            <Utensils className="mr-2 h-4 w-4 text-emerald-500" />
+            <span className="font-semibold">AI Clinical Diet & 7-Day Meal Planner (Veg/Non-Veg)</span>
+            <CommandShortcut>🥗</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/diet-planner" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-cyan-400"
+          >
+            <Watch className="mr-2 h-4 w-4 text-cyan-400 animate-pulse" />
+            <span className="font-bold">Noise Smartwatch & 108 Autonomous Voice Rescue</span>
+            <CommandShortcut>⚡</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/blood" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-rose-500"
+          >
+            <Droplets className="mr-2 h-4 w-4 text-rose-500 fill-rose-500" />
+            <span className="font-bold">Emergency Blood Radar &amp; Home Pickup Hub</span>
+            <CommandShortcut>🩸</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/medicines" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-amber-500"
+          >
+            <Scan className="mr-2 h-4 w-4 text-amber-500" />
+            <span className="font-semibold">ScanMed: Counterfeit Medicine &amp; Cold-Chain Verifier</span>
+            <CommandShortcut>🔍</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/prescriptions" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-indigo-400"
+          >
+            <ShieldAlert className="mr-2 h-4 w-4 text-indigo-400" />
+            <span className="font-semibold">Prescription OCR &amp; Fatal Drug Conflict Shield</span>
+            <CommandShortcut>🛡️</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/surgeries" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-amber-400"
+          >
+            <Camera className="mr-2 h-4 w-4 text-amber-400" />
+            <span className="font-semibold">Post-Op Surgical Wound &amp; Stitches Vision AI</span>
+            <CommandShortcut>📸</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
+                navigate({ to: "/patient/care-ai" });
+              })
+            }
+            className="rounded-xl cursor-pointer text-red-500"
+          >
+            <Ambulance className="mr-2 h-4 w-4 text-red-500" />
+            <span className="font-bold">Smart Ambulance Golden Hour &amp; Green Corridor</span>
+            <CommandShortcut>🚑</CommandShortcut>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => {
                 window.dispatchEvent(
                   new CustomEvent("open-care-ai", { detail: { mode: "emergency_sos" } }),
                 );
@@ -137,7 +265,7 @@ export function CommandPalette() {
             className="rounded-xl cursor-pointer text-rose-600"
           >
             <Shield className="mr-2 h-4 w-4 text-rose-600" />
-            <span className="font-bold">Emergency SOS & Nearest Hospital (112/108)</span>
+            <span className="font-bold">Emergency SOS &amp; Nearest Hospital (112/108)</span>
           </CommandItem>
         </CommandGroup>
 

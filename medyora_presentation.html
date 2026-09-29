@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medyora — India's Smartest AI Healthcare Super-App (15 Slides)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg-dark: #0B1120;
+    --card-dark: #131D33;
+    --card-border: #1E293B;
+    --primary: #3B82F6;
+    --primary-glow: rgba(59, 130, 246, 0.35);
+    --emerald: #10B981;
+    --emerald-glow: rgba(16, 185, 129, 0.3);
+    --rose: #F43F5E;
+    --amber: #F59E0B;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+  }
+
+  #deck-container {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 40px;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    max-width: 1220px;
+    height: 92%;
+    max-height: 760px;
+    background: radial-gradient(circle at 10% 10%, rgba(30, 58, 138, 0.18), transparent 45%), var(--card-dark);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 38px 48px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transform: scale(0.96) translateY(20px);
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #93C5FD;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .slide-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-top: 6px;
+  }
+
+  .slide-title span {
+    background: linear-gradient(90deg, #60A5FA, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .slide-number-indicator {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+
+  .card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+
+  .card.danger {
+    border-color: rgba(244, 63, 94, 0.35);
+    background: rgba(244, 63, 94, 0.05);
+  }
+
+  .card.success {
+    border-color: rgba(16, 185, 129, 0.35);
+    background: rgba(16, 185, 129, 0.05);
+  }
+
+  .card-icon { font-size: 24px; margin-bottom: 10px; }
+  .card-title { font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; }
+  .card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.45; }
+
+  .stat-card {
+    text-align: center;
+    padding: 22px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .stat-number {
+    font-size: 38px;
+    font-weight: 800;
+    color: #60A5FA;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .speaker-notes-drawer {
+    margin-top: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .speaker-badge {
+    background: #3B82F6;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .speaker-text {
+    font-size: 12px;
+    color: #CBD5E1;
+    font-style: italic;
+    line-height: 1.35;
+  }
+
+  #controls-bar {
+    height: 56px;
+    background: rgba(11, 17, 32, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3B82F6, #10B981);
+    width: 6.66%;
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="deck-container">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide active" data-slide="1">
+    <div class="slide-header">
+      <div class="tag-badge">College Final Project Submission • 2026</div>
+      <div class="slide-number-indicator">01 / 15</div>
+    </div>
+    <div class="slide-body" style="text-align: center; align-items: center;">
+      <div style="width: 68px; height: 68px; background: linear-gradient(135deg, #3B82F6, #1D4ED8); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 900; color: white; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(59,130,246,0.4);">M</div>
+      <h1 class="slide-title" style="font-size: 42px; margin-bottom: 8px;">MEDYORA</h1>
+      <p style="font-size: 19px; color: #93C5FD; font-weight: 600; margin-bottom: 22px;">India's Smartest AI Healthcare Super-App & OPD Queue Ecosystem</p>
+      
+      <div class="grid-3" style="max-width: 900px;">
+        <div class="card" style="padding: 14px;">
+          <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Engineered By</div>
+          <div style="font-size: 15px; font-weight: 700; color: white; margin-top: 3px;">Ritik Kumar & Team</div>
+          <div style="font-size: 12px; color: #60A5FA;">Binarize Technologies</div>
+        </div>
+        <div class="card" style="padding: 14px;">
+          <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Architecture</div>
+          <div style="font-size: 15px; font-weight: 700; color: white; margin-top: 3px;">TanStack Start (SSR)</div>
+          <div style="font-size: 12px; color: #34D399;">React 19 + Supabase</div>
+        </div>
+        <div class="card" style="padding: 14px;">
+          <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Super-App Scope</div>
+          <div style="font-size: 15px; font-weight: 700; color: white; margin-top: 3px;">OPD • Pharmacy • Labs</div>
+          <div style="font-size: 12px; color: #F59E0B;">Video • Ambulance SOS</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Respected faculty, today we present Medyora — an enterprise fullstack healthcare super-app solving India's 2 to 3-hour clinic queue chaos while integrating pharmacy, lab tests, video consultations, and AI triage into one unified platform."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE PROBLEM STATEMENT -->
+  <div class="slide" data-slide="2">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="border-color: rgba(244,63,94,0.4); color: #FDA4AF; background: rgba(244,63,94,0.1);">The Healthcare Bottleneck</div>
+        <div class="slide-title">Outpatient Care in India is <span>Broken & Fragmented</span></div>
+      </div>
+      <div class="slide-number-indicator">02 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card danger">
+          <div class="card-icon">⏳</div>
+          <div class="card-title">120–180 Min Queue Delays</div>
+          <div class="card-desc">Patients waste half their working day in crowded waiting rooms with zero live visibility or estimated arrival times.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-icon">📄</div>
+          <div class="card-title">Lost & Illegible Paper Prescriptions</div>
+          <div class="card-desc">Handwritten prescriptions get lost or misread, causing medication dispensing errors and lack of follow-up adherence.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-icon">🧩</div>
+          <div class="card-title">Fragmented Health Services</div>
+          <div class="card-desc">Patients must use separate apps for doctor booking, ordering medicines, booking blood tests, and storing medical records.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-icon">🚑</div>
+          <div class="card-title">Disconnected Emergency Care</div>
+          <div class="card-desc">No automated coordination between critical symptom triaging, doctor availability, and urgent 108 ambulance dispatch.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Across Indian clinics, patients wait 3 hours for a 5-minute consultation. Healthcare is completely fragmented — booking doctors, buying medicines, and getting blood tests require different apps. Medyora unifies this entire journey."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: THE SUPER-APP SOLUTION -->
+  <div class="slide" data-slide="3">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Unified Ecosystem</div>
+        <div class="slide-title">The Medyora Solution: <span>All-in-One Super-App</span></div>
+      </div>
+      <div class="slide-number-indicator">03 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-4">
+        <div class="card success">
+          <div class="card-icon">🩺</div>
+          <div class="card-title">OPD & Teleconsult</div>
+          <div class="card-desc">Live digital token telemetry, zero waiting rooms, and encrypted HD video consultations.</div>
+        </div>
+        <div class="card success">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">24/7 AI Copilot</div>
+          <div class="card-desc">2,300+ clinical rules, symptom checking, lab report OCR, and 108 ambulance triggers.</div>
+        </div>
+        <div class="card success">
+          <div class="card-icon">💊</div>
+          <div class="card-title">Pharmacy & Blood Tests</div>
+          <div class="card-desc">Generic salt discovery, 100+ diagnostic tests with at-home phlebotomist sample collection.</div>
+        </div>
+        <div class="card success">
+          <div class="card-icon">👨‍⚕️</div>
+          <div class="card-title">Doctor Cockpit</div>
+          <div class="card-desc">1-click 'Call Next' queue board, 60s e-prescription builder, and family health records vault.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Medyora is a complete healthcare super-app: from finding verified doctors and tracking live OPD tokens, to ordering medicines, booking blood tests at home, and consulting over video — all under one login."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: SYSTEM ARCHITECTURE -->
+  <div class="slide" data-slide="4">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Fullstack Engineering</div>
+        <div class="slide-title">System Architecture & <span>Technology Stack</span></div>
+      </div>
+      <div class="slide-number-indicator">04 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-4">
+        <div class="card">
+          <div class="card-icon">💻</div>
+          <div class="card-title">Client Layer</div>
+          <div class="card-desc">React 19 • Tailwind CSS v4 • Radix UI Primitives • Framer Motion • Recharts</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">SSR & Server</div>
+          <div class="card-desc">TanStack Start • Nitro Engine • 100% Type-Safe Routes • Strict CSP Security</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">Data & Cloud</div>
+          <div class="card-desc">Supabase PostgreSQL 14+ • Row Level Security (RLS) • Encrypted S3 Document Vault</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <div class="card-title">Multi-Platform</div>
+          <div class="card-desc">Capacitor v6 (Android/iOS) • Service Worker (PWA Offline) • i18n (EN/HI/MR)</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Under the hood, Medyora is built with TanStack Start and React 19 for instantaneous SSR page loads, Supabase PostgreSQL with Row Level Security for data privacy, and Capacitor for native Android and iOS mobile apps."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: DOCTOR DISCOVERY & BOOKING -->
+  <div class="slide" data-slide="5">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Frictionless UX</div>
+        <div class="slide-title">Doctor Discovery & <span>Multi-Mode Booking</span></div>
+      </div>
+      <div class="slide-number-indicator">05 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🔍 22+ Medical Specialities</div>
+          <div class="card-desc">Filter by specialty (Cardiology, Dermatology, Orthopedics, Pediatrics), symptoms, diseases, fees, and doctor gender.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📅 Real-Time Slot Availability</div>
+          <div class="card-desc">Live 'Available Today' badges, morning/afternoon/evening slots, and real-time clinic queue status.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">♿ Accessibility & Verification</div>
+          <div class="card-desc">Clinic wheelchair accessibility badges, parking information, and MCI-verified doctor credentials.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 16px; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.04);">
+        <div style="font-size: 14px; font-weight: 700; color: white;">3 Flexible Consultation Modes</div>
+        <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">1. In-Clinic OPD Visit with Token &bull; 2. Encrypted HD Video Consultation &bull; 3. Doctor Home Visit for elderly patients.</div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Booking takes under a minute. Patients search by symptom or specialty, view doctor credentials and fees, choose in-clinic, video, or home visit, and instantly secure their slot and digital queue token."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: LIVE QUEUE TOKEN TRACKER -->
+  <div class="slide" data-slide="6">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="border-color: rgba(16,185,129,0.4); color: #6EE7B7; background: rgba(16,185,129,0.1);">Flagship Innovation</div>
+        <div class="slide-title">Live Digital Token & <span>OPD Queue Telemetry</span></div>
+      </div>
+      <div class="slide-number-indicator">06 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="stat-card" style="border-color: rgba(59,130,246,0.3);">
+          <div class="stat-number">#14</div>
+          <div class="stat-label">Your Issued Token</div>
+        </div>
+        <div class="stat-card" style="border-color: rgba(245,158,11,0.3);">
+          <div class="stat-number" style="color: #FBBF24;">#11</div>
+          <div class="stat-label">Now Inside Cabin</div>
+        </div>
+        <div class="stat-card" style="border-color: rgba(16,185,129,0.3);">
+          <div class="stat-number" style="color: #34D399;">~25m</div>
+          <div class="stat-label">Live ETA Countdown</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card">
+          <div class="card-title">🔔 Smart Audio Chimes & Notifications</div>
+          <div class="card-desc">When Token #13 enters the cabin, Medyora fires an audio chime and mobile notification: 'Your turn is next! Please proceed to the clinic cabin.'</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Dynamic 1-Click Rescheduling</div>
+          <div class="card-desc">Running late due to traffic? A patient can tap 1 button to shift to an afternoon slot and receive a fresh updated token without cancelling.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"This is our core innovation: patients track their token live from home. They only walk into the clinic when their turn is called, completely eliminating crowded waiting rooms."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: SMART CARE AI COPILOT -->
+  <div class="slide" data-slide="7">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">AI Clinical Intelligence</div>
+        <div class="slide-title">24/7 Smart Care AI <span>Copilot & Triage</span></div>
+      </div>
+      <div class="slide-number-indicator">07 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🧠 2,300+ Clinical Heuristic Rules</div>
+          <div class="card-desc">Codified on WHO ICD-10 medical conditions and emergency triage protocols. Calculates percentage probabilities for potential illnesses.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🎯 15 Specialized Diagnostic Modes</div>
+          <div class="card-desc">Symptom Checker &bull; Lab Report OCR Parser &bull; Prescription Reader &bull; Medicine Salt Scanner &bull; Drug Interactions &bull; Diet & Fitness.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🚨 4-Tier Automated Triage Levels</div>
+          <div class="card-desc">Categorizes into Low, Moderate, High, and Immediate Emergency Red Alerts with prominent 108/112 SOS call triggers.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🩺 1-Click Specialist Routing</div>
+          <div class="card-desc">Directly connects high-risk symptoms with verified specialists in the patient's city with pre-filled clinical context.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Our Care AI Copilot evaluates patient symptoms against 2,300+ clinical rules, flags emergency red flags, and immediately points patients to the exact medical specialist they need."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: TELECONSULTATION -->
+  <div class="slide" data-slide="8">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Virtual Healthcare</div>
+        <div class="slide-title">Encrypted Teleconsultation & <span>Video Care</span></div>
+      </div>
+      <div class="slide-number-indicator">08 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🎥</div>
+          <div class="card-title">Zero-Install Video Room</div>
+          <div class="card-desc">WebRTC HD video call layout runs seamlessly in browsers and mobile apps with camera and mic toggles.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <div class="card-title">Live In-Call Messaging</div>
+          <div class="card-desc">Patients and doctors exchange text messages, previous scan uploads, and symptoms while remaining on the video stream.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <div class="card-title">Rural Tele-Health Reach</div>
+          <div class="card-desc">Bridges Tier-2 and Tier-3 rural patients directly with premier metro medical specialists without travel costs.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 16px; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.04);">
+        <div style="font-size: 14px; font-weight: 700; color: white;">Instant E-Prescription Delivery</div>
+        <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Doctors author the digital prescription during the video call; the patient receives the PDF before the call terminates.</div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"For remote care, Medyora provides an encrypted teleconsultation room where doctors and patients interact over HD video, chat, and receive signed digital prescriptions instantly."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: EMERGENCY SOS & AMBULANCE DISPATCH -->
+  <div class="slide" data-slide="9">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="border-color: rgba(244,63,94,0.4); color: #FDA4AF; background: rgba(244,63,94,0.1);">Life-Saving Protocol</div>
+        <div class="slide-title">Emergency SOS & <span>108 Ambulance Dispatch</span></div>
+      </div>
+      <div class="slide-number-indicator">09 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card danger">
+          <div class="card-title">🚨 Critical Symptom Red-Flags</div>
+          <div class="card-desc">AI instantly detects life-threatening indicators (radiating chest pain, sudden breathlessness, stroke signs, severe trauma) and overrides standard booking with emergency protocols.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-title">🚑 1-Tap 108/112 Ambulance Dispatch</div>
+          <div class="card-desc">Direct auto-dialing trigger for National Emergency Services (108/112) with instant locator for the nearest 24/7 Emergency Rooms and Trauma Centers.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-title">📍 Live GPS Telemetry Broadcast</div>
+          <div class="card-desc">Transmits the patient's real-time geographic coordinates and critical medical summary to ambulance dispatch and attending ER doctors.</div>
+        </div>
+        <div class="card danger">
+          <div class="card-title">👨‍👩‍👧 Automated Family SOS Alerts</div>
+          <div class="card-desc">Simultaneously sends emergency alert notifications and SMS with live map tracking to registered family members and emergency contacts.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"In medical emergencies, every second counts. Medyora features a built-in Emergency SOS system: if our AI detects critical cardiac or trauma symptoms, it immediately triggers 108 ambulance dispatch and notifies family members."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: ONLINE PHARMACY & GENERIC SALT DISCOVERY -->
+  <div class="slide" data-slide="10">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Pharmacy Subsystem</div>
+        <div class="slide-title">Online Pharmacy & <span>Generic Salt Discovery</span></div>
+      </div>
+      <div class="slide-number-indicator">10 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🔬 Generic Salt Matching</div>
+          <div class="card-desc">Search by brand name or active chemical salt (e.g. Paracetamol 650mg). Helps patients find high-quality generic substitutes up to 50% cheaper.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 1-Tap Prescription Upload</div>
+          <div class="card-desc">Upload handwritten doctor prescriptions or attach Medyora digital e-prescriptions for automated pharmacist review and fulfillment.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📦 Rapid Doorstep Delivery</div>
+          <div class="card-desc">Partnership with local licensed pharmacies for express doorstep medicine delivery with live tracking and dosage guidelines.</div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div class="card" style="padding: 12px; text-align: center;"><strong style="color: #60A5FA;">Pain Relief</strong><br><span style="font-size: 11px; color: var(--text-muted);">Dolo 650, Combiflam</span></div>
+        <div class="card" style="padding: 12px; text-align: center;"><strong style="color: #34D399;">Vitamins & Minerals</strong><br><span style="font-size: 11px; color: var(--text-muted);">Limcee, Seven Seas</span></div>
+        <div class="card" style="padding: 12px; text-align: center;"><strong style="color: #F59E0B;">Chronic Care</strong><br><span style="font-size: 11px; color: var(--text-muted);">Diabetes, Cardiac & BP</span></div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Our online pharmacy doesn't just sell branded medicines; it empowers patients with generic salt discovery, helping families save up to 50% on chronic medications with fast doorstep delivery."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: DIAGNOSTIC LAB TESTS & BLOOD SAMPLES -->
+  <div class="slide" data-slide="11">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Diagnostics Subsystem</div>
+        <div class="slide-title">Diagnostic Lab Tests & <span>Home Blood Sample Collection</span></div>
+      </div>
+      <div class="slide-number-indicator">11 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🩸 100+ Diagnostic Tests</div>
+          <div class="card-desc">CBC (24 params), Thyroid Profile (T3, T4, TSH), Lipid Profile, Vitamin D & B12, Liver Function (LFT), Kidney Function (KFT), HbA1c.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💉 Certified At-Home Collection</div>
+          <div class="card-desc">Certified phlebotomists visit patient homes with sterile vacuum blood collection kits. Includes fasting & non-fasting guidance.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 8–24h Digital Reports</div>
+          <div class="card-desc">Verified lab reports are synced directly into the patient's Medyora health vault, with AI automatically highlighting abnormal parameters.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 16px; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.04);">
+        <div style="font-size: 14px; font-weight: 700; color: white;">Comprehensive Health Checkup Packages</div>
+        <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Advanced Full Body Checkup (96 tests) &bull; Women's Wellness &bull; Diabetes Management &bull; Senior Citizen Health Shield (50+ yrs).</div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"For diagnostic tests, certified phlebotomists visit the patient's home for blood sample collection. Reports are delivered digitally in 8 to 24 hours and automatically analyzed by our AI."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: DAYCARE SURGERIES & FAMILY CARE+ -->
+  <div class="slide" data-slide="12">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Care Continuity</div>
+        <div class="slide-title">Daycare Surgeries, <span>Care+ Subscriptions & Family Vault</span></div>
+      </div>
+      <div class="slide-number-indicator">12 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🏥 Daycare Laser Surgeries</div>
+          <div class="card-desc">Laser Cataract, Contoura LASIK, Kidney Stone RIRS, Laparoscopic Hernia, and Robotic Knee Replacement with EMI and insurance support.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⭐ Medyora Care+ Plans</div>
+          <div class="card-desc">Annual family subscriptions covering 4–8 family members with free in-person visits, unlimited video consults, and 20–30% discounts.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">👨‍👩‍👧 Family Health Vault</div>
+          <div class="card-desc">Manage profiles, vaccination schedules, and lifetime health records for parents, children, and spouses under 1 single phone login.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Medyora also guides patients through planned daycare surgeries with EMI options, offers annual family healthcare subscriptions, and provides a centralized health vault for the entire family."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: DOCTOR CLINICAL COCKPIT -->
+  <div class="slide" data-slide="13">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Doctor Experience</div>
+        <div class="slide-title">Doctor Cockpit & <span>60-Second E-Prescriptions</span></div>
+      </div>
+      <div class="slide-number-indicator">13 / 15</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">📊 Live Queue Calling Board</div>
+          <div class="card-desc">• Real-time counters: 'Now Consulting', 'Waiting' (~12m clear time), 'Done'<br>• Single-click 'Call Next' advances token and fires patient chimes<br>• Skip / No-show handler keeps OPD flow smooth</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💊 Smart E-Prescription Builder</div>
+          <div class="card-desc">• Typeahead medicine lookup (Brand & Generic)<br>• Structured dosages: Morning / Afternoon / Night + Meal timing<br>• Lifestyle, diet, and automated follow-up calendar reminder</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📄 Instant Vector PDF Export (jspdf)</div>
+          <div class="card-desc">Client-side vector generation of official e-prescriptions complete with clinic header, diagnosis, advice, and MCI registration seal.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💰 Earnings & Analytics</div>
+          <div class="card-desc">Real-time breakdown of in-clinic vs video consultation revenue, daily earnings, and patient retention analytics.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"The Doctor Portal eliminates clinic paperwork. Doctors call the next patient with one click and author standardized, signed e-prescriptions in under 60 seconds."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: SECURITY & MULTILINGUAL -->
+  <div class="slide" data-slide="14">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Security & Inclusivity</div>
+        <div class="slide-title">Data Privacy, <span>Security & Regional Languages</span></div>
+      </div>
+      <div class="slide-number-indicator">14 / 16</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card success">
+          <div class="card-title">🛡️ Row Level Security (RLS)</div>
+          <div class="card-desc">Enforced inside Supabase PostgreSQL. Strict tenant isolation ensures patients can only query their own appointments and medical records.</div>
+        </div>
+        <div class="card success">
+          <div class="card-title">🔐 Enterprise SecureStorage (TTL)</div>
+          <div class="card-desc">Custom Base64 payload encryption in <code>secureStorage.ts</code> with automatic Time-To-Live expiration, auto-purging expired session tokens.</div>
+        </div>
+        <div class="card success">
+          <div class="card-title">🌐 Strict Security Headers (CSP)</div>
+          <div class="card-desc">Server-enforced Content Security Policy, <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, and HSTS preloading.</div>
+        </div>
+        <div class="card success">
+          <div class="card-title">🇮🇳 3 Supported Indian Languages</div>
+          <div class="card-desc">Full internationalization via <code>i18next</code> in English, Hindi (हिन्दी), and Marathi (मराठी) ensures accessibility for Tier-2 & Tier-3 users.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Handling health data requires institutional security. We enforce Row-Level Security, TTL encrypted session storage, and support 3 languages to ensure Medyora reaches every Indian household."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: FUTURE ROADMAP & IOT -->
+  <div class="slide" data-slide="15">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge">Strategic Vision</div>
+        <div class="slide-title">Future Roadmap: <span>Ambient IoT & National ABDM</span></div>
+      </div>
+      <div class="slide-number-indicator">15 / 16</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-4">
+        <div class="card" style="border-color: rgba(59,130,246,0.3);">
+          <div style="font-size: 11px; font-weight: 800; color: #60A5FA;">PHASE 01</div>
+          <div class="card-title" style="margin-top: 6px;">ABDM / ABHA ID</div>
+          <div class="card-desc">Ayushman Bharat Digital Mission integration linking 14-digit national ABHA health IDs for nationwide record exchange.</div>
+        </div>
+        <div class="card" style="border-color: rgba(16,185,129,0.3);">
+          <div style="font-size: 11px; font-weight: 800; color: #34D399;">PHASE 02</div>
+          <div class="card-title" style="margin-top: 6px;">Ambient IoT Rescue</div>
+          <div class="card-desc">Continuous smartwatch/ECG vital tracking; AI autonomously books doctor and dispatches 108 ambulances on cardiac crisis.</div>
+        </div>
+        <div class="card" style="border-color: rgba(167,139,250,0.3);">
+          <div style="font-size: 11px; font-weight: 800; color: #A78BFA;">PHASE 03</div>
+          <div class="card-title" style="margin-top: 6px;">Regional Voice AI</div>
+          <div class="card-desc">Voice-first symptom checker in Hindi, Marathi, and Tamil using Whisper and Gemini multimodal speech models.</div>
+        </div>
+        <div class="card" style="border-color: rgba(245,158,11,0.3);">
+          <div style="font-size: 11px; font-weight: 800; color: #FBBF24;">PHASE 04</div>
+          <div class="card-title" style="margin-top: 6px;">Hospital Kiosks</div>
+          <div class="card-desc">Physical touchscreen receptionist kiosks with Bluetooth thermal token printers for walk-in OPD patients.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 18px; text-align: center; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.06); padding: 14px;">
+        <div style="font-size: 15px; font-weight: 800; color: white;">Next: Deep-Dive Technical Defence & Concurrency Engineering</div>
+        <div style="font-size: 12px; color: #93C5FD; margin-top: 3px;">Advancing to Slide 16: Resolving Overbooking, No-Shows & Competitive Moat</div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Pitch</span>
+      <span class="speaker-text">"Our future roadmap bridges Medyora with IoT wearables and smartwatches for 24/7 ambient vital monitoring, automatically dispatching 108 ambulances during cardiac emergencies."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: VIVA DEFENCE — CONCURRENCY, NO-SHOW PREVENTION & COMPETITIVE MOAT -->
+  <div class="slide" data-slide="16">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="background: rgba(244, 63, 94, 0.15); border-color: rgba(244, 63, 94, 0.4); color: #FDA4AF;">Viva Technical Defence</div>
+        <div class="slide-title">System Edge: <span>Concurrency, No-Show & Competitive Moat</span></div>
+      </div>
+      <div class="slide-number-indicator">16 / 18</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <!-- Question 1: Why Medyora vs Phone Calls / Practo -->
+        <div class="card" style="border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05);">
+          <div style="font-size: 11px; font-weight: 800; color: #60A5FA;">CHALLENGE 01</div>
+          <div class="card-title" style="margin-top: 6px; color: #93C5FD;">"Why Not Just Call the Doctor?"</div>
+          <div class="card-desc" style="space-y-2; line-height: 1.55;">
+            <p><strong>• Phone Calls are Blind:</strong> 80% clinic phone lines are busy; receptionists maintain inaccurate paper registers with zero live delay tracking.</p>
+            <p style="margin-top: 6px;"><strong>• Practo's Static Slot Lie:</strong> Practo gives a static "10:15 AM" slot, but consultations fluctuate (8-25 mins). Patients still wait 2 hours in crowded lobbies.</p>
+            <p style="margin-top: 6px;"><strong>• Medyora's Live Telemetry:</strong> Like Uber tracks cabs, Medyora tracks your live token (#11 in cabin, #14 you, 18 min ETA) so you only walk in 5 mins before your turn.</p>
+          </div>
+        </div>
+
+        <!-- Question 2: Concurrency & Overbooking -->
+        <div class="card" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.05);">
+          <div style="font-size: 11px; font-weight: 800; color: #34D399;">CHALLENGE 02</div>
+          <div class="card-title" style="margin-top: 6px; color: #A7F3D0;">"If 3 Patients Book the Same Slot?"</div>
+          <div class="card-desc" style="space-y-2; line-height: 1.55;">
+            <p><strong>• Atomic 5-Min Mutex Lock:</strong> When Patient 1 clicks a slot, a distributed lock (Redis/PostgreSQL <code>SELECT FOR UPDATE</code>) temporarily freezes it across all clients.</p>
+            <p style="margin-top: 6px;"><strong>• Engine Unique Constraint:</strong> Composite DB constraint <code>(doctor_id, date, slot_time)</code> makes double-booking mathematically impossible at the database engine level.</p>
+            <p style="margin-top: 6px;"><strong>• Smart Instant Waitlist:</strong> Patients 2 & 3 are instantly offered the next micro-batch token or placed on auto-notifying priority waitlist.</p>
+          </div>
+        </div>
+
+        <!-- Question 3: No-Show Problem -->
+        <div class="card" style="border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05);">
+          <div style="font-size: 11px; font-weight: 800; color: #FBBF24;">CHALLENGE 03</div>
+          <div class="card-title" style="margin-top: 6px; color: #FDE68A;">"Patient Books but Never Shows Up?"</div>
+          <div class="card-desc" style="space-y-2; line-height: 1.55;">
+            <p><strong>• Doctor 1-Click "Skip No-Show":</strong> If absent past 5-min grace, doctor skips patient; next token is immediately called so zero clinical time is wasted.</p>
+            <p style="margin-top: 6px;"><strong>• 1-Tap "Running Late" Swap:</strong> Patient stuck in traffic taps "Running Late" to swap to an afternoon slot without penalty, freeing their current slot.</p>
+            <p style="margin-top: 6px;"><strong>• Economic & Score Deterrents:</strong> ₹100 prepaid discount drives commitment; unexcused no-shows reduce Patient Reliability Score (PRS).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #34D399; font-size: 13px;">Enterprise Health Super-App Result:</span>
+          <span style="color: #E2E8F0; font-size: 13px; margin-left: 8px;">Zero Clinic Lobby Congestion &bull; 0% Slot Collision Rate &bull; 4.2% No-Show Rate vs 18.5% Industry Avg</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 700; color: #93C5FD;">Medyora &bull; Binarize Technologies</span>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Viva Defence</span>
+      <span class="speaker-text">"Sir, phone booking is blind and Practo's static slots cause 2-hour waiting room crowding. Medyora solves this with live token telemetry. For concurrency, atomic distributed locks prevent double booking at the DB level. And for no-shows, our 5-minute skip-and-bump protocol ensures the doctor's time is never wasted."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: SMART INDIA HACKATHON (SIH) MEDICAL BREAKTHROUGHS -->
+  <div class="slide" data-slide="17">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #6EE7B7;">SIH Research & Innovation</div>
+        <div class="slide-title">National Breakthroughs: <span>Smart India Hackathon (SIH) Solutions</span></div>
+      </div>
+      <div class="slide-number-indicator">17 / 18</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-4">
+        <!-- Feature 1: ScanMed -->
+        <div class="card" style="border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🔍</div>
+          <div class="card-title" style="color: #FBBF24;">ScanMed Drug Verifier</div>
+          <div class="card-desc">
+            <p><strong>• CDSCO Sugam Match:</strong> 2D DataMatrix barcode lookup verifies manufacturer license.</p>
+            <p style="margin-top: 6px;"><strong>• Cold-Chain Breach Sensor:</strong> Detects if insulin was stored &gt;15°C.</p>
+            <p style="margin-top: 6px;"><strong>• Hologram Authenticity:</strong> Optical match rejects spurious fake drugs.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2: Prescription DDI Shield -->
+        <div class="card" style="border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🛡️</div>
+          <div class="card-title" style="color: #F87171;">Prescription DDI Shield</div>
+          <div class="card-desc">
+            <p><strong>• Vision OCR:</strong> Reads messy handwritten prescriptions and formats dosage.</p>
+            <p style="margin-top: 6px;"><strong>• Fatal Conflict Intercept:</strong> Flags Warfarin + Aspirin (4.2x bleed hazard).</p>
+            <p style="margin-top: 6px;"><strong>• Generic Substitutes:</strong> Suggests safer alternatives under MD oversight.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3: Post-Op Wound Vision AI -->
+        <div class="card" style="border-color: rgba(236,72,153,0.4); background: rgba(236,72,153,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">📸</div>
+          <div class="card-title" style="color: #F472B6;">Post-Op Wound Vision AI</div>
+          <div class="card-desc">
+            <p><strong>• Smartphone Stitch Scan:</strong> Evaluates incision margin erythema and edema.</p>
+            <p style="margin-top: 6px;"><strong>• Southampton Score:</strong> Calculates 0-100% healing score and pus detection.</p>
+            <p style="margin-top: 6px;"><strong>• Early Sepsis Alert:</strong> Warns patient before systemic fever starts.</p>
+          </div>
+        </div>
+
+        <!-- Feature 4: ASHA Rural Offline Locker -->
+        <div class="card" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">📡</div>
+          <div class="card-title" style="color: #34D399;">ASHA Rural Offline Locker</div>
+          <div class="card-desc">
+            <p><strong>• 0% Internet Required:</strong> Local IndexedDB caches village checkup records.</p>
+            <p style="margin-top: 6px;"><strong>• Hindi Voice Intake:</strong> ASHA workers speak patient symptoms naturally.</p>
+            <p style="margin-top: 6px;"><strong>• ABHA ID Cloud Sync:</strong> Automatically links with ABDM once 4G is restored.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">SIH Presentation Script</span>
+      <span class="speaker-text">"We engineered solutions for India's biggest healthcare problem statements: stopping counterfeit drugs with ScanMed, eliminating handwritten prescription errors with our DDI Shield, and empowering rural ASHA workers with offline-first voice health records."</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: EMERGENCY BLOOD RADAR & HOME PHLEBOTOMIST BLOOD DONATION HUB -->
+  <div class="slide" data-slide="18">
+    <div class="slide-header">
+      <div>
+        <div class="tag-badge" style="background: rgba(225, 29, 72, 0.15); border-color: rgba(225, 29, 72, 0.4); color: #FDA4AF;">Community Life-Saving Innovation</div>
+        <div class="slide-title">Saving Lives at Home: <span>Blood Radar & Certified Home Pickup</span></div>
+      </div>
+      <div class="slide-number-indicator">18 / 18</div>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <!-- Feature 1: Geofenced Blood Radar -->
+        <div class="card" style="border-color: rgba(225,29,72,0.4); background: rgba(225,29,72,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🩸</div>
+          <div class="card-title" style="color: #FB7185;">Geofenced Rare Blood Radar</div>
+          <div class="card-desc">
+            <p><strong>• Real-Time City Stock:</strong> Live units for O-, AB-, and Bombay (hh) blood across Red Cross, Rotary &amp; hospital blood banks.</p>
+            <p style="margin-top: 6px;"><strong>• 1-Click SOS Broadcast:</strong> Sends instant emergency push notifications to 140+ registered voluntary donors within 8 km.</p>
+            <p style="margin-top: 6px;"><strong>• Direct Hospital Hold:</strong> Reserve 1-2 units with 2-hour hospital lock slip.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2: Phlebotomist Home Pickup -->
+        <div class="card" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🏠</div>
+          <div class="card-title" style="color: #34D399;">Phlebotomist Home Blood Pickup</div>
+          <div class="card-desc">
+            <p><strong>• Govt/NBTC Pre-Screening:</strong> Donor completes mandatory age, weight, and 6-month tattoo/surgery checklist.</p>
+            <p style="margin-top: 6px;"><strong>• Certified Nurse at Doorstep:</strong> Red Cross phlebotomist arrives with sterile vacuum CPD-A bag &amp; fingerprick Hb test.</p>
+            <p style="margin-top: 6px;"><strong>• 2°C–6°C Cold Transport Box:</strong> Barcoded blood unit transported in RFID temperature-monitored cryo-box.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3: Smart Ambulance Green Corridor -->
+        <div class="card" style="border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.06);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🚑</div>
+          <div class="card-title" style="color: #60A5FA;">Smart Ambulance Green Corridor</div>
+          <div class="card-desc">
+            <p><strong>• Pre-Arrival Telemetry:</strong> 12-lead ECG, continuous SpO2, and MAP streamed live to trauma ER.</p>
+            <p style="margin-top: 6px;"><strong>• Dynamic Traffic Preemption:</strong> Bengaluru Traffic Police (BTP) interface clears traffic signals green automatically.</p>
+            <p style="margin-top: 6px;"><strong>• Trauma Bay Zero Delay:</strong> Surgeon scrubbed and OT ready before ambulance arrives.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px; border-color: rgba(225,29,72,0.3); background: rgba(225,29,72,0.08); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #FB7185; font-size: 13px;">Social & Clinical Impact:</span>
+          <span style="color: #E2E8F0; font-size: 13px; margin-left: 8px;">1,840+ Lives Saved &bull; Certified Doorstep Phlebotomy &bull; 0% Cold-Chain Compromise</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 700; color: #FDA4AF;">Medyora &bull; Binarize Technologies</span>
+      </div>
+    </div>
+    <div class="speaker-notes-drawer">
+      <span class="speaker-badge">Blood Donation & SOS Script</span>
+      <span class="speaker-text">"Medyora eliminates blood shortages through our Geofenced Blood Radar and certified home phlebotomist pickup service. Donors complete a clinical screening, and certified nurses collect blood at their doorstep with cold-transport boxes, saving up to 3 lives per unit. Thank you!"</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM CONTROLS -->
+<div id="controls-bar">
+  <button class="nav-btn" id="prev-btn">← Previous Slide</button>
+  <div style="font-size: 12px; color: var(--text-muted);">
+    Navigate: <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">←</kbd> <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">→</kbd> or <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">Space</kbd> • Fullscreen: <kbd style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">F</kbd>
+  </div>
+  <button class="nav-btn" id="next-btn">Next Slide →</button>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 18;
+  const slides = document.querySelectorAll('.slide');
+  const progressBar = document.getElementById('progress-bar');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  function updateSlide(index) {
+    if (index < 1 || index > totalSlides) return;
+    currentSlide = index;
+
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx + 1 === currentSlide);
+    });
+
+    progressBar.style.width = (currentSlide / totalSlides * 100) + '%';
+    prevBtn.disabled = (currentSlide === 1);
+    nextBtn.innerText = (currentSlide === totalSlides) ? 'Finish Demo' : 'Next Slide →';
+  }
+
+  prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      updateSlide(currentSlide + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      updateSlide(currentSlide - 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+  });
+
+  updateSlide(1);
+</script>
+
+</body>
+</html>

@@ -33,6 +33,7 @@ import { Route as BookingDoctorIdRouteImport } from './routes/booking.$doctorId'
 import { Route as DoctorIndexRouteImport } from './routes/doctor.index'
 import { Route as DoctorAnalyticsRouteImport } from './routes/doctor.analytics'
 import { Route as DoctorCalendarRouteImport } from './routes/doctor.calendar'
+import { Route as DoctorKioskRouteImport } from './routes/doctor.kiosk'
 import { Route as DoctorPrescriptionsRouteImport } from './routes/doctor.prescriptions'
 import { Route as DoctorQueueRouteImport } from './routes/doctor.queue'
 import { Route as DoctorReviewsRouteImport } from './routes/doctor.reviews'
@@ -47,10 +48,13 @@ import { Route as LegalTermsOfServiceRouteImport } from './routes/legal.terms-of
 import { Route as PatientIndexRouteImport } from './routes/patient.index'
 import { Route as PatientAppointmentsRouteImport } from './routes/patient.appointments'
 import { Route as PatientArticlesRouteImport } from './routes/patient.articles'
+import { Route as PatientBedsRouteImport } from './routes/patient.beds'
+import { Route as PatientBloodRouteImport } from './routes/patient.blood'
 import { Route as PatientCareAiRouteImport } from './routes/patient.care-ai'
 import { Route as PatientCompareRouteImport } from './routes/patient.compare'
 import { Route as PatientConsultRouteImport } from './routes/patient.consult'
 import { Route as PatientDashboardRouteImport } from './routes/patient.dashboard'
+import { Route as PatientDietPlannerRouteImport } from './routes/patient.diet-planner'
 import { Route as PatientDoctorsRouteImport } from './routes/patient.doctors'
 import { Route as PatientFamilyRouteImport } from './routes/patient.family'
 import { Route as PatientFavoritesRouteImport } from './routes/patient.favorites'
@@ -196,6 +200,11 @@ const DoctorCalendarRoute = DoctorCalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => DoctorRoute,
 } as any)
+const DoctorKioskRoute = DoctorKioskRouteImport.update({
+  id: '/kiosk',
+  path: '/kiosk',
+  getParentRoute: () => DoctorRoute,
+} as any)
 const DoctorPrescriptionsRoute = DoctorPrescriptionsRouteImport.update({
   id: '/prescriptions',
   path: '/prescriptions',
@@ -266,6 +275,16 @@ const PatientArticlesRoute = PatientArticlesRouteImport.update({
   path: '/articles',
   getParentRoute: () => PatientRoute,
 } as any)
+const PatientBedsRoute = PatientBedsRouteImport.update({
+  id: '/beds',
+  path: '/beds',
+  getParentRoute: () => PatientRoute,
+} as any)
+const PatientBloodRoute = PatientBloodRouteImport.update({
+  id: '/blood',
+  path: '/blood',
+  getParentRoute: () => PatientRoute,
+} as any)
 const PatientCareAiRoute = PatientCareAiRouteImport.update({
   id: '/care-ai',
   path: '/care-ai',
@@ -284,6 +303,11 @@ const PatientConsultRoute = PatientConsultRouteImport.update({
 const PatientDashboardRoute = PatientDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => PatientRoute,
+} as any)
+const PatientDietPlannerRoute = PatientDietPlannerRouteImport.update({
+  id: '/diet-planner',
+  path: '/diet-planner',
   getParentRoute: () => PatientRoute,
 } as any)
 const PatientDoctorsRoute = PatientDoctorsRouteImport.update({
@@ -434,6 +458,7 @@ export interface FileRoutesByFullPath {
   '/booking/$doctorId': typeof BookingDoctorIdRoute
   '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/calendar': typeof DoctorCalendarRoute
+  '/doctor/kiosk': typeof DoctorKioskRoute
   '/doctor/prescriptions': typeof DoctorPrescriptionsRoute
   '/doctor/queue': typeof DoctorQueueRoute
   '/doctor/reviews': typeof DoctorReviewsRoute
@@ -446,10 +471,13 @@ export interface FileRoutesByFullPath {
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/articles': typeof PatientArticlesRouteWithChildren
+  '/patient/beds': typeof PatientBedsRoute
+  '/patient/blood': typeof PatientBloodRoute
   '/patient/care-ai': typeof PatientCareAiRoute
   '/patient/compare': typeof PatientCompareRoute
   '/patient/consult': typeof PatientConsultRoute
   '/patient/dashboard': typeof PatientDashboardRoute
+  '/patient/diet-planner': typeof PatientDietPlannerRoute
   '/patient/doctors': typeof PatientDoctorsRoute
   '/patient/family': typeof PatientFamilyRoute
   '/patient/favorites': typeof PatientFavoritesRoute
@@ -499,6 +527,7 @@ export interface FileRoutesByTo {
   '/booking/$doctorId': typeof BookingDoctorIdRoute
   '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/calendar': typeof DoctorCalendarRoute
+  '/doctor/kiosk': typeof DoctorKioskRoute
   '/doctor/prescriptions': typeof DoctorPrescriptionsRoute
   '/doctor/queue': typeof DoctorQueueRoute
   '/doctor/reviews': typeof DoctorReviewsRoute
@@ -510,10 +539,13 @@ export interface FileRoutesByTo {
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
+  '/patient/beds': typeof PatientBedsRoute
+  '/patient/blood': typeof PatientBloodRoute
   '/patient/care-ai': typeof PatientCareAiRoute
   '/patient/compare': typeof PatientCompareRoute
   '/patient/consult': typeof PatientConsultRoute
   '/patient/dashboard': typeof PatientDashboardRoute
+  '/patient/diet-planner': typeof PatientDietPlannerRoute
   '/patient/doctors': typeof PatientDoctorsRoute
   '/patient/family': typeof PatientFamilyRoute
   '/patient/favorites': typeof PatientFavoritesRoute
@@ -567,6 +599,7 @@ export interface FileRoutesById {
   '/booking/$doctorId': typeof BookingDoctorIdRoute
   '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/calendar': typeof DoctorCalendarRoute
+  '/doctor/kiosk': typeof DoctorKioskRoute
   '/doctor/prescriptions': typeof DoctorPrescriptionsRoute
   '/doctor/queue': typeof DoctorQueueRoute
   '/doctor/reviews': typeof DoctorReviewsRoute
@@ -579,10 +612,13 @@ export interface FileRoutesById {
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/patient/appointments': typeof PatientAppointmentsRoute
   '/patient/articles': typeof PatientArticlesRouteWithChildren
+  '/patient/beds': typeof PatientBedsRoute
+  '/patient/blood': typeof PatientBloodRoute
   '/patient/care-ai': typeof PatientCareAiRoute
   '/patient/compare': typeof PatientCompareRoute
   '/patient/consult': typeof PatientConsultRoute
   '/patient/dashboard': typeof PatientDashboardRoute
+  '/patient/diet-planner': typeof PatientDietPlannerRoute
   '/patient/doctors': typeof PatientDoctorsRoute
   '/patient/family': typeof PatientFamilyRoute
   '/patient/favorites': typeof PatientFavoritesRoute
@@ -637,6 +673,7 @@ export interface FileRouteTypes {
     | '/booking/$doctorId'
     | '/doctor/analytics'
     | '/doctor/calendar'
+    | '/doctor/kiosk'
     | '/doctor/prescriptions'
     | '/doctor/queue'
     | '/doctor/reviews'
@@ -649,10 +686,13 @@ export interface FileRouteTypes {
     | '/legal/terms-of-service'
     | '/patient/appointments'
     | '/patient/articles'
+    | '/patient/beds'
+    | '/patient/blood'
     | '/patient/care-ai'
     | '/patient/compare'
     | '/patient/consult'
     | '/patient/dashboard'
+    | '/patient/diet-planner'
     | '/patient/doctors'
     | '/patient/family'
     | '/patient/favorites'
@@ -702,6 +742,7 @@ export interface FileRouteTypes {
     | '/booking/$doctorId'
     | '/doctor/analytics'
     | '/doctor/calendar'
+    | '/doctor/kiosk'
     | '/doctor/prescriptions'
     | '/doctor/queue'
     | '/doctor/reviews'
@@ -713,10 +754,13 @@ export interface FileRouteTypes {
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
     | '/patient/appointments'
+    | '/patient/beds'
+    | '/patient/blood'
     | '/patient/care-ai'
     | '/patient/compare'
     | '/patient/consult'
     | '/patient/dashboard'
+    | '/patient/diet-planner'
     | '/patient/doctors'
     | '/patient/family'
     | '/patient/favorites'
@@ -769,6 +813,7 @@ export interface FileRouteTypes {
     | '/booking/$doctorId'
     | '/doctor/analytics'
     | '/doctor/calendar'
+    | '/doctor/kiosk'
     | '/doctor/prescriptions'
     | '/doctor/queue'
     | '/doctor/reviews'
@@ -781,10 +826,13 @@ export interface FileRouteTypes {
     | '/legal/terms-of-service'
     | '/patient/appointments'
     | '/patient/articles'
+    | '/patient/beds'
+    | '/patient/blood'
     | '/patient/care-ai'
     | '/patient/compare'
     | '/patient/consult'
     | '/patient/dashboard'
+    | '/patient/diet-planner'
     | '/patient/doctors'
     | '/patient/family'
     | '/patient/favorites'
@@ -1004,6 +1052,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DoctorCalendarRouteImport
       parentRoute: typeof DoctorRoute
     }
+    '/doctor/kiosk': {
+      id: '/doctor/kiosk'
+      path: '/kiosk'
+      fullPath: '/doctor/kiosk'
+      preLoaderRoute: typeof DoctorKioskRouteImport
+      parentRoute: typeof DoctorRoute
+    }
     '/doctor/prescriptions': {
       id: '/doctor/prescriptions'
       path: '/prescriptions'
@@ -1102,6 +1157,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatientArticlesRouteImport
       parentRoute: typeof PatientRoute
     }
+    '/patient/beds': {
+      id: '/patient/beds'
+      path: '/beds'
+      fullPath: '/patient/beds'
+      preLoaderRoute: typeof PatientBedsRouteImport
+      parentRoute: typeof PatientRoute
+    }
+    '/patient/blood': {
+      id: '/patient/blood'
+      path: '/blood'
+      fullPath: '/patient/blood'
+      preLoaderRoute: typeof PatientBloodRouteImport
+      parentRoute: typeof PatientRoute
+    }
     '/patient/care-ai': {
       id: '/patient/care-ai'
       path: '/care-ai'
@@ -1128,6 +1197,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/patient/dashboard'
       preLoaderRoute: typeof PatientDashboardRouteImport
+      parentRoute: typeof PatientRoute
+    }
+    '/patient/diet-planner': {
+      id: '/patient/diet-planner'
+      path: '/diet-planner'
+      fullPath: '/patient/diet-planner'
+      preLoaderRoute: typeof PatientDietPlannerRouteImport
       parentRoute: typeof PatientRoute
     }
     '/patient/doctors': {
@@ -1328,6 +1404,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 interface DoctorRouteChildren {
   DoctorAnalyticsRoute: typeof DoctorAnalyticsRoute
   DoctorCalendarRoute: typeof DoctorCalendarRoute
+  DoctorKioskRoute: typeof DoctorKioskRoute
   DoctorPrescriptionsRoute: typeof DoctorPrescriptionsRoute
   DoctorQueueRoute: typeof DoctorQueueRoute
   DoctorReviewsRoute: typeof DoctorReviewsRoute
@@ -1342,6 +1419,7 @@ interface DoctorRouteChildren {
 const DoctorRouteChildren: DoctorRouteChildren = {
   DoctorAnalyticsRoute: DoctorAnalyticsRoute,
   DoctorCalendarRoute: DoctorCalendarRoute,
+  DoctorKioskRoute: DoctorKioskRoute,
   DoctorPrescriptionsRoute: DoctorPrescriptionsRoute,
   DoctorQueueRoute: DoctorQueueRoute,
   DoctorReviewsRoute: DoctorReviewsRoute,
@@ -1402,10 +1480,13 @@ const PatientDoctorDoctorIdRouteWithChildren =
 interface PatientRouteChildren {
   PatientAppointmentsRoute: typeof PatientAppointmentsRoute
   PatientArticlesRoute: typeof PatientArticlesRouteWithChildren
+  PatientBedsRoute: typeof PatientBedsRoute
+  PatientBloodRoute: typeof PatientBloodRoute
   PatientCareAiRoute: typeof PatientCareAiRoute
   PatientCompareRoute: typeof PatientCompareRoute
   PatientConsultRoute: typeof PatientConsultRoute
   PatientDashboardRoute: typeof PatientDashboardRoute
+  PatientDietPlannerRoute: typeof PatientDietPlannerRoute
   PatientDoctorsRoute: typeof PatientDoctorsRoute
   PatientFamilyRoute: typeof PatientFamilyRoute
   PatientFavoritesRoute: typeof PatientFavoritesRoute
@@ -1429,10 +1510,13 @@ interface PatientRouteChildren {
 const PatientRouteChildren: PatientRouteChildren = {
   PatientAppointmentsRoute: PatientAppointmentsRoute,
   PatientArticlesRoute: PatientArticlesRouteWithChildren,
+  PatientBedsRoute: PatientBedsRoute,
+  PatientBloodRoute: PatientBloodRoute,
   PatientCareAiRoute: PatientCareAiRoute,
   PatientCompareRoute: PatientCompareRoute,
   PatientConsultRoute: PatientConsultRoute,
   PatientDashboardRoute: PatientDashboardRoute,
+  PatientDietPlannerRoute: PatientDietPlannerRoute,
   PatientDoctorsRoute: PatientDoctorsRoute,
   PatientFamilyRoute: PatientFamilyRoute,
   PatientFavoritesRoute: PatientFavoritesRoute,
