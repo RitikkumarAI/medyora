@@ -23,6 +23,7 @@ import {
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CityInteractiveBedGrid } from "@/modules/patient/beds/components/CityInteractiveBedGrid";
 
 export const Route = createFileRoute("/patient/beds")({
   head: () => ({
@@ -152,6 +153,7 @@ const INITIAL_HOSPITALS: HospitalBedData[] = [
 
 function BedsTrackerPage() {
   const router = useRouter();
+  const [viewMode, setViewMode] = useState<"city_grid" | "hospital_cards">("city_grid");
   const [hospitals, setHospitals] = useState<HospitalBedData[]>(INITIAL_HOSPITALS);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<"all" | "icu" | "ventilator" | "oxygen">("all");
@@ -338,8 +340,49 @@ function BedsTrackerPage() {
           </div>
         )}
 
-        {/* Live Metrics Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {/* View Mode Switcher: Interactive City Bed Grid vs Hospital Cards */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-1.5 rounded-2xl bg-slate-200/70 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setViewMode("city_grid")}
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                viewMode === "city_grid"
+                  ? "bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-600/20"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              <Activity className="size-4 text-emerald-400 animate-pulse" />
+              <span>⚡ City Live Bed Grid</span>
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-500 text-white font-black">
+                ICU · VENT · NICU · CCU
+              </span>
+            </button>
+
+            <button
+              onClick={() => setViewMode("hospital_cards")}
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                viewMode === "hospital_cards"
+                  ? "bg-slate-900 text-white dark:bg-slate-800 shadow-md"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              <Building2 className="size-4" />
+              <span>Hospital Directory</span>
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center gap-2 px-3 text-[11px] text-slate-500 font-mono">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+            <span>45-Min Golden Hour Reserve Enabled</span>
+          </div>
+        </div>
+
+        {viewMode === "city_grid" ? (
+          <CityInteractiveBedGrid />
+        ) : (
+          <>
+            {/* Live Metrics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400">ICU Beds</span>
@@ -596,6 +639,8 @@ function BedsTrackerPage() {
             );
           })}
         </div>
+          </>
+        )}
       </main>
 
       {/* Emergency Bed Reservation Modal */}

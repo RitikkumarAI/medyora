@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus, Trash2, Mic, MicOff, Sparkles, AlertTriangle, ShieldCheck } from "lucide-react";
+import { Plus, Trash2, Mic, MicOff, Sparkles, AlertTriangle, ShieldCheck, Languages } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SectionCard } from "@/shared/components/AppShell";
 import { DoctorShell } from "@/shared/components/DoctorShell";
 import { DOCTOR_PROFILE, useIssuedPrescriptions, useVisits } from "@/shared/data/doctor-store";
+import { DoctorVoiceRxModal } from "@/modules/doctor/prescriptions/components/DoctorVoiceRxModal";
 
 export const Route = createFileRoute("/doctor/prescriptions")({
   head: () => ({
@@ -65,6 +66,23 @@ function PrescriptionBuilder() {
   const [advice, setAdvice] = useState("");
   const [medicines, setMedicines] = useState<MedicineRow[]>([{ ...EMPTY_ROW }]);
   const [isListening, setIsListening] = useState(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+
+  const handleApplyVoiceRx = (data: {
+    patientName: string;
+    diagnosis: string;
+    advice: string;
+    medicines: { name: string; dosage: string; duration: string }[];
+  }) => {
+    if (data.patientName) setPatient(data.patientName);
+    if (data.diagnosis) setDiagnosis(data.diagnosis);
+    if (data.advice) setAdvice(data.advice);
+    if (data.medicines && data.medicines.length > 0) {
+      setMedicines(data.medicines);
+    }
+    setIsVoiceModalOpen(false);
+    toast.success(`Voice AI Prescription loaded for ${data.patientName || "Patient"}!`);
+  };
 
   const updateRow = (index: number, key: keyof MedicineRow, value: string) =>
     setMedicines((rows) => rows.map((r, i) => (i === index ? { ...r, [key]: value } : r)));
@@ -186,11 +204,50 @@ function PrescriptionBuilder() {
       title="Prescription builder"
       subtitle={`${DOCTOR_PROFILE.name} · ${DOCTOR_PROFILE.clinic}`}
       actions={
-        <Button size="sm" onClick={handleIssue}>
-          Issue prescription
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setIsVoiceModalOpen(true)}
+            className="border-blue-400 bg-blue-50/70 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950/60 dark:text-blue-300 shadow-sm font-semibold"
+          >
+            <Mic className="mr-1.5 size-4 text-blue-600 dark:text-blue-400 animate-pulse" />
+            🎙️ Voice Studio (हिंदी/Eng)
+          </Button>
+          <Button size="sm" onClick={handleIssue}>
+            Issue prescription
+          </Button>
+        </div>
       }
     >
+      {/* AI Voice Prescription Studio Banner */}
+      <div className="mb-4 p-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/30">
+              AI Speech-to-Rx Engine
+            </span>
+            <span className="flex items-center gap-1 text-[11px] text-blue-100 font-medium">
+              <Languages className="size-3.5" /> English + हिंदी (Hinglish)
+            </span>
+          </div>
+          <h2 className="text-base font-bold flex items-center gap-2">
+            <Sparkles className="size-4 text-amber-300 animate-spin" style={{ animationDuration: "4s" }} />
+            Doctor Voice-to-Prescription Studio
+          </h2>
+          <p className="text-xs text-blue-100 max-w-xl">
+            Dictate entire patient cases naturally — e.g. &ldquo;मरीज राहुल शर्मा, Acute Bronchitis, Dolo 650 1-0-1 खाना खाने के बाद 5 दिन&rdquo;. Medyora extracts drugs, dosage schedules, food timing & clinical notes instantly.
+          </p>
+        </div>
+        <Button
+          onClick={() => setIsVoiceModalOpen(true)}
+          className="bg-white text-blue-700 hover:bg-blue-50 font-bold px-4 py-2 shadow-md shrink-0 flex items-center gap-2"
+        >
+          <Mic className="size-4 text-rose-600 animate-bounce" />
+          Launch Voice Studio
+        </Button>
+      </div>
+
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           <SectionCard title="Patient & diagnosis">
@@ -229,18 +286,11 @@ function PrescriptionBuilder() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleStartVoiceDictation}
-                  className={`text-xs font-bold ${isListening ? "bg-rose-50 text-rose-600 border-rose-400 animate-pulse" : "bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200"}`}
+                  onClick={() => setIsVoiceModalOpen(true)}
+                  className="text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-950/60 dark:text-blue-300 border-blue-300 dark:border-blue-800"
                 >
-                  {isListening ? (
-                    <>
-                      <MicOff className="mr-1.5 size-3.5 text-rose-600" /> Listening...
-                    </>
-                  ) : (
-                    <>
-                      <Mic className="mr-1.5 size-3.5 text-blue-600" /> Voice-to-Rx
-                    </>
-                  )}
+                  <Mic className="mr-1.5 size-3.5 text-blue-600 dark:text-blue-400" />
+                  Voice Studio
                 </Button>
                 <Button
                   variant="outline"
@@ -354,6 +404,12 @@ function PrescriptionBuilder() {
           </SectionCard>
         </div>
       </div>
+
+      <DoctorVoiceRxModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+        onApplyPrescription={handleApplyVoiceRx}
+      />
     </DoctorShell>
   );
 }

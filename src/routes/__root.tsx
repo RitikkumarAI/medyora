@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import React, { useEffect, lazy, Suspense, type ReactNode } from "react";
+import React, { useState, useEffect, lazy, Suspense, type ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
@@ -42,6 +42,12 @@ const CinematicMedicalPreloader = lazy(() =>
 const EmergencySOSModal = lazy(() =>
   import("@/shared/components/EmergencySOSModal").then((m) => ({
     default: m.EmergencySOSModal,
+  })),
+);
+
+const LiveNotificationPhoneDrawer = lazy(() =>
+  import("@/shared/components/LiveNotificationPhoneDrawer").then((m) => ({
+    default: m.LiveNotificationPhoneDrawer,
   })),
 );
 
@@ -257,6 +263,7 @@ function RootComponent() {
             <GlobalAICopilot />
             <CommandPalette />
             <EmergencySOSModal isOpen={isSosOpen} onClose={() => setIsSosOpen(false)} />
+            <LiveNotificationPhoneDrawer />
           </Suspense>
           <PWAInstallPrompt />
           <LiveAnnouncer />
